@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dragon's Keep — Exercise</title>
+<style>
+  :root{
+    --bar:#2f56b0; --bar2:#274a9a; --accent:#ff9d1c; --accent2:#ff8000;
+    --ink:#1f2a3d; --line:#e2e8f4; --panel:#fff; --bg:#eef2f8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  .app{display:flex;flex-direction:column;height:100vh}
+  /* ---- toolbar ---- */
+  .toolbar{display:flex;align-items:center;gap:10px;background:var(--bar);color:#fff;padding:8px 14px;flex:0 0 auto;flex-wrap:wrap}
+  .tb-left{display:flex;align-items:center;gap:12px;min-width:0}
+  .back{color:#fff;text-decoration:none;font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .back:hover{opacity:.85}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.3px}
+  .logo .mark{background:#ffd21a;color:#5a3a00;border-radius:8px;padding:2px 8px;font-size:13px;box-shadow:0 2px 0 rgba(0,0,0,.15)}
+  .proj{background:rgba(255,255,255,.16);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tb-right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .tbtn{border:0;border-radius:8px;padding:9px 14px;font-weight:700;font-size:13.5px;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .tbtn.ghost{background:rgba(255,255,255,.16);color:#fff}
+  .tbtn.ghost:hover{background:rgba(255,255,255,.28)}
+  .tbtn.accent{background:var(--accent);color:#3a2400}
+  .tbtn.accent:hover{background:var(--accent2);color:#fff}
+  /* ---- editor area ---- */
+  .stage{position:relative;flex:1 1 auto;min-height:0}
+  .editor-frame{width:100%;height:100%;border:0;display:block;background:#0f1626}
+  .fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;color:#33405a;background:linear-gradient(180deg,#f3f7ff,#e7eefb)}
+  .fallback h2{margin:0}
+  .fallback p{max-width:520px;color:#55617a}
+  .fallback .big{background:var(--accent);color:#3a2400;border:0;border-radius:999px;padding:13px 26px;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none}
+  .loading{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:#55617a;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:2}
+  /* ---- modals ---- */
+  .overlay{position:fixed;inset:0;background:rgba(20,28,45,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+  .overlay.open{display:flex}
+  .modal{background:var(--panel);border-radius:16px;max-width:760px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+  .modal-head h2{margin:0;font-size:22px}
+  .x{border:0;background:#eef2fa;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;color:#55617a}
+  .x:hover{background:#e2e8f4}
+  .modal-body{padding:22px}
+  .story{font-size:16px;line-height:1.6}
+  .story .lead{background:linear-gradient(135deg,#fff6ea,#fff);border:1px solid #ffe0bd;border-radius:12px;padding:14px 16px;margin:0 0 14px}
+  .hint-title{font-weight:800;letter-spacing:.4px;color:var(--accent2);text-transform:uppercase;font-size:12px;margin:16px 0 8px}
+  .hints{margin:0;padding-left:20px}
+  .hints li{margin-bottom:8px}
+  .do-frame{width:100%;height:60vh;border:1px solid var(--line);border-radius:12px;background:#0f1626}
+  .do-note{font-size:13px;color:#8a93a8;margin-top:10px}
+  .do-fallback{padding:16px;text-align:center}
+  @media (max-width:640px){ .proj{display:none} .logo span.full{display:none} }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="toolbar">
+    <div class="tb-left">
+      <a class="back" href="index.html#/session/2/28" title="Back to exercises">← Go Back</a>
+      <div class="logo"><span class="mark">🐱 Scratch</span> <span class="full">Academy</span></div>
+      <div class="proj" title="Dragon's Keep">Dragon's Keep</div>
+    </div>
+    <div class="tb-right">
+      <button class="tbtn ghost" id="btnNew">＋ New</button>
+      <a class="tbtn ghost" id="btnOpenTab" target="_blank" rel="noopener" title="Open the editor in a new tab, pre-loaded">⤢ Open in tab</a>
+      <a class="tbtn ghost" id="btnDownload" download>⬇ Download</a>
+      <button class="tbtn ghost" id="btnReattempt">↻ Reattempt</button>
+      <button class="tbtn accent" id="btnInstructions">📋 Instructions</button>
+      <button class="tbtn accent" id="btnDesired">🎯 Desired Output</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="loading" id="loading">Loading the Scratch editor with your sprites…</div>
+    <iframe class="editor-frame" id="editor" allow="autoplay; fullscreen; microphone; camera"
+            title="Scratch editor"></iframe>
+    <div class="fallback" id="fallback" style="display:none">
+      <h2>Open the editor</h2>
+      <p>The in-page editor could not load here (some browsers/hosts block embedding). Click below to open the same project, pre-loaded with its sprites, in a new tab.</p>
+      <a class="big" id="fallbackOpen" target="_blank" rel="noopener">▶ Open editor (pre-loaded)</a>
+    </div>
+  </div>
+</div>
+
+<!-- Instructions modal -->
+<div class="overlay" id="instrOverlay">
+  <div class="modal">
+    <div class="modal-head"><h2>📋 Instructions</h2><button class="x" data-close>×</button></div>
+    <div class="modal-body story">
+      <p class="lead"><strong>Dragon's Keep</strong> — a fantasy platformer.<br>
+      A young wizard is trapped in an ancient castle. Three magic crystals will break the spell — but a restless ghost guards the halls, and a sleeping dragon waits at the far tower.</p>
+      <p>Let's build a game where the wizard explores the castle, collects the crystals, dodges the ghost, and reaches the dragon to win.</p>
+      <div class="hint-title">Hint — build it step by step</div>
+      <ul class="hints">
+        <li>Move the <strong>Wizard</strong> with the arrow keys, and animate the walk with its costumes.</li>
+        <li>Make each <strong>Crystal</strong> disappear and add <strong>+1 to a score</strong> when the wizard touches it.</li>
+        <li>Make the <strong>Ghost</strong> chase the wizard (point towards, then move).</li>
+        <li>If the wizard touches the ghost, send them back to the start.</li>
+        <li>When the score reaches <strong>3</strong>, the <strong>Dragon</strong> celebrates — <em>You Win!</em></li>
+        <li><strong>Stretch:</strong> add lives, a second castle level, and a start screen.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Desired Output modal -->
+<div class="overlay" id="desiredOverlay">
+  <div class="modal">
+    <div class="modal-head"><h2>🎯 Desired Output</h2><button class="x" data-close>×</button></div>
+    <div class="modal-body">
+      <p style="margin-top:0">This is what your finished game should do. <strong>Press the green flag and play it</strong> — then work out how to build it yourself. (You can also click “See inside” in the editor to study the blocks.)</p>
+      <iframe class="do-frame" id="desiredFrame" title="Desired output — playable finished game"
+              allow="autoplay; fullscreen"></iframe>
+      <div class="do-fallback" id="desiredFallback" style="display:none">
+        <a class="big" id="desiredOpen" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#3a2400;border-radius:999px;padding:12px 24px;font-weight:800;text-decoration:none">▶ Play the finished game</a>
+      </div>
+      <p class="do-note">Note: in the full platform this can be a recorded gameplay video instead of a live editor, if you prefer.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Point these at wherever the .sb3 files are hosted (GitHub Pages here).
+  var BASE = "https://pranshukesavmishra.github.io/scratchgraden/starters/";
+  var STARTER = BASE + "SAMPLE-dragons-keep.sb3";
+  var FINISHED = BASE + "SAMPLE-dragons-keep-FINISHED.sb3";
+  var EDITOR = "https://turbowarp.org/editor?project_url=";
+  var PLAYER = "https://turbowarp.org/embed?project_url="; // player-only for desired output
+
+  var editor = document.getElementById("editor");
+  var loading = document.getElementById("loading");
+  var fallback = document.getElementById("fallback");
+
+  function loadEditor(){
+    editor.src = EDITOR + encodeURIComponent(STARTER);
+  }
+  loadEditor();
+  document.getElementById("fallbackOpen").href = EDITOR + encodeURIComponent(STARTER);
+  document.getElementById("btnOpenTab").href = EDITOR + encodeURIComponent(STARTER);
+  document.getElementById("btnDownload").href = STARTER;
+  document.getElementById("btnDownload").setAttribute("download","dragons-keep.sb3");
+
+  editor.addEventListener("load", function(){ loading.style.display="none"; });
+  // If the frame is blocked from embedding, it often stays blank; show a fallback after a grace period.
+  setTimeout(function(){
+    loading.style.display="none";
+    try {
+      // Cross-origin: we can't read it, but if it never fired 'load' we assume blocked.
+    } catch(e){}
+  }, 6000);
+  // simple heuristic: offer the fallback link always available under the editor if needed
+  window.addEventListener("message", function(){}, false);
+
+  document.getElementById("btnReattempt").onclick = function(){ loading.style.display="block"; loadEditor(); };
+  document.getElementById("btnNew").onclick = function(){ window.open("https://turbowarp.org/editor","_blank","noopener"); };
+
+  // modals
+  function open(id){ document.getElementById(id).classList.add("open"); }
+  function closeAll(){ document.querySelectorAll(".overlay").forEach(function(o){o.classList.remove("open");}); }
+  document.getElementById("btnInstructions").onclick = function(){ open("instrOverlay"); };
+  document.getElementById("btnDesired").onclick = function(){
+    var f = document.getElementById("desiredFrame");
+    if(!f.src) f.src = PLAYER + encodeURIComponent(FINISHED);
+    document.getElementById("desiredOpen").href = EDITOR + encodeURIComponent(FINISHED);
+    open("desiredOverlay");
+  };
+  document.querySelectorAll("[data-close]").forEach(function(b){ b.onclick = closeAll; });
+  document.querySelectorAll(".overlay").forEach(function(o){ o.addEventListener("click", function(e){ if(e.target===o) closeAll(); }); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeAll(); });
+
+  // Show the "open in new tab" fallback link permanently accessible if the editor stays blank.
+  // (Kept subtle: the fallback overlay only appears if the iframe errors.)
+  editor.addEventListener("error", function(){ fallback.style.display="flex"; });
+</script>
+</body>
+</html>
