@@ -1,8 +1,16 @@
 name: Deploy to GitHub Pages
 
+# NOTE: GitHub Pages must be enabled once by a repo admin before this runs.
+#   Settings -> Pages -> "Build and deployment":
+#     • Easiest: Source = "Deploy from a branch", Branch =
+#       claude/scratch-exercises-platform-25bxh0 , folder = / (root). Done — no
+#       workflow needed; GitHub serves index.html directly.
+#     • Or: Source = "GitHub Actions", then run this workflow (Actions tab ->
+#       "Deploy to GitHub Pages" -> Run workflow).
+# This workflow is manual-dispatch only so it never fails automatically before
+# Pages has been enabled.
+
 on:
-  push:
-    branches: ["claude/scratch-exercises-platform-25bxh0"]
   workflow_dispatch:
 
 permissions:
@@ -27,14 +35,10 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          # auto-enable GitHub Pages for this repo if it isn't already
-          enablement: true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # publish the whole repo root (index.html is the entry point)
           path: "."
 
       - name: Deploy to GitHub Pages
