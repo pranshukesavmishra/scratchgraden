@@ -118,6 +118,13 @@
    "color": "#7c3aed",
    "starter": "starters/S1E1.sb3",
    "desired": "finished/S1E1.sb3",
+   "sprites": [
+    "Wizard",
+    "Crystal",
+    "Ghost",
+    "Dragon"
+   ],
+   "backdrop": "Castle 3",
    "story": "A young wizard is trapped in a castle. Collect the three magic crystals, dodge the ghost, and reach the dragon to break the spell.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -140,6 +147,13 @@
    "color": "#7c3aed",
    "starter": "starters/S1E2.sb3",
    "desired": "finished/S1E2.sb3",
+   "sprites": [
+    "Witch",
+    "Star",
+    "Ghost",
+    "Griffin"
+   ],
+   "backdrop": "Woods",
    "story": "A witch must gather three fallen stars in the haunted woods while a ghost gives chase, then reach the griffin.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -162,6 +176,10 @@
    "color": "#e11d48",
    "starter": "starters/S1E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall what you learned about moving sprites and detecting touches.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -183,6 +201,11 @@
    "color": "#16a34a",
    "starter": "starters/S2E1.sb3",
    "desired": "finished/S2E1.sb3",
+   "sprites": [
+    "Bowl",
+    "Apple"
+   ],
+   "backdrop": "Blue Sky",
    "story": "Apples are falling from the trees! Move the bowl with your mouse and catch as many as you can before you run out of lives.",
    "hints": [
     "Make the catcher follow the mouse along the bottom (set x to mouse x).",
@@ -205,6 +228,11 @@
    "color": "#16a34a",
    "starter": "starters/S2E2.sb3",
    "desired": "finished/S2E2.sb3",
+   "sprites": [
+    "Bowl",
+    "Bananas"
+   ],
+   "backdrop": "Beach Rio",
    "story": "The monkeys are dropping bananas on the beach. Catch them in your bowl!",
    "hints": [
     "Make the catcher follow the mouse along the bottom (set x to mouse x).",
@@ -227,6 +255,10 @@
    "color": "#e11d48",
    "starter": "starters/S2E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall coordinates and how a score variable works.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -248,6 +280,11 @@
    "color": "#2563eb",
    "starter": "starters/S3E1.sb3",
    "desired": "finished/S3E1.sb3",
+   "sprites": [
+    "Rocketship",
+    "Rocks"
+   ],
+   "backdrop": "Space",
    "story": "Pilot your rocket through an asteroid field. Dodge the falling rocks and survive as long as you can!",
    "hints": [
     "Move the player with the arrow keys.",
@@ -269,6 +306,11 @@
    "color": "#2563eb",
    "starter": "starters/S3E2.sb3",
    "desired": "finished/S3E2.sb3",
+   "sprites": [
+    "Robot",
+    "Rocks"
+   ],
+   "backdrop": "Nebula",
    "story": "A robot explorer is caught in a meteor storm inside a glowing nebula. Keep it safe!",
    "hints": [
     "Move the player with the arrow keys.",
@@ -290,6 +332,10 @@
    "color": "#e11d48",
    "starter": "starters/S3E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall loops and conditionals.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -311,6 +357,10 @@
    "color": "#f59e0b",
    "starter": "starters/S4E1.sb3",
    "desired": "finished/S4E1.sb3",
+   "sprites": [
+    "Donut"
+   ],
+   "backdrop": "Party",
    "story": "Click the donut as fast as you can! Every click adds to your score \u2014 reach 25 to win the party.",
    "hints": [
     "Add a score variable and set it to 0 at the start.",
@@ -332,6 +382,10 @@
    "color": "#2563eb",
    "starter": "starters/S4E2.sb3",
    "desired": "finished/S4E2.sb3",
+   "sprites": [
+    "Star"
+   ],
+   "backdrop": "Galaxy",
    "story": "Tap the shooting star across the galaxy to light up the sky.",
    "hints": [
     "Add a score variable and set it to 0 at the start.",
@@ -353,6 +407,10 @@
    "color": "#e11d48",
    "starter": "starters/S4E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall variables and events.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -374,6 +432,11 @@
    "color": "#0891b2",
    "starter": "starters/S5E1.sb3",
    "desired": "finished/S5E1.sb3",
+   "sprites": [
+    "Fish",
+    "Jellyfish"
+   ],
+   "backdrop": "Underwater 1",
    "story": "Swim your little fish through a swarm of drifting jellyfish. Don't get stung!",
    "hints": [
     "Move the player with the arrow keys.",
@@ -395,6 +458,11 @@
    "color": "#0891b2",
    "starter": "starters/S5E2.sb3",
    "desired": "finished/S5E2.sb3",
+   "sprites": [
+    "Fish",
+    "Pufferfish"
+   ],
+   "backdrop": "Underwater 2",
    "story": "Pufferfish are drifting down through the reef. Guide your fish safely past them.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -416,6 +484,10 @@
    "color": "#e11d48",
    "starter": "starters/S5E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall sensing and touching.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -437,6 +509,13 @@
    "color": "#0891b2",
    "starter": "starters/S6E1.sb3",
    "desired": "finished/S6E1.sb3",
+   "sprites": [
+    "Diver1",
+    "Starfish",
+    "Shark 2",
+    "Octopus"
+   ],
+   "backdrop": "Underwater 2",
    "story": "Dive the reef to gather three glowing starfish, keep clear of the shark, and reach the friendly octopus.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -459,6 +538,13 @@
    "color": "#0891b2",
    "starter": "starters/S6E2.sb3",
    "desired": "finished/S6E2.sb3",
+   "sprites": [
+    "Crab",
+    "Crystal",
+    "Shark 2",
+    "Octopus"
+   ],
+   "backdrop": "Underwater 1",
    "story": "A brave crab scuttles the cove for crystals while dodging the shark.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -481,6 +567,10 @@
    "color": "#e11d48",
    "starter": "starters/S6E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall scoring and win conditions.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -502,6 +592,11 @@
    "color": "#f59e0b",
    "starter": "starters/S7E1.sb3",
    "desired": "finished/S7E1.sb3",
+   "sprites": [
+    "Bowl",
+    "Watermelon"
+   ],
+   "backdrop": "Farm",
    "story": "Watermelons are rolling off the farm cart! Catch them \u2014 but miss three and it's game over.",
    "hints": [
     "Make the catcher follow the mouse along the bottom (set x to mouse x).",
@@ -524,6 +619,11 @@
    "color": "#f59e0b",
    "starter": "starters/S7E2.sb3",
    "desired": "finished/S7E2.sb3",
+   "sprites": [
+    "Bowl",
+    "Cake"
+   ],
+   "backdrop": "Bedroom 1",
    "story": "Slices of cake are tumbling down. Catch them before they hit the floor!",
    "hints": [
     "Make the catcher follow the mouse along the bottom (set x to mouse x).",
@@ -546,6 +646,10 @@
    "color": "#e11d48",
    "starter": "starters/S7E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "Recall lives and game over.",
    "hints": [
     "Press the green flag to start the quiz.",
@@ -567,6 +671,13 @@
    "color": "#7c3aed",
    "starter": "starters/S8E1.sb3",
    "desired": "finished/S8E1.sb3",
+   "sprites": [
+    "Wizard",
+    "Crystal",
+    "Ghost",
+    "Dragon"
+   ],
+   "backdrop": "Castle 1",
    "story": "The final challenge. A wizard braves the great keep to collect the crystals, outwit the ghost, and awaken the dragon.",
    "hints": [
     "Move the player with the arrow keys.",
@@ -589,6 +700,13 @@
    "color": "#7c3aed",
    "starter": "starters/S8E2.sb3",
    "desired": "finished/S8E2.sb3",
+   "sprites": [
+    "Knight",
+    "Crystal",
+    "Ghost",
+    "Dragon"
+   ],
+   "backdrop": "Castle 2",
    "story": "A knight takes on the same keep. Can you beat it a second way?",
    "hints": [
     "Move the player with the arrow keys.",
@@ -611,6 +729,10 @@
    "color": "#e11d48",
    "starter": "starters/S8E3.sb3",
    "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
    "story": "A final review of everything in this level.",
    "hints": [
     "Press the green flag to start the quiz.",

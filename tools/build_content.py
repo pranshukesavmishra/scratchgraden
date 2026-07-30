@@ -35,6 +35,15 @@ STARTER_TASK = {
 }
 
 
+def sprites_of(template, theme):
+    if template == "collect": return [theme["player"], theme["collectible"], theme["enemy"], theme["goal"]]
+    if template == "catch":   return [theme["player"], theme["item"]]
+    if template == "dodge":   return [theme["player"], theme["enemy"]]
+    if template == "clicker": return [theme["target"]]
+    if template == "quiz":    return [theme.get("host", "Gobo")]
+    return []
+
+
 def make_starter(finished_targets, task):
     st = copy.deepcopy(finished_targets)
     for t in st:
@@ -72,6 +81,7 @@ def build():
                 "title": ex["title"], "type": ex["type"], "level": ex["level"],
                 "tag": ex["tag"], "emoji": ex["emoji"], "color": ex["color"],
                 "starter": "starters/%s.sb3" % xid, "desired": desired,
+                "sprites": sprites_of(tmpl, theme), "backdrop": theme.get("backdrop", ""),
                 "story": ex["story"], "hints": ex["hints"],
             }
             ex_ids.append(xid)
