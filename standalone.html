@@ -4828,6 +4828,12 @@ window.GN_STARTERS_DATA = {"L1-01":"UEsDBBQAAAAIADIf/lyZLYI6pAIAADcHAAAMAAAAcHJv
       app.innerHTML = '<div style="padding:40px;text-align:center">Curriculum failed to load. Check that the curriculum-level*.js files are present.</div>';
       return;
     }
+    // On GitHub Pages the starter .sb3 files are served with permissive CORS,
+    // so we can offer the one-click "Open pre-loaded in Scratch" button
+    // automatically (unless the host already configured a base URL).
+    if (!window.GN_STARTER_BASEURL && /(^|\.)github\.io$/i.test(location.hostname)) {
+      window.GN_STARTER_BASEURL = location.origin + location.pathname.replace(/[^/]*$/, "") + "starters/";
+    }
     window.addEventListener("hashchange", render);
     // normalise a query deep-link into a hash so navigation is consistent
     var r = parseHash();
