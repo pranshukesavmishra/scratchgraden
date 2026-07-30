@@ -4,7 +4,31 @@ A topic-by-topic, **game-focused Scratch curriculum and exercise platform for ag
 
 Students learn every part of Scratch — all the block types and how to use them — through **100 hands-on sessions** across **two levels**, building real games inspired by the things kids already love (Minecraft, Roblox, Flappy Bird, Mario, Pong, Space shooters, tycoons and more). The goal: by the time a student finishes, coding concepts feel natural and moving on to any language is easy.
 
-It's a **single static web app** — no build step, no server, no dependencies, no internet required. Just open `index.html`.
+It's a static web app — no build step, no server dependencies. Host it (e.g. GitHub Pages) and open `index.html`.
+
+---
+
+## 🆕 The course experience (v2 — reference-style)
+
+`index.html` is a **Sessions → Exercises** browser, modelled on a professional tutoring platform:
+
+- **Sessions** (game themes) each contain **exercises**: a **Mini Project**, a **Home Task**, and a **Recall Test**, with a **difficulty** bar, a **concept tag**, and a thumbnail.
+- Opening an exercise loads **the Scratch editor embedded right in the page** (via the embeddable **TurboWarp** editor), **pre-loaded with that exercise's real Scratch sprites** on a themed backdrop.
+- A toolbar gives **📋 Instructions** (story + step-by-step hints), **🎯 Desired Output** (the **playable finished game** — press the green flag and play the goal, then build it), plus **Reattempt / Download / Open-in-tab / New**.
+
+The starters and finished "desired output" games use the **real Scratch sprite & backdrop library** (dragons, wizards, rockets, sea life…) referenced by md5, so they render as professional art in Scratch/TurboWarp.
+
+**Pages of the app**
+- `index.html` — the course browser (Sessions → Exercises)
+- `exercise.html?ex=<id>` — the embedded-editor exercise page (Instructions + Desired Output)
+- `blocklab.html` — the offline tap-to-code Block Lab
+- `index-classic.html` — the original 100-session written curriculum (kept for reference)
+
+> Note: the embedded editor and the pre-loaded projects need the site to be **hosted** (the editor fetches the `.sb3` files over the network). On GitHub Pages this works out of the box.
+
+---
+
+### About the original written curriculum
 
 ---
 
