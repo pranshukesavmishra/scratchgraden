@@ -116,15 +116,20 @@
   var dir=location.origin+location.pathname.replace(/[^/]*$/,"");
   var stage=document.getElementById("stage");
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function cleanName(s){return String(s).replace(/\s*\d+$/,"");}
   function spriteEmoji(n){n=n.toLowerCase();
     if(/wizard|witch|knight/.test(n))return"🧙";if(/dragon/.test(n))return"🐉";if(/ghost/.test(n))return"👻";
     if(/crystal/.test(n))return"💎";if(/griffin/.test(n))return"🦅";if(/star/.test(n))return"⭐";
     if(/bowl/.test(n))return"🥣";if(/apple/.test(n))return"🍎";if(/banana/.test(n))return"🍌";
     if(/rocket/.test(n))return"🚀";if(/robot/.test(n))return"🤖";if(/rock/.test(n))return"🪨";
-    if(/donut/.test(n))return"🍩";if(/fish/.test(n)&&!/jelly|puffer/.test(n))return"🐟";if(/shark/.test(n))return"🦈";
-    if(/jelly/.test(n))return"🎐";if(/puffer/.test(n))return"🐡";if(/diver/.test(n))return"🤿";
+    if(/donut/.test(n))return"🍩";if(/shark/.test(n))return"🦈";if(/jelly/.test(n))return"🎐";
+    if(/puffer/.test(n))return"🐡";if(/fish/.test(n))return"🐟";if(/diver/.test(n))return"🤿";
     if(/octopus/.test(n))return"🐙";if(/crab/.test(n))return"🦀";if(/watermelon/.test(n))return"🍉";
-    if(/cake/.test(n))return"🎂";if(/gobo/.test(n))return"👾";return"🎨";}
+    if(/cake/.test(n))return"🎂";if(/gobo/.test(n))return"👾";if(/mouse/.test(n))return"🐭";
+    if(/beetle|bug|ladybug/.test(n))return"🐞";if(/parrot|toucan/.test(n))return"🦜";if(/bat/.test(n))return"🦇";
+    if(/monkey/.test(n))return"🐒";if(/snake/.test(n))return"🐍";if(/puppy|dog/.test(n))return"🐶";
+    if(/cat/.test(n))return"🐱";if(/strawberry|berry/.test(n))return"🍓";if(/orange/.test(n))return"🍊";
+    if(/planet/.test(n))return"🪐";if(/earth/.test(n))return"🌍";if(/tree/.test(n))return"🌳";return"🎨";}
 
   if(!ex){ document.getElementById("projName").textContent="Exercise not found";
     stage.innerHTML='<div class="cover"><div class="cover-card"><h1>Unknown exercise</h1><p class="cover-story">Go back and pick an exercise.</p></div></div>'; return; }
@@ -162,7 +167,7 @@
   var desiredBtn=document.getElementById("btnDesired"); desiredBtn.style.display="";
   desiredBtn.onclick=function(){var f=document.getElementById("desiredFrame"); if(!f.src)f.src=PLAYER+encodeURIComponent(DESIRED); open("desiredOverlay");};
 
-  var chips=(ex.sprites||[]).map(function(s){return '<span class="chip">'+spriteEmoji(s)+' '+esc(s)+'</span>';}).join("");
+  var chips=(ex.sprites||[]).map(function(s){return '<span class="chip">'+spriteEmoji(s)+' '+esc(cleanName(s))+'</span>';}).join("");
   stage.innerHTML=
     '<div class="cover"><div class="cover-card">'+
       '<div class="cover-emoji" style="background:linear-gradient(135deg,'+ex.color+','+ex.color+'cc)">'+ex.emoji+'</div>'+

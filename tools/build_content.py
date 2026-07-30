@@ -32,6 +32,8 @@ STARTER_TASK = {
  "catch":   "Move the catcher with your mouse — catch the falling items!",
  "dodge":   "Move with the arrow keys — dodge every hazard!",
  "clicker": "Click me as fast as you can — reach the target score!",
+ "flappy":  "Press Space to flap — fly through the gaps!",
+ "whack":   "Click the target fast — before the timer runs out!",
 }
 
 
@@ -40,6 +42,8 @@ def sprites_of(template, theme):
     if template == "catch":   return [theme["player"], theme["item"]]
     if template == "dodge":   return [theme["player"], theme["enemy"]]
     if template == "clicker": return [theme["target"]]
+    if template == "flappy":  return [theme["player"], theme["obstacle"]]
+    if template == "whack":   return [theme["target"]]
     if template == "quiz":    return [theme.get("host", "Gobo")]
     return []
 

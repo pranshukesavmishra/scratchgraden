@@ -103,6 +103,110 @@
     "S8E2",
     "S8E3"
    ]
+  },
+  {
+   "id": "S9",
+   "n": 9,
+   "title": "Flappy Flight",
+   "emoji": "\ud83e\udd9c",
+   "color": "#16a34a",
+   "concept": "Gravity and a flap: fly through gaps with a falling-and-boosting sprite.",
+   "exercises": [
+    "S9E1",
+    "S9E2",
+    "S9E3"
+   ]
+  },
+  {
+   "id": "S10",
+   "n": 10,
+   "title": "Whack Attack",
+   "emoji": "\ud83d\udd28",
+   "color": "#f59e0b",
+   "concept": "Random positions and a countdown timer.",
+   "exercises": [
+    "S10E1",
+    "S10E2",
+    "S10E3"
+   ]
+  },
+  {
+   "id": "S11",
+   "n": 11,
+   "title": "Galaxy Gems",
+   "emoji": "\ud83c\udf1f",
+   "color": "#2563eb",
+   "concept": "Collecting and scoring, out in space.",
+   "exercises": [
+    "S11E1",
+    "S11E2",
+    "S11E3"
+   ]
+  },
+  {
+   "id": "S12",
+   "n": 12,
+   "title": "Jungle Dash",
+   "emoji": "\ud83d\udc12",
+   "color": "#16a34a",
+   "concept": "Dodging falling hazards with loops and if-blocks.",
+   "exercises": [
+    "S12E1",
+    "S12E2",
+    "S12E3"
+   ]
+  },
+  {
+   "id": "S13",
+   "n": 13,
+   "title": "Pet Clicker",
+   "emoji": "\ud83d\udc36",
+   "color": "#f59e0b",
+   "concept": "More variables and events, with a friendly pet.",
+   "exercises": [
+    "S13E1",
+    "S13E2",
+    "S13E3"
+   ]
+  },
+  {
+   "id": "S14",
+   "n": 14,
+   "title": "Berry Catch",
+   "emoji": "\ud83c\udf53",
+   "color": "#16a34a",
+   "concept": "Catching, scoring, and lives \u2014 again, with new fruit.",
+   "exercises": [
+    "S14E1",
+    "S14E2",
+    "S14E3"
+   ]
+  },
+  {
+   "id": "S15",
+   "n": 15,
+   "title": "Rocket Rush",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "concept": "Gravity and flap in space \u2014 tune the feel.",
+   "exercises": [
+    "S15E1",
+    "S15E2",
+    "S15E3"
+   ]
+  },
+  {
+   "id": "S16",
+   "n": 16,
+   "title": "Ocean Whack",
+   "emoji": "\ud83e\udd80",
+   "color": "#0891b2",
+   "concept": "Random pop-ups and timing, under the sea.",
+   "exercises": [
+    "S16E1",
+    "S16E2",
+    "S16E3"
+   ]
   }
  ],
  "exercises": {
@@ -734,6 +838,628 @@
    ],
    "backdrop": "Chalkboard",
    "story": "A final review of everything in this level.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S9E1": {
+   "id": "S9E1",
+   "session": "S9",
+   "sessionTitle": "Flappy Flight",
+   "title": "Flappy Parrot",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Gravity & flap",
+   "emoji": "\ud83e\udd9c",
+   "color": "#16a34a",
+   "starter": "starters/S9E1.sb3",
+   "desired": "finished/S9E1.sb3",
+   "sprites": [
+    "Parrot",
+    "Tree1"
+   ],
+   "backdrop": "Jungle",
+   "story": "Tap Space to keep the parrot in the air and flap through the trees. How far can you fly?",
+   "hints": [
+    "Make the player fall \u2014 a 'gravity' variable that lowers its y a little every frame.",
+    "When Space is pressed, give it an upward boost.",
+    "Scroll the obstacle from right to left, forever.",
+    "When the obstacle leaves the left edge, send it back to the right at a new height and score +1.",
+    "If the player touches the obstacle or falls off the bottom, it's Game Over.",
+    "Stretch: add a top and bottom obstacle with a gap to fly through."
+   ]
+  },
+  "S9E2": {
+   "id": "S9E2",
+   "session": "S9",
+   "sessionTitle": "Flappy Flight",
+   "title": "Home Task \u2014 Bat Flight",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Gravity & flap",
+   "emoji": "\ud83e\udd87",
+   "color": "#7c3aed",
+   "starter": "starters/S9E2.sb3",
+   "desired": "finished/S9E2.sb3",
+   "sprites": [
+    "Bat",
+    "Rocks"
+   ],
+   "backdrop": "Woods",
+   "story": "A little bat flutters through a rocky cave at dusk. Don't hit the rocks!",
+   "hints": [
+    "Make the player fall \u2014 a 'gravity' variable that lowers its y a little every frame.",
+    "When Space is pressed, give it an upward boost.",
+    "Scroll the obstacle from right to left, forever.",
+    "When the obstacle leaves the left edge, send it back to the right at a new height and score +1.",
+    "If the player touches the obstacle or falls off the bottom, it's Game Over.",
+    "Stretch: add a top and bottom obstacle with a gap to fly through."
+   ]
+  },
+  "S9E3": {
+   "id": "S9E3",
+   "session": "S9",
+   "sessionTitle": "Flappy Flight",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Gravity & flap",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S9E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall gravity and the flap boost.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S10E1": {
+   "id": "S10E1",
+   "session": "S10",
+   "sessionTitle": "Whack Attack",
+   "title": "Whack-a-Mouse",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Random & timing",
+   "emoji": "\ud83d\udc2d",
+   "color": "#f59e0b",
+   "starter": "starters/S10E1.sb3",
+   "desired": "finished/S10E1.sb3",
+   "sprites": [
+    "Mouse1"
+   ],
+   "backdrop": "Farm",
+   "story": "Mice keep popping out of the barn! Click them as fast as you can before the timer runs out.",
+   "hints": [
+    "Make the target pop up at a random spot, wait a moment, then hide \u2014 forever.",
+    "When the target is clicked, add 1 to the score.",
+    "Add a countdown timer that starts at 20.",
+    "When the timer reaches 0, show the final score and stop the game.",
+    "Stretch: make it pop up faster as the timer runs down."
+   ]
+  },
+  "S10E2": {
+   "id": "S10E2",
+   "session": "S10",
+   "sessionTitle": "Whack Attack",
+   "title": "Home Task \u2014 Bug Bash",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Random & timing",
+   "emoji": "\ud83d\udc1e",
+   "color": "#16a34a",
+   "starter": "starters/S10E2.sb3",
+   "desired": "finished/S10E2.sb3",
+   "sprites": [
+    "Beetle"
+   ],
+   "backdrop": "Garden-rock",
+   "story": "Beetles are popping up all over the garden. Bash as many as you can in 20 seconds!",
+   "hints": [
+    "Make the target pop up at a random spot, wait a moment, then hide \u2014 forever.",
+    "When the target is clicked, add 1 to the score.",
+    "Add a countdown timer that starts at 20.",
+    "When the timer reaches 0, show the final score and stop the game.",
+    "Stretch: make it pop up faster as the timer runs down."
+   ]
+  },
+  "S10E3": {
+   "id": "S10E3",
+   "session": "S10",
+   "sessionTitle": "Whack Attack",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Random & timing",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S10E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall random positions and timing.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S11E1": {
+   "id": "S11E1",
+   "session": "S11",
+   "sessionTitle": "Galaxy Gems",
+   "title": "Galaxy Gems",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Score & collecting",
+   "emoji": "\ud83c\udf1f",
+   "color": "#2563eb",
+   "starter": "starters/S11E1.sb3",
+   "desired": "finished/S11E1.sb3",
+   "sprites": [
+    "Robot",
+    "Star",
+    "Ghost",
+    "Planet2"
+   ],
+   "backdrop": "Stars",
+   "story": "Pilot a robot through the stars, gather three of them, dodge the space ghost, and reach the planet.",
+   "hints": [
+    "Move the player with the arrow keys.",
+    "Make each gem vanish and add 1 to the score when the player touches it.",
+    "Make the enemy chase the player (point towards it, then move).",
+    "If the player touches the enemy, send it back to the start.",
+    "When the score reaches 3, the goal sprite celebrates \u2014 You Win!",
+    "Stretch: add lives, and a second area to explore."
+   ]
+  },
+  "S11E2": {
+   "id": "S11E2",
+   "session": "S11",
+   "sessionTitle": "Galaxy Gems",
+   "title": "Home Task \u2014 Moon Run",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Score & collecting",
+   "emoji": "\ud83c\udf19",
+   "color": "#2563eb",
+   "starter": "starters/S11E2.sb3",
+   "desired": "finished/S11E2.sb3",
+   "sprites": [
+    "Retro Robot",
+    "Star",
+    "Ghost",
+    "Earth"
+   ],
+   "backdrop": "Moon",
+   "story": "A retro robot hops across the moon collecting stars on the way back to Earth.",
+   "hints": [
+    "Move the player with the arrow keys.",
+    "Make each gem vanish and add 1 to the score when the player touches it.",
+    "Make the enemy chase the player (point towards it, then move).",
+    "If the player touches the enemy, send it back to the start.",
+    "When the score reaches 3, the goal sprite celebrates \u2014 You Win!",
+    "Stretch: add lives, and a second area to explore."
+   ]
+  },
+  "S11E3": {
+   "id": "S11E3",
+   "session": "S11",
+   "sessionTitle": "Galaxy Gems",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Score & collecting",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S11E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall scoring and collecting.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S12E1": {
+   "id": "S12E1",
+   "session": "S12",
+   "sessionTitle": "Jungle Dash",
+   "title": "Jungle Dash",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Loops & conditionals",
+   "emoji": "\ud83d\udc12",
+   "color": "#16a34a",
+   "starter": "starters/S12E1.sb3",
+   "desired": "finished/S12E1.sb3",
+   "sprites": [
+    "Monkey",
+    "Rocks"
+   ],
+   "backdrop": "Jungle",
+   "story": "Coconuts are raining down in the jungle! Move the monkey to dodge them and survive.",
+   "hints": [
+    "Move the player with the arrow keys.",
+    "Make each hazard fall from a random spot at the top.",
+    "When a hazard passes the bottom, add 1 to the score and reset it.",
+    "If a hazard touches the player, it's Game Over.",
+    "Stretch: speed the hazards up the longer you survive."
+   ]
+  },
+  "S12E2": {
+   "id": "S12E2",
+   "session": "S12",
+   "sessionTitle": "Jungle Dash",
+   "title": "Home Task \u2014 Desert Dash",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Loops & conditionals",
+   "emoji": "\ud83d\udc0d",
+   "color": "#f59e0b",
+   "starter": "starters/S12E2.sb3",
+   "desired": "finished/S12E2.sb3",
+   "sprites": [
+    "Snake",
+    "Rocks"
+   ],
+   "backdrop": "Desert",
+   "story": "A snake slithers through a rockslide in the desert. Keep it safe!",
+   "hints": [
+    "Move the player with the arrow keys.",
+    "Make each hazard fall from a random spot at the top.",
+    "When a hazard passes the bottom, add 1 to the score and reset it.",
+    "If a hazard touches the player, it's Game Over.",
+    "Stretch: speed the hazards up the longer you survive."
+   ]
+  },
+  "S12E3": {
+   "id": "S12E3",
+   "session": "S12",
+   "sessionTitle": "Jungle Dash",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Loops & conditionals",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S12E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall loops and conditionals.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S13E1": {
+   "id": "S13E1",
+   "session": "S13",
+   "sessionTitle": "Pet Clicker",
+   "title": "Puppy Clicker",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Variables & events",
+   "emoji": "\ud83d\udc36",
+   "color": "#f59e0b",
+   "starter": "starters/S13E1.sb3",
+   "desired": "finished/S13E1.sb3",
+   "sprites": [
+    "Puppy"
+   ],
+   "backdrop": "Bedroom 1",
+   "story": "Click the happy puppy to give it treats \u2014 reach 25 to make it the happiest pup ever!",
+   "hints": [
+    "Add a score variable and set it to 0 at the start.",
+    "When the target is clicked, add 1 to the score.",
+    "Make the target pulse (change size, then back) so clicks feel good.",
+    "When the score reaches the goal, celebrate \u2014 You Win!",
+    "Stretch: add an upgrade that earns points automatically."
+   ]
+  },
+  "S13E2": {
+   "id": "S13E2",
+   "session": "S13",
+   "sessionTitle": "Pet Clicker",
+   "title": "Home Task \u2014 Kitty Clicker",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Variables & events",
+   "emoji": "\ud83d\udc31",
+   "color": "#7c3aed",
+   "starter": "starters/S13E2.sb3",
+   "desired": "finished/S13E2.sb3",
+   "sprites": [
+    "Cat 2"
+   ],
+   "backdrop": "Room 1",
+   "story": "Pet the kitty by clicking it. Can you reach the goal?",
+   "hints": [
+    "Add a score variable and set it to 0 at the start.",
+    "When the target is clicked, add 1 to the score.",
+    "Make the target pulse (change size, then back) so clicks feel good.",
+    "When the score reaches the goal, celebrate \u2014 You Win!",
+    "Stretch: add an upgrade that earns points automatically."
+   ]
+  },
+  "S13E3": {
+   "id": "S13E3",
+   "session": "S13",
+   "sessionTitle": "Pet Clicker",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Variables & events",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S13E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall variables and events.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S14E1": {
+   "id": "S14E1",
+   "session": "S14",
+   "sessionTitle": "Berry Catch",
+   "title": "Berry Catch",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Score & lives",
+   "emoji": "\ud83c\udf53",
+   "color": "#16a34a",
+   "starter": "starters/S14E1.sb3",
+   "desired": "finished/S14E1.sb3",
+   "sprites": [
+    "Bowl",
+    "Strawberry"
+   ],
+   "backdrop": "Hay Field",
+   "story": "Strawberries are dropping from the vines. Catch them in your bowl \u2014 miss three and it's over.",
+   "hints": [
+    "Make the catcher follow the mouse along the bottom (set x to mouse x).",
+    "Make the item fall \u2014 change y by a negative number, forever.",
+    "If the item touches the catcher, add 1 to the score and send it back to the top.",
+    "If the item drops off the bottom, lose a life and reset it.",
+    "When lives reach 0, show Game Over.",
+    "Stretch: make the item fall faster as your score climbs."
+   ]
+  },
+  "S14E2": {
+   "id": "S14E2",
+   "session": "S14",
+   "sessionTitle": "Berry Catch",
+   "title": "Home Task \u2014 Orange Drop",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Score & lives",
+   "emoji": "\ud83c\udf4a",
+   "color": "#f59e0b",
+   "starter": "starters/S14E2.sb3",
+   "desired": "finished/S14E2.sb3",
+   "sprites": [
+    "Bowl",
+    "Orange"
+   ],
+   "backdrop": "Farm",
+   "story": "Oranges are rolling off the farm stand. Don't let them hit the ground!",
+   "hints": [
+    "Make the catcher follow the mouse along the bottom (set x to mouse x).",
+    "Make the item fall \u2014 change y by a negative number, forever.",
+    "If the item touches the catcher, add 1 to the score and send it back to the top.",
+    "If the item drops off the bottom, lose a life and reset it.",
+    "When lives reach 0, show Game Over.",
+    "Stretch: make the item fall faster as your score climbs."
+   ]
+  },
+  "S14E3": {
+   "id": "S14E3",
+   "session": "S14",
+   "sessionTitle": "Berry Catch",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Score & lives",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S14E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall scoring, coordinates and lives.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S15E1": {
+   "id": "S15E1",
+   "session": "S15",
+   "sessionTitle": "Rocket Rush",
+   "title": "Rocket Rush",
+   "type": "Mini Project",
+   "level": "Hard",
+   "tag": "Game feel",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "starter": "starters/S15E1.sb3",
+   "desired": "finished/S15E1.sb3",
+   "sprites": [
+    "Rocketship",
+    "Planet2"
+   ],
+   "backdrop": "Nebula",
+   "story": "Thread your rocket through the planets. Tap Space to fire the thrusters and don't crash!",
+   "hints": [
+    "Make the player fall \u2014 a 'gravity' variable that lowers its y a little every frame.",
+    "When Space is pressed, give it an upward boost.",
+    "Scroll the obstacle from right to left, forever.",
+    "When the obstacle leaves the left edge, send it back to the right at a new height and score +1.",
+    "If the player touches the obstacle or falls off the bottom, it's Game Over.",
+    "Stretch: add a top and bottom obstacle with a gap to fly through."
+   ]
+  },
+  "S15E2": {
+   "id": "S15E2",
+   "session": "S15",
+   "sessionTitle": "Rocket Rush",
+   "title": "Home Task \u2014 UFO Flight",
+   "type": "Home Task",
+   "level": "Hard",
+   "tag": "Game feel",
+   "emoji": "\ud83d\udef8",
+   "color": "#2563eb",
+   "starter": "starters/S15E2.sb3",
+   "desired": "finished/S15E2.sb3",
+   "sprites": [
+    "Retro Robot",
+    "Rocks"
+   ],
+   "backdrop": "Galaxy",
+   "story": "Fly the little robot's saucer through an asteroid gauntlet across the galaxy.",
+   "hints": [
+    "Make the player fall \u2014 a 'gravity' variable that lowers its y a little every frame.",
+    "When Space is pressed, give it an upward boost.",
+    "Scroll the obstacle from right to left, forever.",
+    "When the obstacle leaves the left edge, send it back to the right at a new height and score +1.",
+    "If the player touches the obstacle or falls off the bottom, it's Game Over.",
+    "Stretch: add a top and bottom obstacle with a gap to fly through."
+   ]
+  },
+  "S15E3": {
+   "id": "S15E3",
+   "session": "S15",
+   "sessionTitle": "Rocket Rush",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Game feel",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S15E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall tuning and game feel.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S16E1": {
+   "id": "S16E1",
+   "session": "S16",
+   "sessionTitle": "Ocean Whack",
+   "title": "Crab Whack",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Random & timing",
+   "emoji": "\ud83e\udd80",
+   "color": "#0891b2",
+   "starter": "starters/S16E1.sb3",
+   "desired": "finished/S16E1.sb3",
+   "sprites": [
+    "Crab"
+   ],
+   "backdrop": "Underwater 1",
+   "story": "Crabs keep scuttling out from the sand! Tap them fast before the timer runs out.",
+   "hints": [
+    "Make the target pop up at a random spot, wait a moment, then hide \u2014 forever.",
+    "When the target is clicked, add 1 to the score.",
+    "Add a countdown timer that starts at 20.",
+    "When the timer reaches 0, show the final score and stop the game.",
+    "Stretch: make it pop up faster as the timer runs down."
+   ]
+  },
+  "S16E2": {
+   "id": "S16E2",
+   "session": "S16",
+   "sessionTitle": "Ocean Whack",
+   "title": "Home Task \u2014 Jelly Tap",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Random & timing",
+   "emoji": "\ud83c\udf90",
+   "color": "#0891b2",
+   "starter": "starters/S16E2.sb3",
+   "desired": "finished/S16E2.sb3",
+   "sprites": [
+    "Jellyfish"
+   ],
+   "backdrop": "Underwater 2",
+   "story": "Glowing jellyfish drift up from the deep. Tap as many as you can!",
+   "hints": [
+    "Make the target pop up at a random spot, wait a moment, then hide \u2014 forever.",
+    "When the target is clicked, add 1 to the score.",
+    "Add a countdown timer that starts at 20.",
+    "When the timer reaches 0, show the final score and stop the game.",
+    "Stretch: make it pop up faster as the timer runs down."
+   ]
+  },
+  "S16E3": {
+   "id": "S16E3",
+   "session": "S16",
+   "sessionTitle": "Ocean Whack",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Final review",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S16E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "A final review across all the games.",
    "hints": [
     "Press the green flag to start the quiz.",
     "Read each question and type your answer, then press Enter.",

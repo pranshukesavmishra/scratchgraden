@@ -11,9 +11,9 @@ Templates: collect, catch, dodge, clicker, quiz.
 All are built with game_engine and auto-verified on write.
 """
 from game_engine import (Factory, target_sprite, make_stage, var_monitor, write_project,
-                         txt, num, whenflag, whenclicked, setvar, changevar, gotoxy, sety,
+                         txt, num, whenflag, whenclicked, whenkey, setvar, changevar, gotoxy, sety,
                          changex, changey, pointdir, move, show, hide, sayfor, nextcostume,
-                         changesize, wait, forever, if_, stop, pointtowards, askandwait)
+                         changesize, wait, repeat, forever, if_, stop, pointtowards, askandwait)
 
 def _goto_random_top(f, y=175):
     r = f.random(-210, 210)
@@ -132,7 +132,61 @@ def quiz(theme):
     stage = make_stage(theme["backdrop"], variables=vi)
     return [stage, host], [var_monitor("score", vid)]
 
-TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clicker, "quiz": quiz}
+# ------------------------------------------------------------ FLAPPY
+def flappy(theme):
+    vid = "vsc"; vvy = "vvy"; vi = {"score": vid, "vy": vvy}
+    pf = Factory("p", vi)
+    ob = pf.touching(theme["obstacle"])
+    yb = pf.ypos(); floor = pf.lt([3, yb, [4, "0"]], num(-170))
+    change_y_by_vy = {"op": "motion_changeyby", "inputs": {"DY": [3, [12, "vy", vvy], [4, "0"]]}}
+    pf.stack([whenflag(), setvar("score", 0, vid), setvar("vy", 0, vvy), gotoxy(-120, 0), pointdir(90),
+              forever([{"op": "data_changevariableby", "inputs": {"VALUE": txt("-1")}, "fields": {"VARIABLE": ["vy", vvy]}},
+                       change_y_by_vy,
+                       if_(ob, [sayfor("Ouch! Game Over", 3), stop("all")]),
+                       if_(floor, [sayfor("You fell — Game Over", 3), stop("all")])])])
+    pf.stack([whenkey("space"), setvar("vy", 12, vvy)], top=True, y=240)
+    player = target_sprite(theme["player"], theme["player"], -120, 0, theme.get("psize", 70), pf, 3, rot="left-right")
+
+    of = Factory("o", vi)
+    def g_edge(f):
+        r = f.random(-110, 110)
+        return {"op": "motion_gotoxy", "inputs": {"X": num(240), "Y": [3, r, [4, "0"]]}}
+    xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-235))
+    of.stack([whenflag(), g_edge(of),
+              forever([changex(-4), if_(off, [g_edge(of), changevar("score", 1, vid)])])])
+    obstacle = target_sprite(theme["obstacle"], theme["obstacle"], 240, 0, theme.get("osize", 80), of, 1)
+
+    stage = make_stage(theme["backdrop"], variables=vi)
+    return [stage, obstacle, player], [var_monitor("score", vid)]
+
+# ------------------------------------------------------------ WHACK
+def whack(theme):
+    vid = "vsc"; vtm = "vtm"; vi = {"score": vid, "time": vtm}
+    tf = Factory("t", vi)
+    def rgoto(f):
+        rx = f.random(-200, 200); ry = f.random(-140, 140)
+        return {"op": "motion_gotoxy", "inputs": {"X": [3, rx, [4, "0"]], "Y": [3, ry, [4, "0"]]}}
+    def rwait(f, a, b):
+        r = f.random(a, b)
+        return {"op": "control_wait", "inputs": {"DURATION": [3, r, [5, "1"]]}}
+    # pop-up loop
+    tf.stack([whenflag(), setvar("score", 0, vid),
+              forever([show(), rgoto(tf), rwait(tf, "0.6", "1.1"), hide(), rwait(tf, "0.3", "0.6")])])
+    # click to score
+    tf.stack([whenclicked(), changevar("score", 1, vid), hide()], top=True, y=240)
+    # countdown then game over
+    jscore = tf.join([1, [10, "Time up! Score: "]], tf.rvar("score"))
+    tf.stack([whenflag(), setvar("time", 20, vtm),
+              repeat(20, [wait("1"), changevar("time", -1, vtm)]),
+              stop("other scripts in sprite"),
+              {"op": "looks_sayforsecs", "inputs": {"MESSAGE": [3, jscore, [10, ""]], "SECS": num(5)}},
+              stop("all")], top=True, y=440)
+    target = target_sprite(theme["target"], theme["target"], 0, 0, theme.get("tsize", 90), tf, 1)
+    stage = make_stage(theme["backdrop"], variables=vi)
+    return [stage, target], [var_monitor("score", vid, 5, 5), var_monitor("time", vtm, 5, 40)]
+
+TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clicker,
+             "quiz": quiz, "flappy": flappy, "whack": whack}
 
 def build(template, theme, out_path):
     targets, monitors = TEMPLATES[template](theme)
