@@ -17,6 +17,7 @@ It's a **single static web app** — no build step, no server, no dependencies, 
 | **300 exercises** | Ordered, do-able steps in every session |
 | **100 game projects** | Every session builds toward a game; whole modules are dedicated to platformers, top-down adventures, shooters, endless runners and tycoons |
 | **All Scratch blocks** | Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables, Lists, My Blocks (custom blocks/functions) and Pen — colour-coded to match real Scratch |
+| **🐱 Scratch starter projects** | Every session ships a ready-made Scratch project (`.sb3`) **pre-loaded with the sprites for that exercise** on a themed backdrop — students open Scratch and start building, never from a blank canvas |
 | **🧪 Block Lab** | A built-in, offline tap-to-code playground so young students grasp sequence, turning, loops and debugging *before* wrestling with dragging in real Scratch |
 | **Progress tracking** | Per-session completion + "I can…" checklists, saved in the browser; live progress rings and bars |
 | **Teacher Guide** | Session shape, block colour key, full curriculum map, assessment rubric, and embedding instructions |
@@ -121,6 +122,55 @@ GradeNext.markComplete(1, 13);     // mark a session complete
 
 ---
 
+## 🐱 Scratch starter projects (the important bit)
+
+A link to a blank Scratch editor isn't much help. So every session's **"Do this exercise in Scratch"** panel gives students a real Scratch project that **already contains the sprites for that exercise**, positioned on a fitting backdrop:
+
+| Exercise / game | Starter ships with |
+|---|---|
+| Catch game | Basket, Apple, Gem · Sky |
+| Maze | Player, Goal, Coin · Maze walls |
+| Whack-a-Creeper (Minecraft) | Creeper ×2, Villager · Grass |
+| Flappy Bird | Bird, Pipe, Coin · Sky |
+| Pong / Breakout | Paddle, Ball, Bricks · Space |
+| Platformer (Mario / Roblox obby) | Player, Platform, Coin, Enemy, Goal · Sky |
+| Top-down adventure (Zelda / Minecraft) | Hero, Gem, Enemy, Coin · Dungeon |
+| Space shooter (Galaga) | Ship, Bullet, Aliens · Space |
+| Clicker / tycoon (Cookie Clicker) | Cookie, Coin · Plain |
+| …and every other session | a relevant sprite set + a green-flag starter script |
+
+**How a student uses it**
+1. Click **⬇ Download this starter (.sb3)** on the exercise page.
+2. Click **↗ Open Scratch**.
+3. In Scratch: **File → Load from your computer** → pick the downloaded file. The sprites are there, ready to code.
+
+This works with **real Scratch** (`scratch.mit.edu`) and needs **no account**. The `.sb3` files are also **embedded in the app** (base64), so the download works offline, from `file://`, and inside the single-file `standalone.html`.
+
+**One-click loading (optional, for your hosted deployment):** host the `starters/` folder on your site and set `window.GN_STARTER_BASEURL` to its public URL (e.g. `"https://your-cdn.com/scratch/starters/"`). Each panel then also shows a **⚡ Open pre-loaded (1-click)** button that opens a Scratch-compatible editor (TurboWarp) with the project already loaded — no download step.
+
+Every generated `.sb3` passes the **official `scratch-parser`** validator (the same check Scratch runs on upload), so they load cleanly.
+
+### Regenerating / customizing the starters
+
+The starters are generated from a small toolchain so you can change sprites, positions or add starter scripts:
+
+```bash
+# 1. (only if you edited the curriculum) refresh the session list the generator reads:
+node -e 'global.window={};require("./assets/js/curriculum-level1.js");require("./assets/js/curriculum-level2.js");
+const o=[];window.GN_LEVELS.forEach(l=>l.sessions.forEach((s,i)=>o.push({key:"L"+l.level+"-"+String(i+1).padStart(2,"0"),
+level:l.level,n:i+1,module:s.module,title:s.title,theme:s.theme,projectTitle:s.project?s.project.title:"",objective:s.objective||""})));
+require("fs").writeFileSync("tools/sessions.json",JSON.stringify(o,null,1))'
+
+# 2. regenerate all .sb3 files + the manifest + embedded data:
+python3 tools/generate_starters.py
+```
+
+- Sprite art lives in `tools/svg_assets.py` (simple inline SVGs — edit or add your own).
+- The session → sprite-set mapping is the `RULES` list in `tools/generate_starters.py`.
+- Outputs: `starters/*.sb3`, `starters/manifest.json`, `assets/js/starters-manifest.js`, `assets/js/starters-data.js`.
+
+---
+
 ## 🧪 Block Lab
 
 Real Scratch asks a 7-year-old to *read* a 120-block palette and *drag with precision* — two things that get in the way of the actual thinking. Block Lab removes both barriers so concepts land first:
@@ -148,8 +198,17 @@ assets/
   js/
     curriculum-level1.js        # Level 1 data (50 sessions)
     curriculum-level2.js        # Level 2 data (50 sessions)
+    starters-manifest.js        # per-session starter metadata (sprites, backdrop) [generated]
+    starters-data.js            # base64 of every .sb3 so downloads work offline [generated]
     blocklab.js                 # the interactive Block Lab playground
     app.js                      # router, rendering, progress, host integration
+starters/                       # one Scratch starter project per session [generated]
+  L1-01.sb3 … L2-50.sb3
+  manifest.json
+tools/                          # the starter-project generator
+  svg_assets.py                 # sprite + backdrop art (inline SVG)
+  generate_starters.py          # builds the .sb3 files + manifest + embedded data
+  sessions.json                 # session list the generator reads
 README.md
 ```
 

@@ -437,12 +437,8 @@
     }
     wrap.appendChild(twoCol);
 
-    // open in Scratch
-    wrap.appendChild(h("div", { class: "scratch-cta" }, [
-      h("p", {}, ["Ready to build it for real?"]),
-      h("a", { class: "btn primary", href: "https://scratch.mit.edu/projects/editor/", target: "_blank", rel: "noopener" }, ["Open Scratch Editor ↗"]),
-      h("span", { class: "cta-note" }, ["(Block Lab is great for the earliest sessions if dragging is still tricky.)"])
-    ]));
+    // do it in Scratch — with a starter project pre-loaded with this exercise's sprites
+    wrap.appendChild(starterPanel(levelNum, n));
 
     // prev / next
     var nav = h("div", { class: "session-nav" });
@@ -500,6 +496,105 @@
     if (hp) { hp.innerHTML = ""; hp.appendChild(progressRing(overallPercent())); }
   }
 
+  /* ---------------- Scratch starter projects ---------------- */
+  // manifest keys are zero-padded, e.g. "L1-01", "L2-37"
+  function padKey(levelNum, n) { return "L" + levelNum + "-" + (n < 10 ? "0" + n : "" + n); }
+
+  function downloadStarter(key, fname) {
+    var data = window.GN_STARTERS_DATA && window.GN_STARTERS_DATA[key];
+    if (data) {
+      try {
+        var bin = atob(data), len = bin.length, arr = new Uint8Array(len);
+        for (var i = 0; i < len; i++) arr[i] = bin.charCodeAt(i);
+        var url = URL.createObjectURL(new Blob([arr], { type: "application/octet-stream" }));
+        var a = h("a", { href: url, download: fname });
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(url); if (a.parentNode) a.parentNode.removeChild(a); }, 2000);
+        return;
+      } catch (e) { /* fall through to path */ }
+    }
+    var base = window.GN_STARTER_BASEURL || "starters/";
+    var a2 = h("a", { href: base + fname, download: fname, target: "_blank", rel: "noopener" });
+    document.body.appendChild(a2); a2.click();
+    setTimeout(function () { if (a2.parentNode) a2.parentNode.removeChild(a2); }, 1000);
+  }
+
+  function spriteEmoji(name) {
+    var n = name.toLowerCase();
+    if (/hero|player/.test(n)) return "🐱";
+    if (/apple/.test(n)) return "🍎";
+    if (/gem/.test(n)) return "💎";
+    if (/coin/.test(n)) return "🪙";
+    if (/star/.test(n)) return "⭐";
+    if (/flag|goal|base/.test(n)) return "🚩";
+    if (/basket/.test(n)) return "🧺";
+    if (/creeper/.test(n)) return "🟩";
+    if (/villager/.test(n)) return "🧑";
+    if (/bird/.test(n)) return "🐤";
+    if (/pipe/.test(n)) return "🟢";
+    if (/platform/.test(n)) return "🟫";
+    if (/paddle/.test(n)) return "🏓";
+    if (/ball/.test(n)) return "⚪";
+    if (/brick/.test(n)) return "🧱";
+    if (/enemy/.test(n)) return "👹";
+    if (/spike/.test(n)) return "🔺";
+    if (/ship/.test(n)) return "🚀";
+    if (/bullet/.test(n)) return "🔆";
+    if (/alien/.test(n)) return "👾";
+    if (/cookie/.test(n)) return "🍪";
+    if (/dancer/.test(n)) return "🕺";
+    return "🎭";
+  }
+
+  function starterPanel(levelNum, n) {
+    var key = padKey(levelNum, n);
+    var meta = (window.GN_STARTERS && window.GN_STARTERS[key]) || null;
+    var fname = (meta && meta.file) || (key + ".sb3");
+    var wrap = h("div", { class: "panel starter-panel" });
+
+    wrap.appendChild(h("div", { class: "sp-head" }, [
+      h("span", { class: "sp-emoji" }, ["🐱"]),
+      h("div", {}, [
+        h("h3", {}, ["Do this exercise in Scratch"]),
+        h("p", {}, ["This starter opens in Scratch with the sprites for this exercise already loaded — no blank canvas, so students start building straight away."])
+      ])
+    ]));
+
+    if (meta && meta.sprites && meta.sprites.length) {
+      var chips = h("div", { class: "sprite-chips" });
+      meta.sprites.forEach(function (sName) {
+        chips.appendChild(h("span", { class: "sprite-chip" }, [spriteEmoji(sName) + " " + sName]));
+      });
+      wrap.appendChild(h("div", { class: "sp-sprites" }, [
+        h("span", { class: "sp-label" }, ["Sprites already in this project"]),
+        chips,
+        h("span", { class: "sp-backdrop" }, ["🖼️ Backdrop: " + (meta.backdrop || "Plain")])
+      ]));
+    }
+
+    var actions = h("div", { class: "sp-actions" });
+    actions.appendChild(h("button", { class: "btn primary", onclick: function () { downloadStarter(key, fname); } }, ["⬇ Download this starter (.sb3)"]));
+    actions.appendChild(h("a", { class: "btn ghost", href: "https://scratch.mit.edu/projects/editor/", target: "_blank", rel: "noopener" }, ["↗ Open Scratch"]));
+    if (window.GN_STARTER_BASEURL) {
+      var purl = window.GN_STARTER_BASEURL + fname;
+      actions.appendChild(h("a", { class: "btn ghost", href: "https://turbowarp.org/editor?project_url=" + encodeURIComponent(purl), target: "_blank", rel: "noopener", title: "Opens a Scratch-compatible editor with the project already loaded" }, ["⚡ Open pre-loaded (1-click)"]));
+    }
+    wrap.appendChild(actions);
+
+    wrap.appendChild(h("ol", { class: "sp-steps" }, [
+      h("li", {}, [h("strong", {}, ["Download"]), " the starter project above."]),
+      h("li", {}, [h("strong", {}, ["Open Scratch"]), " with the button above."]),
+      h("li", {}, ["In Scratch choose ", h("strong", {}, ["File → Load from your computer"]), " and pick the file you just downloaded. The sprites appear, ready to code."])
+    ]));
+
+    wrap.appendChild(h("p", { class: "sp-note" }, [
+      "New to dragging blocks? Try the ",
+      h("button", { class: "linkish", onclick: function () { location.hash = "#/lab"; } }, ["Block Lab"]),
+      " first — same ideas, no dragging."
+    ]));
+    return wrap;
+  }
+
   /* ---------------- Block Lab view ---------------- */
   function viewLab() {
     var wrap = h("div", { class: "view lab" });
@@ -531,6 +626,13 @@
         ]
       ),
       h("p", { class: "muted" }, ["Pairs at one device: a Driver (touches) and a Navigator (says what to do). Swap every 8 minutes."])
+    ]));
+
+    // scratch starter projects
+    wrap.appendChild(panel("🐱 Scratch starter projects (one per session)", [
+      h("p", {}, ["Every session's ", h("strong", {}, ["Do this exercise in Scratch"]), " panel gives students a ready-made Scratch project (.sb3) with the exact sprites for that exercise already placed on a themed backdrop — so no one starts from a blank canvas. The Catch lesson ships a basket, apple and gem; the Whack-a-Creeper lesson ships creepers and a villager; the platformer ships a player, platform, coins, an enemy and a goal, and so on."]),
+      h("p", {}, ["Students click ", h("strong", {}, ["Download this starter"]), ", open Scratch, then ", h("strong", {}, ["File → Load from your computer"]), " and pick the file. It works with real Scratch and needs no account."]),
+      h("p", { class: "muted" }, ["One-click loading: if you host the ", h("code", {}, ["starters/"]), " folder on your site and set ", h("code", {}, ["window.GN_STARTER_BASEURL"]), " to its public URL, each panel also shows a one-click \"Open pre-loaded\" button (opens a Scratch-compatible editor with the project already loaded). The .sb3 files are also embedded in the app, so downloads work offline and in the single-file build."])
     ]));
 
     // block colour key

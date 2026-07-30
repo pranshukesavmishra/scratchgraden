@@ -1,0 +1,1138 @@
+{
+ "L1-01": {
+  "file": "L1-01.sb3",
+  "title": "Name Tag",
+  "module": "Welcome to Scratch",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-02": {
+  "file": "L1-02.sb3",
+  "title": "Meet the Crew",
+  "module": "Welcome to Scratch",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-03": {
+  "file": "L1-03.sb3",
+  "title": "Square Walk",
+  "module": "Welcome to Scratch",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-04": {
+  "file": "L1-04.sb3",
+  "title": "Treasure Hop",
+  "module": "Welcome to Scratch",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-05": {
+  "file": "L1-05.sb3",
+  "title": "Magic Trick",
+  "module": "Welcome to Scratch",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-06": {
+  "file": "L1-06.sb3",
+  "title": "Two-Face",
+  "module": "Move & Look",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-07": {
+  "file": "L1-07.sb3",
+  "title": "Walk Cycle",
+  "module": "Move & Look",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-08": {
+  "file": "L1-08.sb3",
+  "title": "Mini Adventure",
+  "module": "Move & Look",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Enemy",
+   "Coin"
+  ]
+ },
+ "L1-09": {
+  "file": "L1-09.sb3",
+  "title": "Power-Up Glow",
+  "module": "Move & Look",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L1-10": {
+  "file": "L1-10.sb3",
+  "title": "My Character",
+  "module": "Move & Look",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-11": {
+  "file": "L1-11.sb3",
+  "title": "Two-Character Scene",
+  "module": "Move & Look",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-12": {
+  "file": "L1-12.sb3",
+  "title": "Animated Postcard",
+  "module": "Move & Look",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-13": {
+  "file": "L1-13.sb3",
+  "title": "Shape Stamper",
+  "module": "Loops & Repetition",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-14": {
+  "file": "L1-14.sb3",
+  "title": "Screensaver",
+  "module": "Loops & Repetition",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L1-15": {
+  "file": "L1-15.sb3",
+  "title": "Living Character",
+  "module": "Loops & Repetition",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-16": {
+  "file": "L1-16.sb3",
+  "title": "Pattern Machine",
+  "module": "Loops & Repetition",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-17": {
+  "file": "L1-17.sb3",
+  "title": "Mandala Maker",
+  "module": "Loops & Repetition",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-18": {
+  "file": "L1-18.sb3",
+  "title": "Dance Battle",
+  "module": "Loops & Repetition",
+  "backdrop": "Stage",
+  "sprites": [
+   "Dancer1",
+   "Dancer2"
+  ]
+ },
+ "L1-19": {
+  "file": "L1-19.sb3",
+  "title": "Reaction Board",
+  "module": "Events & Control",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-20": {
+  "file": "L1-20.sb3",
+  "title": "Free Roam",
+  "module": "Events & Control",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-21": {
+  "file": "L1-21.sb3",
+  "title": "Turret Aim",
+  "module": "Events & Control",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-22": {
+  "file": "L1-22.sb3",
+  "title": "Countdown Start",
+  "module": "Events & Control",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L1-23": {
+  "file": "L1-23.sb3",
+  "title": "Traffic Light Crossing",
+  "module": "Events & Control",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-24": {
+  "file": "L1-24.sb3",
+  "title": "Explorer",
+  "module": "Events & Control",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-25": {
+  "file": "L1-25.sb3",
+  "title": "Smooth Mover",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-26": {
+  "file": "L1-26.sb3",
+  "title": "Mood Ring",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-27": {
+  "file": "L1-27.sb3",
+  "title": "Don't Touch the Lava",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-28": {
+  "file": "L1-28.sb3",
+  "title": "Proximity Alarm",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-29": {
+  "file": "L1-29.sb3",
+  "title": "Locked Door",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-30": {
+  "file": "L1-30.sb3",
+  "title": "Two-Question Quiz",
+  "module": "Decisions & Sensing",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L1-31": {
+  "file": "L1-31.sb3",
+  "title": "Bumper Arena",
+  "module": "Decisions & Sensing",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Apple",
+   "Goal"
+  ]
+ },
+ "L1-32": {
+  "file": "L1-32.sb3",
+  "title": "Coin Rush",
+  "module": "Decisions & Sensing",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Coin1",
+   "Coin2",
+   "Coin3"
+  ]
+ },
+ "L1-33": {
+  "file": "L1-33.sb3",
+  "title": "Click Counter",
+  "module": "Variables & Scoring",
+  "backdrop": "Plain",
+  "sprites": [
+   "Player",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-34": {
+  "file": "L1-34.sb3",
+  "title": "Scored Coin Rush",
+  "module": "Variables & Scoring",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Coin1",
+   "Coin2",
+   "Coin3"
+  ]
+ },
+ "L1-35": {
+  "file": "L1-35.sb3",
+  "title": "Beat the Clock",
+  "module": "Variables & Scoring",
+  "backdrop": "Stage",
+  "sprites": [
+   "Dancer1",
+   "Dancer2"
+  ]
+ },
+ "L1-36": {
+  "file": "L1-36.sb3",
+  "title": "Survive the Hazards",
+  "module": "Variables & Scoring",
+  "backdrop": "Plain",
+  "sprites": [
+   "Player",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-37": {
+  "file": "L1-37.sb3",
+  "title": "Difficulty Dial",
+  "module": "Variables & Scoring",
+  "backdrop": "Plain",
+  "sprites": [
+   "Player",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L1-38": {
+  "file": "L1-38.sb3",
+  "title": "Flappy (Mini)",
+  "module": "Variables & Scoring",
+  "backdrop": "Sky",
+  "sprites": [
+   "Bird",
+   "Pipe",
+   "Coin"
+  ]
+ },
+ "L1-39": {
+  "file": "L1-39.sb3",
+  "title": "Catch \u2014 Part 1",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Basket",
+   "Apple",
+   "Gem"
+  ]
+ },
+ "L1-40": {
+  "file": "L1-40.sb3",
+  "title": "Catch \u2014 Complete",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Basket",
+   "Apple",
+   "Gem"
+  ]
+ },
+ "L1-41": {
+  "file": "L1-41.sb3",
+  "title": "Maze \u2014 Part 1",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Maze",
+  "sprites": [
+   "Player",
+   "Goal",
+   "Coin"
+  ]
+ },
+ "L1-42": {
+  "file": "L1-42.sb3",
+  "title": "Maze \u2014 Complete",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Maze",
+  "sprites": [
+   "Player",
+   "Goal",
+   "Coin"
+  ]
+ },
+ "L1-43": {
+  "file": "L1-43.sb3",
+  "title": "Whack \u2014 Part 1",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Grass",
+  "sprites": [
+   "Creeper",
+   "Creeper2",
+   "Villager"
+  ]
+ },
+ "L1-44": {
+  "file": "L1-44.sb3",
+  "title": "Whack \u2014 Complete",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Grass",
+  "sprites": [
+   "Creeper",
+   "Creeper2",
+   "Villager"
+  ]
+ },
+ "L1-45": {
+  "file": "L1-45.sb3",
+  "title": "Flappy \u2014 Part 1",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Bird",
+   "Pipe",
+   "Coin"
+  ]
+ },
+ "L1-46": {
+  "file": "L1-46.sb3",
+  "title": "Flappy \u2014 Complete",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Bird",
+   "Pipe",
+   "Coin"
+  ]
+ },
+ "L1-47": {
+  "file": "L1-47.sb3",
+  "title": "Pong \u2014 Part 1",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Space",
+  "sprites": [
+   "Paddle",
+   "Ball",
+   "Brick1",
+   "Brick2",
+   "Brick3"
+  ]
+ },
+ "L1-48": {
+  "file": "L1-48.sb3",
+  "title": "Pong / Breakout \u2014 Complete",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Space",
+  "sprites": [
+   "Paddle",
+   "Ball",
+   "Brick1",
+   "Brick2",
+   "Brick3"
+  ]
+ },
+ "L1-49": {
+  "file": "L1-49.sb3",
+  "title": "My Arcade Game \u2014 Build",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L1-50": {
+  "file": "L1-50.sb3",
+  "title": "Showcase Build",
+  "module": "Level 1 Game Builds",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-01": {
+  "file": "L2-01.sb3",
+  "title": "Ice Skater",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L2-02": {
+  "file": "L2-02.sb3",
+  "title": "Floaty Follower",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L2-03": {
+  "file": "L2-03.sb3",
+  "title": "Jump Test",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-04": {
+  "file": "L2-04.sb3",
+  "title": "Platformer Controller",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-05": {
+  "file": "L2-05.sb3",
+  "title": "Scrolling Ground",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star"
+  ]
+ },
+ "L2-06": {
+  "file": "L2-06.sb3",
+  "title": "Feel Lab",
+  "module": "Level Up: Advanced Motion",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-07": {
+  "file": "L2-07.sb3",
+  "title": "Rain",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-08": {
+  "file": "L2-08.sb3",
+  "title": "Blaster",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-09": {
+  "file": "L2-09.sb3",
+  "title": "Invasion",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-10": {
+  "file": "L2-10.sb3",
+  "title": "Juice It",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-11": {
+  "file": "L2-11.sb3",
+  "title": "Clone Budget",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-12": {
+  "file": "L2-12.sb3",
+  "title": "Mixed Swarm",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-13": {
+  "file": "L2-13.sb3",
+  "title": "Star Blaster",
+  "module": "Clones \u2014 Many at Once",
+  "backdrop": "Space",
+  "sprites": [
+   "Ship",
+   "Bullet",
+   "Alien1",
+   "Alien2",
+   "Alien3"
+  ]
+ },
+ "L2-14": {
+  "file": "L2-14.sb3",
+  "title": "My Top 5",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-15": {
+  "file": "L2-15.sb3",
+  "title": "Backpack",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-16": {
+  "file": "L2-16.sb3",
+  "title": "Leaderboard",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-17": {
+  "file": "L2-17.sb3",
+  "title": "Quiz Master",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-18": {
+  "file": "L2-18.sb3",
+  "title": "To-Do Manager",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-19": {
+  "file": "L2-19.sb3",
+  "title": "Stats Machine",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-20": {
+  "file": "L2-20.sb3",
+  "title": "Save & Load",
+  "module": "Lists & Data",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-21": {
+  "file": "L2-21.sb3",
+  "title": "Tidy-Up",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-22": {
+  "file": "L2-22.sb3",
+  "title": "Shape Kit",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-23": {
+  "file": "L2-23.sb3",
+  "title": "Function Refactor",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-24": {
+  "file": "L2-24.sb3",
+  "title": "Fractal Tree",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-25": {
+  "file": "L2-25.sb3",
+  "title": "Project Cleanup",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-26": {
+  "file": "L2-26.sb3",
+  "title": "Bug Hunt",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-27": {
+  "file": "L2-27.sb3",
+  "title": "Remaster",
+  "module": "Custom Blocks & Clean Code",
+  "backdrop": "Plain",
+  "sprites": [
+   "Hero",
+   "Star"
+  ]
+ },
+ "L2-28": {
+  "file": "L2-28.sb3",
+  "title": "Platformer \u2014 Physics",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-29": {
+  "file": "L2-29.sb3",
+  "title": "Platformer \u2014 Platforms",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-30": {
+  "file": "L2-30.sb3",
+  "title": "Platformer \u2014 Content",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-31": {
+  "file": "L2-31.sb3",
+  "title": "Platformer \u2014 Complete",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Platform",
+   "Coin",
+   "Enemy",
+   "Goal"
+  ]
+ },
+ "L2-32": {
+  "file": "L2-32.sb3",
+  "title": "Adventure \u2014 World",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Enemy",
+   "Coin"
+  ]
+ },
+ "L2-33": {
+  "file": "L2-33.sb3",
+  "title": "Adventure \u2014 Bigger World",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Enemy",
+   "Coin"
+  ]
+ },
+ "L2-34": {
+  "file": "L2-34.sb3",
+  "title": "Adventure \u2014 Complete",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Enemy",
+   "Coin"
+  ]
+ },
+ "L2-35": {
+  "file": "L2-35.sb3",
+  "title": "Runner \u2014 Core",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Spikes",
+   "Coin"
+  ]
+ },
+ "L2-36": {
+  "file": "L2-36.sb3",
+  "title": "Runner \u2014 Complete",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Sky",
+  "sprites": [
+   "Player",
+   "Spikes",
+   "Coin"
+  ]
+ },
+ "L2-37": {
+  "file": "L2-37.sb3",
+  "title": "Clicker \u2014 Core",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Plain",
+  "sprites": [
+   "Cookie",
+   "Coin"
+  ]
+ },
+ "L2-38": {
+  "file": "L2-38.sb3",
+  "title": "Tycoon \u2014 Complete",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Plain",
+  "sprites": [
+   "Cookie",
+   "Coin"
+  ]
+ },
+ "L2-39": {
+  "file": "L2-39.sb3",
+  "title": "Last Stand",
+  "module": "Game Genres Deep Dive",
+  "backdrop": "Grass",
+  "sprites": [
+   "Hero",
+   "Enemy1",
+   "Enemy2",
+   "Base"
+  ]
+ },
+ "L2-40": {
+  "file": "L2-40.sb3",
+  "title": "Front End",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-41": {
+  "file": "L2-41.sb3",
+  "title": "Soundtrack",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-42": {
+  "file": "L2-42.sb3",
+  "title": "Juice Pass",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-43": {
+  "file": "L2-43.sb3",
+  "title": "Global Best",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Dungeon",
+  "sprites": [
+   "Hero",
+   "Gem",
+   "Apple",
+   "Coin"
+  ]
+ },
+ "L2-44": {
+  "file": "L2-44.sb3",
+  "title": "Versus",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-45": {
+  "file": "L2-45.sb3",
+  "title": "Ship It",
+  "module": "Polish & Pro Skills",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-46": {
+  "file": "L2-46.sb3",
+  "title": "Design Doc",
+  "module": "Capstone",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-47": {
+  "file": "L2-47.sb3",
+  "title": "Core Build",
+  "module": "Capstone",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-48": {
+  "file": "L2-48.sb3",
+  "title": "Content Build",
+  "module": "Capstone",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-49": {
+  "file": "L2-49.sb3",
+  "title": "Polish Build",
+  "module": "Capstone",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ },
+ "L2-50": {
+  "file": "L2-50.sb3",
+  "title": "Graduation Showcase",
+  "module": "Capstone",
+  "backdrop": "Sky",
+  "sprites": [
+   "Hero",
+   "Coin",
+   "Star",
+   "Enemy"
+  ]
+ }
+}

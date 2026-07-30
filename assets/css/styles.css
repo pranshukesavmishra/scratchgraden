@@ -224,6 +224,23 @@ code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monosp
 .scratch-cta p { font-weight: 700; margin-bottom: 10px; }
 .scratch-cta .cta-note { display: block; margin-top: 10px; font-size: 13px; color: var(--ink-faint); }
 
+/* Scratch starter project panel */
+.starter-panel { border-left: 5px solid #ff8c1a; background: linear-gradient(180deg, #fffaf2, var(--surface)); }
+.sp-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 6px; }
+.sp-head .sp-emoji { font-size: 30px; line-height: 1; }
+.sp-head h3 { margin: 0 0 4px; }
+.sp-head p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+.sp-sprites { margin: 14px 0; }
+.sp-label { display: block; text-transform: uppercase; font-size: 11px; letter-spacing: .6px; font-weight: 800; color: var(--ink-faint); margin-bottom: 8px; }
+.sprite-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.sprite-chip { font-size: 14px; font-weight: 700; background: #fff3e2; color: #a85f00; border: 1px solid #ffd9a8; padding: 6px 12px; border-radius: 999px; }
+.sp-backdrop { display: inline-block; margin-top: 10px; font-size: 13px; color: var(--ink-faint); font-weight: 600; }
+.sp-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+.sp-steps { margin: 10px 0 6px; padding-left: 22px; }
+.sp-steps li { margin-bottom: 6px; }
+.sp-steps li::marker { font-weight: 800; color: #ff8c1a; }
+.sp-note { font-size: 13.5px; color: var(--ink-faint); margin: 8px 0 0; }
+
 .session-nav { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
 .sn-spacer { flex: 1; }
 .session-nav .btn { max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -370,6 +387,8 @@ code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monosp
   .data-table th { background: #212a3a; }
   .vocab { background: #2b2447; color: #c3b0ff; }
   .scratch-cta { background: linear-gradient(135deg, #2a2317, #2e2213); border-color: #4a3d1e; }
+  .starter-panel { background: linear-gradient(180deg, #241d12, var(--surface)); border-left-color: #ff8c1a; }
+  .sprite-chip { background: #2e2417; color: #ffc178; border-color: #4a3d1e; }
   .bl-mission { background: #1a2436; border-color: #313a52; }
   .bl-palette, .bl-script { background: #131a26; border-color: var(--line); }
   .bl-stage { background: #16202f; border-color: #2b3547; }
