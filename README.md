@@ -29,6 +29,8 @@ It's a **single static web app** — no build step, no server, no dependencies, 
 
 Open `index.html` in any modern browser. That's it — it runs from `file://`, from a USB stick, or from any static host.
 
+Prefer a **single file**? Open `standalone.html` instead — it's the whole platform (all CSS + JS inlined) in one self-contained HTML file, ideal for offline classrooms or dropping straight into another system. Regenerate it any time after editing the source files by concatenating them (see *Project structure* below).
+
 To serve it locally (optional):
 
 ```bash
@@ -139,6 +141,7 @@ Use it heavily in the earliest sessions; students who find dragging hard can sta
 
 ```
 index.html                      # app shell; loads everything below
+standalone.html                 # the whole platform inlined into ONE file (offline/embed)
 assets/
   css/
     styles.css                  # all styling (light + dark), one file
