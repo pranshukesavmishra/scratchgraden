@@ -311,6 +311,84 @@
     "S24E2",
     "S24E3"
    ]
+  },
+  {
+   "id": "S25",
+   "n": 25,
+   "title": "Lost in Space",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "concept": "Make an animation: sequence movement, costumes and dialogue.",
+   "exercises": [
+    "S25E1",
+    "S25E2",
+    "S25E3"
+   ]
+  },
+  {
+   "id": "S26",
+   "n": 26,
+   "title": "Dance Party",
+   "emoji": "\ud83d\udd7a",
+   "color": "#e11d48",
+   "concept": "Loop costumes to a beat to make sprites dance.",
+   "exercises": [
+    "S26E1",
+    "S26E2",
+    "S26E3"
+   ]
+  },
+  {
+   "id": "S27",
+   "n": 27,
+   "title": "Rock Band",
+   "emoji": "\ud83e\udd41",
+   "color": "#f59e0b",
+   "concept": "Make musical instruments you play by clicking.",
+   "exercises": [
+    "S27E1",
+    "S27E2",
+    "S27E3"
+   ]
+  },
+  {
+   "id": "S28",
+   "n": 28,
+   "title": "Flower Generator",
+   "emoji": "\ud83c\udf38",
+   "color": "#16a34a",
+   "concept": "Draw amazing patterns with the Pen and loops.",
+   "exercises": [
+    "S28E1",
+    "S28E2",
+    "S28E3"
+   ]
+  },
+  {
+   "id": "S29",
+   "n": 29,
+   "title": "Chatbot",
+   "emoji": "\ud83e\udd16",
+   "color": "#2563eb",
+   "concept": "Ask questions and reply using the player's answers.",
+   "exercises": [
+    "S29E1",
+    "S29E2",
+    "S29E3"
+   ]
+  },
+  {
+   "id": "S30",
+   "n": 30,
+   "title": "Story Time",
+   "emoji": "\ud83d\udcd6",
+   "color": "#7c3aed",
+   "concept": "Tell a story with characters, movement and dialogue.",
+   "exercises": [
+    "S30E1",
+    "S30E2",
+    "S30E3"
+   ]
   }
  ],
  "exercises": {
@@ -2188,6 +2266,468 @@
    ],
    "backdrop": "Chalkboard",
    "story": "The grand finale review across every game type!",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S25E1": {
+   "id": "S25E1",
+   "session": "S25",
+   "sessionTitle": "Lost in Space",
+   "title": "Lost in Space",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Animation & sequencing",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "starter": "starters/S25E1.sb3",
+   "desired": "finished/S25E1.sb3",
+   "sprites": [
+    "Rocketship",
+    "Planet2"
+   ],
+   "backdrop": "Stars",
+   "story": "Program your own animation: a little rocket drifts through the stars towards a distant planet, narrating its journey.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S25E2": {
+   "id": "S25E2",
+   "session": "S25",
+   "sessionTitle": "Lost in Space",
+   "title": "Home Task \u2014 Catch the Bus",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Animation & sequencing",
+   "emoji": "\ud83d\ude8c",
+   "color": "#f59e0b",
+   "starter": "starters/S25E2.sb3",
+   "desired": "finished/S25E2.sb3",
+   "sprites": [
+    "Cat 2",
+    "City Bus"
+   ],
+   "backdrop": "Metro",
+   "story": "Animate a character hurrying across town to catch the bus before it leaves.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S25E3": {
+   "id": "S25E3",
+   "session": "S25",
+   "sessionTitle": "Lost in Space",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Animation & sequencing",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S25E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall animation and sequencing.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S26E1": {
+   "id": "S26E1",
+   "session": "S26",
+   "sessionTitle": "Dance Party",
+   "title": "Dance Party",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Costumes & loops",
+   "emoji": "\ud83d\udd7a",
+   "color": "#e11d48",
+   "starter": "starters/S26E1.sb3",
+   "desired": "finished/S26E1.sb3",
+   "sprites": [
+    "Cassy Dance",
+    "Speaker"
+   ],
+   "backdrop": "Spotlight",
+   "story": "Throw a dance party! Loop the dancer's costumes so it grooves across the stage to the beat.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S26E2": {
+   "id": "S26E2",
+   "session": "S26",
+   "sessionTitle": "Dance Party",
+   "title": "Home Task \u2014 Star Performer",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Costumes & loops",
+   "emoji": "\ud83c\udfa4",
+   "color": "#7c3aed",
+   "starter": "starters/S26E2.sb3",
+   "desired": "finished/S26E2.sb3",
+   "sprites": [
+    "Ten80 Dance",
+    "Microphone"
+   ],
+   "backdrop": "Concert",
+   "story": "Put a performer centre-stage and animate a show-stopping routine.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S26E3": {
+   "id": "S26E3",
+   "session": "S26",
+   "sessionTitle": "Dance Party",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Costumes & loops",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S26E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall costumes and loops.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S27E1": {
+   "id": "S27E1",
+   "session": "S27",
+   "sessionTitle": "Rock Band",
+   "title": "Rock Band",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Sound & events",
+   "emoji": "\ud83e\udd41",
+   "color": "#f59e0b",
+   "starter": "starters/S27E1.sb3",
+   "desired": "finished/S27E1.sb3",
+   "sprites": [
+    "Drum",
+    "Drums Conga",
+    "Drum-cymbal",
+    "Drum-snare"
+   ],
+   "backdrop": "Concert",
+   "story": "Build a band you can play! Click each instrument to hit a drum and jam out your own rhythm.",
+   "hints": [
+    "Add the Music extension.",
+    "Give each instrument a 'when this sprite clicked' script.",
+    "Play a different drum on each instrument.",
+    "Make it pulse (change size, then back) when clicked so it feels alive.",
+    "Stretch: press the green flag to play a whole beat by itself."
+   ]
+  },
+  "S27E2": {
+   "id": "S27E2",
+   "session": "S27",
+   "sessionTitle": "Rock Band",
+   "title": "Home Task \u2014 Drum Kit",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Sound & events",
+   "emoji": "\ud83e\udd41",
+   "color": "#e11d48",
+   "starter": "starters/S27E2.sb3",
+   "desired": "finished/S27E2.sb3",
+   "sprites": [
+    "Drum-snare",
+    "Drum-highhat",
+    "Drum-cymbal",
+    "Drums Tabla"
+   ],
+   "backdrop": "Bedroom 2",
+   "story": "Set up a full drum kit and tap out a beat by clicking each drum.",
+   "hints": [
+    "Add the Music extension.",
+    "Give each instrument a 'when this sprite clicked' script.",
+    "Play a different drum on each instrument.",
+    "Make it pulse (change size, then back) when clicked so it feels alive.",
+    "Stretch: press the green flag to play a whole beat by itself."
+   ]
+  },
+  "S27E3": {
+   "id": "S27E3",
+   "session": "S27",
+   "sessionTitle": "Rock Band",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Sound & events",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S27E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall sound and events.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S28E1": {
+   "id": "S28E1",
+   "session": "S28",
+   "sessionTitle": "Flower Generator",
+   "title": "Spirograph",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Pen & patterns",
+   "emoji": "\ud83c\udf00",
+   "color": "#2563eb",
+   "starter": "starters/S28E1.sb3",
+   "desired": "finished/S28E1.sb3",
+   "sprites": [
+    "Ball"
+   ],
+   "backdrop": "Stars",
+   "story": "Turn code into art! A hidden pen draws a hypnotic rainbow spirograph. Change the numbers to invent new patterns.",
+   "hints": [
+    "Add the Pen extension, then 'erase all' and 'pen down'.",
+    "Use a 'repeat' loop with 'move' and 'turn' to draw a pattern.",
+    "Change the pen colour a little each step for a rainbow.",
+    "Try different move amounts and turn angles for brand-new shapes.",
+    "Stretch: make the pen follow the mouse so you can paint freely."
+   ]
+  },
+  "S28E2": {
+   "id": "S28E2",
+   "session": "S28",
+   "sessionTitle": "Flower Generator",
+   "title": "Home Task \u2014 Star Burst",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Pen & patterns",
+   "emoji": "\u2728",
+   "color": "#7c3aed",
+   "starter": "starters/S28E2.sb3",
+   "desired": "finished/S28E2.sb3",
+   "sprites": [
+    "Ball"
+   ],
+   "backdrop": "Rays",
+   "story": "Draw a dazzling burst of stars by repeating a shape and turning a little each time.",
+   "hints": [
+    "Add the Pen extension, then 'erase all' and 'pen down'.",
+    "Use a 'repeat' loop with 'move' and 'turn' to draw a pattern.",
+    "Change the pen colour a little each step for a rainbow.",
+    "Try different move amounts and turn angles for brand-new shapes.",
+    "Stretch: make the pen follow the mouse so you can paint freely."
+   ]
+  },
+  "S28E3": {
+   "id": "S28E3",
+   "session": "S28",
+   "sessionTitle": "Flower Generator",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Pen & patterns",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S28E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall the Pen and patterns.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S29E1": {
+   "id": "S29E1",
+   "session": "S29",
+   "sessionTitle": "Chatbot",
+   "title": "Chatbot",
+   "type": "Mini Project",
+   "level": "Easy",
+   "tag": "Ask & answer",
+   "emoji": "\ud83e\udd16",
+   "color": "#2563eb",
+   "starter": "starters/S29E1.sb3",
+   "desired": "finished/S29E1.sb3",
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Colorful City",
+   "story": "Build a friendly robot that asks your name and questions, then chats back using your answers.",
+   "hints": [
+    "Use 'ask and wait' to ask the player a question.",
+    "The player's reply is stored in the 'answer' block.",
+    "Use 'join' to reply using their answer (e.g. 'Nice to meet you, ___').",
+    "Ask a few questions and give a friendly reply each time.",
+    "Stretch: use 'if/else' to reply differently depending on the answer."
+   ]
+  },
+  "S29E2": {
+   "id": "S29E2",
+   "session": "S29",
+   "sessionTitle": "Chatbot",
+   "title": "Home Task \u2014 Fortune Teller",
+   "type": "Home Task",
+   "level": "Easy",
+   "tag": "Ask & answer",
+   "emoji": "\ud83d\udd2e",
+   "color": "#7c3aed",
+   "starter": "starters/S29E2.sb3",
+   "desired": "finished/S29E2.sb3",
+   "sprites": [
+    "Wizard"
+   ],
+   "backdrop": "Witch House",
+   "story": "Make a mystical fortune teller that asks about you and gives a fun reply.",
+   "hints": [
+    "Use 'ask and wait' to ask the player a question.",
+    "The player's reply is stored in the 'answer' block.",
+    "Use 'join' to reply using their answer (e.g. 'Nice to meet you, ___').",
+    "Ask a few questions and give a friendly reply each time.",
+    "Stretch: use 'if/else' to reply differently depending on the answer."
+   ]
+  },
+  "S29E3": {
+   "id": "S29E3",
+   "session": "S29",
+   "sessionTitle": "Chatbot",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Ask & answer",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S29E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall asking and answering.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S30E1": {
+   "id": "S30E1",
+   "session": "S30",
+   "sessionTitle": "Story Time",
+   "title": "The Quest",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Storytelling",
+   "emoji": "\ud83d\udc09",
+   "color": "#7c3aed",
+   "starter": "starters/S30E1.sb3",
+   "desired": "finished/S30E1.sb3",
+   "sprites": [
+    "Prince",
+    "Dragon"
+   ],
+   "backdrop": "Castle 4",
+   "story": "Tell a mini adventure: a hero journeys across the land toward a waiting dragon, narrating the tale.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S30E2": {
+   "id": "S30E2",
+   "session": "S30",
+   "sessionTitle": "Story Time",
+   "title": "Home Task \u2014 Under the Sea",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Storytelling",
+   "emoji": "\ud83e\udddc",
+   "color": "#0891b2",
+   "starter": "starters/S30E2.sb3",
+   "desired": "finished/S30E2.sb3",
+   "sprites": [
+    "Mermaid",
+    "Octopus"
+   ],
+   "backdrop": "Underwater 2",
+   "story": "Write an underwater story where a mermaid swims out to meet a friendly octopus.",
+   "hints": [
+    "Place your character on one side of the scene.",
+    "Move it across with 'change x' (or 'glide') inside a loop.",
+    "Switch costumes as it moves so it looks like it's walking or flying.",
+    "Use 'say' to add a line of dialogue at the start and the end.",
+    "Stretch: add a second character that reacts, or change the backdrop mid-scene."
+   ]
+  },
+  "S30E3": {
+   "id": "S30E3",
+   "session": "S30",
+   "sessionTitle": "Story Time",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Storytelling",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S30E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall storytelling in Scratch.",
    "hints": [
     "Press the green flag to start the quiz.",
     "Read each question and type your answer, then press Enter.",

@@ -18,6 +18,8 @@ It's a static web app — no build step, no server dependencies. Host it (e.g. G
 
 The starters and finished "desired output" games use the **real Scratch sprite & backdrop library** (dragons, wizards, rockets, sea life…) referenced by md5, so they render as professional art in Scratch/TurboWarp.
 
+**Project types** — modelled on established curricula (Code Club / Raspberry Pi modules, Google CS First), the exercises span far more than arcade games. Fifteen playable templates power them: **games** (collect, catch, dodge, clicker, flappy, whack, pong, runner, shooter, drive), **animations** (Lost in Space, Catch the Bus, Dance Party), **music** (Rock Band, Drum Kit — uses the Music extension), **art** (Spirograph/Flower Generator — uses the Pen extension), **chatbots** (Chatbot, Fortune Teller), **stories**, and **quizzes** (Recall Tests). New types are added by writing one template in `tools/templates.py`.
+
 **Pages of the app**
 - `index.html` — the course browser (Sessions → Exercises)
 - `exercise.html?ex=<id>` — the embedded-editor exercise page (Instructions + Desired Output)

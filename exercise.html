@@ -135,7 +135,11 @@
     if(/convertible|^car/.test(n))return"🚗";if(/truck/.test(n))return"🚚";if(/bus/.test(n))return"🚌";
     if(/motorcycle|moto/.test(n))return"🏍️";if(/dino|dinosaur/.test(n))return"🦖";if(/fox/.test(n))return"🦊";
     if(/frog/.test(n))return"🐸";if(/duck/.test(n))return"🦆";if(/penguin/.test(n))return"🐧";
-    if(/lion/.test(n))return"🦁";if(/bear/.test(n))return"🐻";if(/owl/.test(n))return"🦉";return"🎨";}
+    if(/lion/.test(n))return"🦁";if(/bear/.test(n))return"🐻";if(/owl/.test(n))return"🦉";
+    if(/drum/.test(n))return"🥁";if(/guitar/.test(n))return"🎸";if(/bell/.test(n))return"🔔";
+    if(/microphone|mic/.test(n))return"🎤";if(/speaker/.test(n))return"🔊";if(/sax/.test(n))return"🎷";
+    if(/piano|keyboard/.test(n))return"🎹";if(/dance|dancer/.test(n))return"🕺";if(/mermaid/.test(n))return"🧜";
+    if(/prince|knight/.test(n))return"🤴";if(/planet/.test(n))return"🪐";return"🎨";}
 
   if(!ex){ document.getElementById("projName").textContent="Exercise not found";
     stage.innerHTML='<div class="cover"><div class="cover-card"><h1>Unknown exercise</h1><p class="cover-story">Go back and pick an exercise.</p></div></div>'; return; }

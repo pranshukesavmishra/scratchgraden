@@ -38,6 +38,10 @@ STARTER_TASK = {
  "runner":  "Press Space to jump over the obstacles!",
  "shooter": "Arrow keys to move, Space to shoot the enemies!",
  "drive":   "Arrow keys to drive — reach the finish flag!",
+ "animation": "Make the character move across the scene and talk!",
+ "chatbot": "Make the robot ask questions and reply to the answers!",
+ "art":     "Press the green flag to draw — then change the numbers for new patterns!",
+ "music":   "Click the instruments to play — make your own beat!",
 }
 
 
@@ -52,6 +56,10 @@ def sprites_of(template, theme):
     if template == "runner":  return [theme["player"], theme["obstacle"]]
     if template == "shooter": return [theme["player"], theme["bullet"], theme["enemy"]]
     if template == "drive":   return [theme["player"], theme["goal"], theme["enemy"]]
+    if template == "animation": return [theme["mover"], theme["scenery"]]
+    if template == "chatbot": return [theme["bot"]]
+    if template == "art":     return [theme.get("pen", "Ball")]
+    if template == "music":   return [p[0] for p in theme["pads"]]
     if template == "quiz":    return [theme.get("host", "Gobo")]
     return []
 
@@ -82,11 +90,12 @@ def build():
                               agent="GradeNext recall quiz")
                 desired = None
             else:
+                ext = templates.TEMPLATE_EXT.get(tmpl)
                 write_project(targets, monitors, os.path.join(FINISHED, xid + ".sb3"),
-                              agent="GradeNext desired-output (%s)" % tmpl)
+                              agent="GradeNext desired-output (%s)" % tmpl, extensions=ext)
                 starter = make_starter(targets, STARTER_TASK[tmpl])
                 write_project(starter, [], os.path.join(STARTERS, xid + ".sb3"),
-                              agent="GradeNext starter (%s)" % tmpl)
+                              agent="GradeNext starter (%s)" % tmpl, extensions=ext)
                 desired = "finished/%s.sb3" % xid
             manifest_ex[xid] = {
                 "id": xid, "session": s["id"], "sessionTitle": s["title"],

@@ -168,6 +168,15 @@ def askandwait(q): return {"op": "sensing_askandwait", "inputs": {"QUESTION": tx
 def broadcast(msg, mid): return {"op": "event_broadcast", "inputs": {"BROADCAST_INPUT": [1, [11, msg, mid]]}}
 def turnright(d): return {"op": "motion_turnright", "inputs": {"DEGREES": num(d)}}
 def turnleft(d): return {"op": "motion_turnleft", "inputs": {"DEGREES": num(d)}}
+# pen (extension "pen")
+def pen_clear(): return {"op": "pen_clear"}
+def pen_down(): return {"op": "pen_penDown"}
+def pen_up(): return {"op": "pen_penUp"}
+def pen_color(hexcolor): return {"op": "pen_setPenColorToColor", "inputs": {"COLOR": [1, [9, hexcolor]]}}
+def pen_size(n): return {"op": "pen_setPenSize", "inputs": {"SIZE": num(n)}}
+def pen_rainbow(v): return {"op": "pen_changePenColorParamBy", "inputs": {"COLOR_PARAM": [1, ("__colorparam__",)], "VALUE": num(v)}}
+# music (extension "music")
+def drum(n, beats): return {"op": "music_playDrumForBeats", "inputs": {"DRUM": [1, ("__drummenu__", n)], "BEATS": num(beats)}}
 def bounce(): return {"op": "motion_ifonedgebounce"}
 def goto_sprite(sprite): return {"op": "motion_goto", "inputs": {"TO": [1, ("__gotomenu__", sprite)]}}
 def repeatuntil(cond_id, sub): return {"op": "control_repeat_until", "inputs": {"CONDITION": [2, cond_id]}, "substack": sub}
@@ -187,6 +196,10 @@ def _patch_menus(f):
                     m = f.add("looks_backdrops", fields={"BACKDROP": [val[1][1], None]}, shadow=True)
                 elif tag == "__gotomenu__":
                     m = f.add("motion_goto_menu", fields={"TO": [val[1][1], None]}, shadow=True)
+                elif tag == "__colorparam__":
+                    m = f.add("pen_menu_colorParam", fields={"colorParam": ["color", None]}, shadow=True)
+                elif tag == "__drummenu__":
+                    m = f.add("music_menu_DRUM", fields={"DRUM": [str(val[1][1]), None]}, shadow=True)
                 else:
                     continue
                 b["inputs"][inp] = [1, m]
@@ -240,6 +253,11 @@ OPSPEC = {
  "motion_goto":({"TO"},set()),"motion_goto_menu":(set(),{"TO"}),
  "operator_add":({"NUM1","NUM2"},set()),"operator_subtract":({"NUM1","NUM2"},set()),
  "operator_multiply":({"NUM1","NUM2"},set()),"control_repeat_until":({"CONDITION","SUBSTACK"},set()),
+ "pen_clear":(set(),set()),"pen_penDown":(set(),set()),"pen_penUp":(set(),set()),
+ "pen_setPenColorToColor":({"COLOR"},set()),"pen_setPenSize":({"SIZE"},set()),
+ "pen_changePenColorParamBy":({"COLOR_PARAM","VALUE"},set()),"pen_menu_colorParam":(set(),{"colorParam"}),
+ "music_playDrumForBeats":({"DRUM","BEATS"},set()),"music_menu_DRUM":(set(),{"DRUM"}),
+ "looks_switchcostumeto":({"COSTUME"},set()),"looks_costume":(set(),{"COSTUME"}),
 }
 
 def verify(project):
@@ -292,8 +310,8 @@ def var_monitor(name, vid, x=5, y=5):
             "spriteName": None, "value": 0, "width": 0, "height": 0, "x": x, "y": y,
             "visible": True, "sliderMin": 0, "sliderMax": 100, "isDiscrete": True}
 
-def write_project(targets, monitors, out_path, agent="GradeNext game engine"):
-    project = {"targets": targets, "monitors": monitors, "extensions": [],
+def write_project(targets, monitors, out_path, agent="GradeNext game engine", extensions=None):
+    project = {"targets": targets, "monitors": monitors, "extensions": extensions or [],
                "meta": {"semver": "3.0.0", "vm": "0.2.0", "agent": agent}}
     problems = verify(project)
     if problems:

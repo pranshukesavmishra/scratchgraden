@@ -14,7 +14,8 @@ from game_engine import (Factory, target_sprite, make_stage, var_monitor, write_
                          txt, num, whenflag, whenclicked, whenkey, setvar, changevar, gotoxy, sety,
                          changex, changey, pointdir, move, show, hide, sayfor, nextcostume,
                          changesize, wait, repeat, forever, if_, stop, pointtowards, askandwait,
-                         bounce, turnright, turnleft, goto_sprite, repeatuntil, waituntil)
+                         bounce, turnright, turnleft, goto_sprite, repeatuntil, waituntil,
+                         pen_clear, pen_down, pen_up, pen_color, pen_size, pen_rainbow, drum)
 
 def _goto_random_top(f, y=175):
     r = f.random(-210, 210)
@@ -281,10 +282,72 @@ def drive(theme):
     stage = make_stage(theme["backdrop"])
     return [stage, goal, enemy, car], []
 
+# ------------------------------------------------------------ ANIMATION
+def animation(theme):
+    mf = Factory("m")
+    mf.stack([whenflag(), gotoxy(-210, theme.get("my", -40)), show(), pointdir(90),
+              sayfor(theme.get("line1", "Off we go!"), 1.8),
+              repeat(22, [nextcostume(), changex(19), wait("0.12")]),
+              sayfor(theme.get("line2", "We made it!"), 2.5)])
+    mover = target_sprite(theme["mover"], theme["mover"], -210, theme.get("my", -40), theme.get("msize", 90), mf, 2, rot="left-right")
+    sf = Factory("s")
+    sf.stack([whenflag(), forever([changey(6), wait("0.5"), changey(-6), wait("0.5")])])
+    scenery = target_sprite(theme["scenery"], theme["scenery"], theme.get("sx", 150), theme.get("sy", 90), theme.get("ssize", 80), sf, 1)
+    stage = make_stage(theme["backdrop"])
+    return [stage, scenery, mover], []
+
+# ------------------------------------------------------------ CHATBOT
+def chatbot(theme):
+    bf = Factory("b"); name = theme.get("name", "Robo")
+    def sayjoin(a, b, secs):
+        return {"op": "looks_sayforsecs", "inputs": {"MESSAGE": [3, bf.join(a, b), [10, ""]], "SECS": num(secs)}}
+    ans = lambda: [3, bf.answer(), [10, ""]]
+    bf.stack([whenflag(), sayfor("Hi! I'm " + name + " the robot.", 1.5),
+              askandwait("What is your name?"),
+              sayjoin([1, [10, "Nice to meet you, "]], ans(), 2),
+              askandwait("What is your favourite animal?"),
+              sayjoin(ans(), [1, [10, "s are awesome!"]], 2),
+              askandwait("What makes you smile?"),
+              sayfor("That makes me smile too!", 2),
+              sayfor("Thanks for chatting with me!", 2)])
+    bot = target_sprite(theme["bot"], theme["bot"], 0, -20, theme.get("bsize", 100), bf, 1)
+    stage = make_stage(theme["backdrop"])
+    return [stage, bot], []
+
+# ------------------------------------------------------------ ART (pen)
+def art(theme):
+    pf = Factory("a")
+    pf.stack([whenflag(), pen_clear(), hide(), gotoxy(0, 0), pointdir(90), pen_size(2),
+              pen_color(theme.get("color", "#ff2d55")), pen_down(),
+              repeat(theme.get("points", 72), [move(theme.get("arm", 120)), turnright(theme.get("angle", 175)), pen_rainbow(6)]),
+              pen_up()])
+    drawer = target_sprite(theme.get("pen", "Ball"), theme.get("pen", "Ball"), 0, 0, 40, pf, 1)
+    stage = make_stage(theme["backdrop"])
+    return [stage, drawer], []
+
+# ------------------------------------------------------------ MUSIC (drums)
+def music(theme):
+    targets = [make_stage(theme["backdrop"])]
+    seen = {}
+    for i, pad in enumerate(theme["pads"]):
+        lib, drumn, x, y = pad
+        nm = lib if seen.get(lib, 0) == 0 else lib + " " + str(seen[lib] + 1)
+        seen[lib] = seen.get(lib, 0) + 1
+        pf = Factory("m%d" % i)
+        pf.stack([whenflag(), gotoxy(x, y)])
+        pf.stack([whenclicked(), changesize(18), drum(drumn, 0.25), changesize(-18)], top=True, y=220)
+        targets.append(target_sprite(nm, lib, x, y, theme.get("size", 90), pf, i + 1))
+    return targets, []
+
 TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clicker,
              "quiz": quiz, "flappy": flappy, "whack": whack,
-             "pong": pong, "runner": runner, "shooter": shooter, "drive": drive}
+             "pong": pong, "runner": runner, "shooter": shooter, "drive": drive,
+             "animation": animation, "chatbot": chatbot, "art": art, "music": music}
+
+# extensions each template needs declared in the .sb3
+TEMPLATE_EXT = {"art": ["pen"], "music": ["music"]}
 
 def build(template, theme, out_path):
     targets, monitors = TEMPLATES[template](theme)
-    return write_project(targets, monitors, out_path, agent="GradeNext desired-output (%s)" % template)
+    return write_project(targets, monitors, out_path, agent="GradeNext desired-output (%s)" % template,
+                         extensions=TEMPLATE_EXT.get(template))
