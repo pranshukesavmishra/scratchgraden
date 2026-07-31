@@ -13,7 +13,8 @@ All are built with game_engine and auto-verified on write.
 from game_engine import (Factory, target_sprite, make_stage, var_monitor, write_project,
                          txt, num, whenflag, whenclicked, whenkey, setvar, changevar, gotoxy, sety,
                          changex, changey, pointdir, move, show, hide, sayfor, nextcostume,
-                         changesize, wait, repeat, forever, if_, stop, pointtowards, askandwait)
+                         changesize, wait, repeat, forever, if_, stop, pointtowards, askandwait,
+                         bounce, turnright, turnleft, goto_sprite, repeatuntil, waituntil)
 
 def _goto_random_top(f, y=175):
     r = f.random(-210, 210)
@@ -185,8 +186,104 @@ def whack(theme):
     stage = make_stage(theme["backdrop"], variables=vi)
     return [stage, target], [var_monitor("score", vid, 5, 5), var_monitor("time", vtm, 5, 40)]
 
+# ------------------------------------------------------------ PONG
+def pong(theme):
+    vid = "vsc"; vi = {"score": vid}
+    pf = Factory("p", vi)
+    mx = pf.mousex()
+    setx_mouse = {"op": "motion_setx", "inputs": {"X": [3, mx, [4, "0"]]}}
+    pf.stack([whenflag(), sety(-150), forever([setx_mouse])])
+    paddle = target_sprite(theme["paddle"], theme["paddle"], 0, -150, theme.get("padsize", 100), pf, 1, rot="left-right")
+
+    bf = Factory("b", vi)
+    tp = bf.touching(theme["paddle"])
+    yb = bf.ypos(); floor = bf.lt([3, yb, [4, "0"]], num(-165))
+    flip = bf.minus(num(180), [3, bf.direction(), [4, "0"]])
+    pdflip = {"op": "motion_pointindirection", "inputs": {"DIRECTION": [3, flip, [8, "90"]]}}
+    bf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, 30), pointdir(45),
+              forever([move(7), bounce(),
+                       if_(tp, [pdflip, changevar("score", 1, vid), move(12)]),
+                       if_(floor, [sayfor("Game Over!", 3), stop("all")])])])
+    ball = target_sprite(theme["ball"], theme["ball"], 0, 30, theme.get("ballsize", 65), bf, 2)
+    stage = make_stage(theme["backdrop"], variables=vi)
+    return [stage, paddle, ball], [var_monitor("score", vid)]
+
+# ------------------------------------------------------------ RUNNER
+def runner(theme):
+    vid = "vsc"; vvy = "vvy"; vi = {"score": vid, "vy": vvy}
+    gf = Factory("p", vi)
+    ob = gf.touching(theme["obstacle"])
+    yb = gf.ypos(); below = gf.lt([3, yb, [4, "0"]], num(-100))
+    dyvy = {"op": "motion_changeyby", "inputs": {"DY": [3, [12, "vy", vvy], [4, "0"]]}}
+    gf.stack([whenflag(), setvar("score", 0, vid), setvar("vy", 0, vvy), gotoxy(-150, -100),
+              forever([changevar("vy", -1, vvy), dyvy,
+                       if_(below, [{"op": "motion_sety", "inputs": {"Y": num(-100)}}, setvar("vy", 0, vvy)]),
+                       if_(ob, [sayfor("Crash — Game Over!", 3), stop("all")])])])
+    yb2 = gf.ypos(); near = gf.lt([3, yb2, [4, "0"]], num(-95))
+    gf.stack([whenkey("space"), if_(near, [setvar("vy", 14, vvy)])], top=True, y=260)
+    player = target_sprite(theme["player"], theme["player"], -150, -100, theme.get("psize", 70), gf, 2, rot="left-right")
+
+    of = Factory("o", vi)
+    xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-240))
+    of.stack([whenflag(), gotoxy(240, -105),
+              forever([changex(-6), if_(off, [gotoxy(240, -105), changevar("score", 1, vid)])])])
+    obstacle = target_sprite(theme["obstacle"], theme["obstacle"], 240, -105, theme.get("osize", 65), of, 1)
+    stage = make_stage(theme["backdrop"], variables=vi)
+    return [stage, obstacle, player], [var_monitor("score", vid)]
+
+# ------------------------------------------------------------ SHOOTER (single bullet)
+def shooter(theme):
+    vid = "vsc"; vi = {"score": vid}
+    pf = Factory("p", vi)
+    kl = pf.key_pressed("left arrow"); kr = pf.key_pressed("right arrow")
+    pf.stack([whenflag(), setvar("score", 0, vid), sety(-140),
+              forever([if_(kl, [changex(-7)]), if_(kr, [changex(7)])])])
+    player = target_sprite(theme["player"], theme["player"], 0, -140, theme.get("psize", 80), pf, 3)
+
+    bf = Factory("b", vi)
+    sp = bf.key_pressed("space")
+    en = bf.touching(theme["enemy"]); yb = bf.ypos(); topedge = bf.gt([3, yb, [4, "0"]], num(170))
+    done = bf.or_(en, topedge)
+    bf.stack([whenflag(),
+              forever([goto_sprite(theme["player"]), hide(), waituntil(sp), show(), repeatuntil(done, [changey(14)])])])
+    bullet = target_sprite(theme["bullet"], theme["bullet"], 0, -120, theme.get("bsize", 55), bf, 2)
+
+    ef = Factory("e", vi)
+    def gtop(f):
+        r = f.random(-200, 200); return {"op": "motion_gotoxy", "inputs": {"X": [3, r, [4, "0"]], "Y": num(170)}}
+    yb2 = ef.ypos(); below = ef.lt([3, yb2, [4, "0"]], num(-175))
+    tb = ef.touching(theme["bullet"]); tp = ef.touching(theme["player"])
+    ef.stack([whenflag(), gtop(ef),
+              forever([changey(-3), if_(below, [gtop(ef)]),
+                       if_(tb, [changevar("score", 1, vid), gtop(ef)]),
+                       if_(tp, [sayfor("The enemy got you — Game Over!", 3), stop("all")])])])
+    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 170, theme.get("esize", 70), ef, 1)
+    stage = make_stage(theme["backdrop"], variables=vi)
+    return [stage, enemy, bullet, player], [var_monitor("score", vid)]
+
+# ------------------------------------------------------------ DRIVE (top-down racer)
+def drive(theme):
+    vi = {}
+    cf = Factory("c", vi)
+    ku = cf.key_pressed("up arrow"); kd = cf.key_pressed("down arrow")
+    kl = cf.key_pressed("left arrow"); kr = cf.key_pressed("right arrow")
+    gl = cf.touching(theme["goal"]); en = cf.touching(theme["enemy"])
+    cf.stack([whenflag(), gotoxy(-200, -140), pointdir(90),
+              forever([if_(ku, [move(5)]), if_(kd, [move(-5)]), if_(kl, [turnleft(8)]), if_(kr, [turnright(8)]),
+                       if_(gl, [sayfor("You reached the finish — YOU WIN!", 4), stop("all")]),
+                       if_(en, [gotoxy(-200, -140)])])])
+    car = target_sprite(theme["player"], theme["player"], -200, -140, theme.get("psize", 60), cf, 3)
+
+    ef = Factory("e", vi)
+    ef.stack([whenflag(), gotoxy(0, 60), pointdir(90), forever([move(4), bounce()])])
+    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 60, theme.get("esize", 60), ef, 2, rot="left-right")
+    goal = target_sprite(theme["goal"], theme["goal"], 200, 150, theme.get("gsize", 80), Factory("g", vi), 1)
+    stage = make_stage(theme["backdrop"])
+    return [stage, goal, enemy, car], []
+
 TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clicker,
-             "quiz": quiz, "flappy": flappy, "whack": whack}
+             "quiz": quiz, "flappy": flappy, "whack": whack,
+             "pong": pong, "runner": runner, "shooter": shooter, "drive": drive}
 
 def build(template, theme, out_path):
     targets, monitors = TEMPLATES[template](theme)

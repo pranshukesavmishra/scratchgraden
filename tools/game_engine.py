@@ -87,6 +87,14 @@ class Factory:
         return self.add("motion_xposition")
     def ypos(self):
         return self.add("motion_yposition")
+    def direction(self):
+        return self.add("motion_direction")
+    def minus(self, a, b):
+        return self.add("operator_subtract", inputs={"NUM1": a, "NUM2": b})
+    def plus(self, a, b):
+        return self.add("operator_add", inputs={"NUM1": a, "NUM2": b})
+    def times(self, a, b):
+        return self.add("operator_multiply", inputs={"NUM1": a, "NUM2": b})
     def mousey(self):
         return self.add("sensing_mousey")
     def timer(self):
@@ -158,6 +166,11 @@ def deleteclone(): return {"op": "control_delete_this_clone"}
 def pointtowards(sprite): return {"op": "motion_pointtowards", "inputs": {"TOWARDS": [1, ("__ptmenu__", sprite)]}}
 def askandwait(q): return {"op": "sensing_askandwait", "inputs": {"QUESTION": txt(q)}}
 def broadcast(msg, mid): return {"op": "event_broadcast", "inputs": {"BROADCAST_INPUT": [1, [11, msg, mid]]}}
+def turnright(d): return {"op": "motion_turnright", "inputs": {"DEGREES": num(d)}}
+def turnleft(d): return {"op": "motion_turnleft", "inputs": {"DEGREES": num(d)}}
+def bounce(): return {"op": "motion_ifonedgebounce"}
+def goto_sprite(sprite): return {"op": "motion_goto", "inputs": {"TO": [1, ("__gotomenu__", sprite)]}}
+def repeatuntil(cond_id, sub): return {"op": "control_repeat_until", "inputs": {"CONDITION": [2, cond_id]}, "substack": sub}
 
 # ---------------------------------------------------------------- post-processing
 def _patch_menus(f):
@@ -172,6 +185,8 @@ def _patch_menus(f):
                     m = f.add("control_create_clone_of_menu", fields={"CLONE_OPTION": ["_myself_", None]}, shadow=True)
                 elif tag == "__bd__":
                     m = f.add("looks_backdrops", fields={"BACKDROP": [val[1][1], None]}, shadow=True)
+                elif tag == "__gotomenu__":
+                    m = f.add("motion_goto_menu", fields={"TO": [val[1][1], None]}, shadow=True)
                 else:
                     continue
                 b["inputs"][inp] = [1, m]
@@ -220,7 +235,11 @@ OPSPEC = {
  "operator_or":({"OPERAND1","OPERAND2"},set()),"operator_not":({"OPERAND"},set()),
  "operator_random":({"FROM","TO"},set()),"operator_join":({"STRING1","STRING2"},set()),
  "sensing_mousex":(set(),set()),"sensing_mousey":(set(),set()),"sensing_timer":(set(),set()),
- "motion_xposition":(set(),set()),"motion_yposition":(set(),set()),
+ "motion_xposition":(set(),set()),"motion_yposition":(set(),set()),"motion_direction":(set(),set()),
+ "motion_turnright":({"DEGREES"},set()),"motion_turnleft":({"DEGREES"},set()),
+ "motion_goto":({"TO"},set()),"motion_goto_menu":(set(),{"TO"}),
+ "operator_add":({"NUM1","NUM2"},set()),"operator_subtract":({"NUM1","NUM2"},set()),
+ "operator_multiply":({"NUM1","NUM2"},set()),"control_repeat_until":({"CONDITION","SUBSTACK"},set()),
 }
 
 def verify(project):

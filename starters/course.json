@@ -207,6 +207,110 @@
     "S16E2",
     "S16E3"
    ]
+  },
+  {
+   "id": "S17",
+   "n": 17,
+   "title": "Neon Pong",
+   "emoji": "\ud83c\udfd3",
+   "color": "#2563eb",
+   "concept": "Bouncing a ball off walls and a paddle.",
+   "exercises": [
+    "S17E1",
+    "S17E2",
+    "S17E3"
+   ]
+  },
+  {
+   "id": "S18",
+   "n": 18,
+   "title": "City Runner",
+   "emoji": "\ud83c\udfc3",
+   "color": "#f59e0b",
+   "concept": "Jump over scrolling obstacles with gravity.",
+   "exercises": [
+    "S18E1",
+    "S18E2",
+    "S18E3"
+   ]
+  },
+  {
+   "id": "S19",
+   "n": 19,
+   "title": "Space Blaster",
+   "emoji": "\ud83d\udd2b",
+   "color": "#2563eb",
+   "concept": "Shoot bullets and score by hitting enemies.",
+   "exercises": [
+    "S19E1",
+    "S19E2",
+    "S19E3"
+   ]
+  },
+  {
+   "id": "S20",
+   "n": 20,
+   "title": "City Speedway",
+   "emoji": "\ud83c\udfce\ufe0f",
+   "color": "#e11d48",
+   "concept": "Steer a car and reach the finish line.",
+   "exercises": [
+    "S20E1",
+    "S20E2",
+    "S20E3"
+   ]
+  },
+  {
+   "id": "S21",
+   "n": 21,
+   "title": "Sport Bounce",
+   "emoji": "\u26bd",
+   "color": "#16a34a",
+   "concept": "More bounce games with sports balls.",
+   "exercises": [
+    "S21E1",
+    "S21E2",
+    "S21E3"
+   ]
+  },
+  {
+   "id": "S22",
+   "n": 22,
+   "title": "Wild Run",
+   "emoji": "\ud83d\udc06",
+   "color": "#16a34a",
+   "concept": "More running and jumping.",
+   "exercises": [
+    "S22E1",
+    "S22E2",
+    "S22E3"
+   ]
+  },
+  {
+   "id": "S23",
+   "n": 23,
+   "title": "Sky Defender",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "concept": "More shooting practice.",
+   "exercises": [
+    "S23E1",
+    "S23E2",
+    "S23E3"
+   ]
+  },
+  {
+   "id": "S24",
+   "n": 24,
+   "title": "Grand Prix",
+   "emoji": "\ud83c\udfc1",
+   "color": "#e11d48",
+   "concept": "The final driving challenge.",
+   "exercises": [
+    "S24E1",
+    "S24E2",
+    "S24E3"
+   ]
   }
  ],
  "exercises": {
@@ -1460,6 +1564,630 @@
    ],
    "backdrop": "Chalkboard",
    "story": "A final review across all the games.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S17E1": {
+   "id": "S17E1",
+   "session": "S17",
+   "sessionTitle": "Neon Pong",
+   "title": "Neon Pong",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Bouncing & angles",
+   "emoji": "\ud83c\udfd3",
+   "color": "#2563eb",
+   "starter": "starters/S17E1.sb3",
+   "desired": "finished/S17E1.sb3",
+   "sprites": [
+    "Paddle",
+    "Ball"
+   ],
+   "backdrop": "Neon Tunnel",
+   "story": "Keep the glowing ball in play! Slide the paddle with your mouse and bounce it back \u2014 don't let it drop.",
+   "hints": [
+    "Make the paddle follow your mouse along the bottom.",
+    "Send the ball moving and bounce it off the walls (if on edge, bounce).",
+    "When the ball hits the paddle, bounce it back up and score +1.",
+    "If the ball drops below the paddle, it's Game Over.",
+    "Stretch: speed the ball up a little on every hit."
+   ]
+  },
+  "S17E2": {
+   "id": "S17E2",
+   "session": "S17",
+   "sessionTitle": "Neon Pong",
+   "title": "Home Task \u2014 Beach Bounce",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Bouncing & angles",
+   "emoji": "\ud83c\udfd6\ufe0f",
+   "color": "#0891b2",
+   "starter": "starters/S17E2.sb3",
+   "desired": "finished/S17E2.sb3",
+   "sprites": [
+    "Paddle",
+    "Beachball"
+   ],
+   "backdrop": "Beach Malibu",
+   "story": "A beach ball is bouncing on the shore. Keep it up with your paddle!",
+   "hints": [
+    "Make the paddle follow your mouse along the bottom.",
+    "Send the ball moving and bounce it off the walls (if on edge, bounce).",
+    "When the ball hits the paddle, bounce it back up and score +1.",
+    "If the ball drops below the paddle, it's Game Over.",
+    "Stretch: speed the ball up a little on every hit."
+   ]
+  },
+  "S17E3": {
+   "id": "S17E3",
+   "session": "S17",
+   "sessionTitle": "Neon Pong",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Bouncing & angles",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S17E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall bouncing and directions.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S18E1": {
+   "id": "S18E1",
+   "session": "S18",
+   "sessionTitle": "City Runner",
+   "title": "City Runner",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Jump & gravity",
+   "emoji": "\ud83c\udfc3",
+   "color": "#f59e0b",
+   "starter": "starters/S18E1.sb3",
+   "desired": "finished/S18E1.sb3",
+   "sprites": [
+    "Cat 2",
+    "Rocks"
+   ],
+   "backdrop": "Metro",
+   "story": "Run through the city and jump the obstacles! Tap Space to leap over each one.",
+   "hints": [
+    "Give the player gravity so it falls back to the ground.",
+    "When Space is pressed (and it's on the ground), jump up.",
+    "Scroll the obstacle from right to left, forever.",
+    "Score +1 each time an obstacle passes; touching one is Game Over.",
+    "Stretch: make the game speed up as your score rises."
+   ]
+  },
+  "S18E2": {
+   "id": "S18E2",
+   "session": "S18",
+   "sessionTitle": "City Runner",
+   "title": "Home Task \u2014 Dino Run",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Jump & gravity",
+   "emoji": "\ud83e\udd96",
+   "color": "#16a34a",
+   "starter": "starters/S18E2.sb3",
+   "desired": "finished/S18E2.sb3",
+   "sprites": [
+    "Dinosaur4",
+    "Rocks"
+   ],
+   "backdrop": "Jurassic",
+   "story": "A dino dashes across prehistoric plains \u2014 jump the rocks to survive!",
+   "hints": [
+    "Give the player gravity so it falls back to the ground.",
+    "When Space is pressed (and it's on the ground), jump up.",
+    "Scroll the obstacle from right to left, forever.",
+    "Score +1 each time an obstacle passes; touching one is Game Over.",
+    "Stretch: make the game speed up as your score rises."
+   ]
+  },
+  "S18E3": {
+   "id": "S18E3",
+   "session": "S18",
+   "sessionTitle": "City Runner",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Jump & gravity",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S18E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall jumping and gravity.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S19E1": {
+   "id": "S19E1",
+   "session": "S19",
+   "sessionTitle": "Space Blaster",
+   "title": "Space Blaster",
+   "type": "Mini Project",
+   "level": "Hard",
+   "tag": "Shooting & scoring",
+   "emoji": "\ud83d\udd2b",
+   "color": "#2563eb",
+   "starter": "starters/S19E1.sb3",
+   "desired": "finished/S19E1.sb3",
+   "sprites": [
+    "Rocketship",
+    "Ball",
+    "Ghost"
+   ],
+   "backdrop": "Space",
+   "story": "Defend the galaxy! Move with the arrows and press Space to blast the space ghosts.",
+   "hints": [
+    "Move the ship left and right with the arrow keys.",
+    "When Space is pressed, fire the bullet upward from the ship.",
+    "Make the enemy fall from the top at a random spot.",
+    "Hitting the enemy scores +1; the enemy reaching you is Game Over.",
+    "Stretch: add lives, or more than one enemy."
+   ]
+  },
+  "S19E2": {
+   "id": "S19E2",
+   "session": "S19",
+   "sessionTitle": "Space Blaster",
+   "title": "Home Task \u2014 Alien Attack",
+   "type": "Home Task",
+   "level": "Hard",
+   "tag": "Shooting & scoring",
+   "emoji": "\ud83d\udc7e",
+   "color": "#2563eb",
+   "starter": "starters/S19E2.sb3",
+   "desired": "finished/S19E2.sb3",
+   "sprites": [
+    "Rocketship",
+    "Star",
+    "Ghost"
+   ],
+   "backdrop": "Nebula",
+   "story": "Aliens are swarming the nebula. Fire your star-blaster and hold the line!",
+   "hints": [
+    "Move the ship left and right with the arrow keys.",
+    "When Space is pressed, fire the bullet upward from the ship.",
+    "Make the enemy fall from the top at a random spot.",
+    "Hitting the enemy scores +1; the enemy reaching you is Game Over.",
+    "Stretch: add lives, or more than one enemy."
+   ]
+  },
+  "S19E3": {
+   "id": "S19E3",
+   "session": "S19",
+   "sessionTitle": "Space Blaster",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Shooting & scoring",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S19E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall shooting and scoring.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S20E1": {
+   "id": "S20E1",
+   "session": "S20",
+   "sessionTitle": "City Speedway",
+   "title": "City Speedway",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Steering & finish",
+   "emoji": "\ud83c\udfce\ufe0f",
+   "color": "#2563eb",
+   "starter": "starters/S20E1.sb3",
+   "desired": "finished/S20E1.sb3",
+   "sprites": [
+    "Convertible",
+    "Green Flag",
+    "Convertible 2"
+   ],
+   "backdrop": "Night City",
+   "story": "Drive through the night city to the finish flag \u2014 steer with the arrows and dodge the other car!",
+   "hints": [
+    "Point the car, then move it forward with the up arrow.",
+    "Turn left and right with the left/right arrows.",
+    "Reach the finish flag to win.",
+    "Touching another car sends you back to the start.",
+    "Stretch: add a lap timer or more traffic."
+   ]
+  },
+  "S20E2": {
+   "id": "S20E2",
+   "session": "S20",
+   "sessionTitle": "City Speedway",
+   "title": "Home Task \u2014 Truck Trail",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Steering & finish",
+   "emoji": "\ud83d\ude9a",
+   "color": "#f59e0b",
+   "starter": "starters/S20E2.sb3",
+   "desired": "finished/S20E2.sb3",
+   "sprites": [
+    "Truck",
+    "Green Flag",
+    "City Bus"
+   ],
+   "backdrop": "Metro",
+   "story": "Haul your truck across town to the finish, avoiding the bus.",
+   "hints": [
+    "Point the car, then move it forward with the up arrow.",
+    "Turn left and right with the left/right arrows.",
+    "Reach the finish flag to win.",
+    "Touching another car sends you back to the start.",
+    "Stretch: add a lap timer or more traffic."
+   ]
+  },
+  "S20E3": {
+   "id": "S20E3",
+   "session": "S20",
+   "sessionTitle": "City Speedway",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Steering & finish",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S20E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall steering and reaching a goal.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S21E1": {
+   "id": "S21E1",
+   "session": "S21",
+   "sessionTitle": "Sport Bounce",
+   "title": "Soccer Bounce",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Bounce reinforce",
+   "emoji": "\u26bd",
+   "color": "#16a34a",
+   "starter": "starters/S21E1.sb3",
+   "desired": "finished/S21E1.sb3",
+   "sprites": [
+    "Paddle",
+    "Soccer Ball"
+   ],
+   "backdrop": "Playing Field",
+   "story": "Keep the soccer ball in the air with your paddle. How long can you keep the streak?",
+   "hints": [
+    "Make the paddle follow your mouse along the bottom.",
+    "Send the ball moving and bounce it off the walls (if on edge, bounce).",
+    "When the ball hits the paddle, bounce it back up and score +1.",
+    "If the ball drops below the paddle, it's Game Over.",
+    "Stretch: speed the ball up a little on every hit."
+   ]
+  },
+  "S21E2": {
+   "id": "S21E2",
+   "session": "S21",
+   "sessionTitle": "Sport Bounce",
+   "title": "Home Task \u2014 Basket Bounce",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Bounce reinforce",
+   "emoji": "\ud83c\udfc0",
+   "color": "#f59e0b",
+   "starter": "starters/S21E2.sb3",
+   "desired": "finished/S21E2.sb3",
+   "sprites": [
+    "Paddle",
+    "Basketball"
+   ],
+   "backdrop": "Basketball 1",
+   "story": "Bounce the basketball off your paddle and rack up points.",
+   "hints": [
+    "Make the paddle follow your mouse along the bottom.",
+    "Send the ball moving and bounce it off the walls (if on edge, bounce).",
+    "When the ball hits the paddle, bounce it back up and score +1.",
+    "If the ball drops below the paddle, it's Game Over.",
+    "Stretch: speed the ball up a little on every hit."
+   ]
+  },
+  "S21E3": {
+   "id": "S21E3",
+   "session": "S21",
+   "sessionTitle": "Sport Bounce",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Bounce reinforce",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S21E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall the bounce game.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S22E1": {
+   "id": "S22E1",
+   "session": "S22",
+   "sessionTitle": "Wild Run",
+   "title": "Monkey Run",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Run reinforce",
+   "emoji": "\ud83d\udc12",
+   "color": "#16a34a",
+   "starter": "starters/S22E1.sb3",
+   "desired": "finished/S22E1.sb3",
+   "sprites": [
+    "Monkey",
+    "Tree1"
+   ],
+   "backdrop": "Jungle",
+   "story": "Swing into action \u2014 run through the jungle and jump the logs!",
+   "hints": [
+    "Give the player gravity so it falls back to the ground.",
+    "When Space is pressed (and it's on the ground), jump up.",
+    "Scroll the obstacle from right to left, forever.",
+    "Score +1 each time an obstacle passes; touching one is Game Over.",
+    "Stretch: make the game speed up as your score rises."
+   ]
+  },
+  "S22E2": {
+   "id": "S22E2",
+   "session": "S22",
+   "sessionTitle": "Wild Run",
+   "title": "Home Task \u2014 Fox Dash",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Run reinforce",
+   "emoji": "\ud83e\udd8a",
+   "color": "#7c3aed",
+   "starter": "starters/S22E2.sb3",
+   "desired": "finished/S22E2.sb3",
+   "sprites": [
+    "Fox",
+    "Rocks"
+   ],
+   "backdrop": "Forest",
+   "story": "A quick fox dashes through the forest. Time your jumps!",
+   "hints": [
+    "Give the player gravity so it falls back to the ground.",
+    "When Space is pressed (and it's on the ground), jump up.",
+    "Scroll the obstacle from right to left, forever.",
+    "Score +1 each time an obstacle passes; touching one is Game Over.",
+    "Stretch: make the game speed up as your score rises."
+   ]
+  },
+  "S22E3": {
+   "id": "S22E3",
+   "session": "S22",
+   "sessionTitle": "Wild Run",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Run reinforce",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S22E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall the runner game.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S23E1": {
+   "id": "S23E1",
+   "session": "S23",
+   "sessionTitle": "Sky Defender",
+   "title": "Sky Defender",
+   "type": "Mini Project",
+   "level": "Hard",
+   "tag": "Shooter reinforce",
+   "emoji": "\ud83d\ude80",
+   "color": "#2563eb",
+   "starter": "starters/S23E1.sb3",
+   "desired": "finished/S23E1.sb3",
+   "sprites": [
+    "Rocketship",
+    "Ball",
+    "Bat"
+   ],
+   "backdrop": "Galaxy",
+   "story": "Bats are diving from the galaxy's edge! Blast them before they reach your ship.",
+   "hints": [
+    "Move the ship left and right with the arrow keys.",
+    "When Space is pressed, fire the bullet upward from the ship.",
+    "Make the enemy fall from the top at a random spot.",
+    "Hitting the enemy scores +1; the enemy reaching you is Game Over.",
+    "Stretch: add lives, or more than one enemy."
+   ]
+  },
+  "S23E2": {
+   "id": "S23E2",
+   "session": "S23",
+   "sessionTitle": "Sky Defender",
+   "title": "Home Task \u2014 Bug Blaster",
+   "type": "Home Task",
+   "level": "Hard",
+   "tag": "Shooter reinforce",
+   "emoji": "\ud83d\udc1e",
+   "color": "#16a34a",
+   "starter": "starters/S23E2.sb3",
+   "desired": "finished/S23E2.sb3",
+   "sprites": [
+    "Rocketship",
+    "Star",
+    "Beetle"
+   ],
+   "backdrop": "Nebula",
+   "story": "Space bugs incoming \u2014 fire your star-blaster and keep scoring!",
+   "hints": [
+    "Move the ship left and right with the arrow keys.",
+    "When Space is pressed, fire the bullet upward from the ship.",
+    "Make the enemy fall from the top at a random spot.",
+    "Hitting the enemy scores +1; the enemy reaching you is Game Over.",
+    "Stretch: add lives, or more than one enemy."
+   ]
+  },
+  "S23E3": {
+   "id": "S23E3",
+   "session": "S23",
+   "sessionTitle": "Sky Defender",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Shooter reinforce",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S23E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "Recall the shooter game.",
+   "hints": [
+    "Press the green flag to start the quiz.",
+    "Read each question and type your answer, then press Enter.",
+    "You earn a point for every correct answer.",
+    "Your final score shows at the end.",
+    "Stretch: try to score full marks!"
+   ]
+  },
+  "S24E1": {
+   "id": "S24E1",
+   "session": "S24",
+   "sessionTitle": "Grand Prix",
+   "title": "Moto Race",
+   "type": "Mini Project",
+   "level": "Medium",
+   "tag": "Driving reinforce",
+   "emoji": "\ud83c\udfcd\ufe0f",
+   "color": "#2563eb",
+   "starter": "starters/S24E1.sb3",
+   "desired": "finished/S24E1.sb3",
+   "sprites": [
+    "Motorcycle",
+    "Green Flag",
+    "Convertible"
+   ],
+   "backdrop": "Colorful City",
+   "story": "Weave your motorbike through traffic to the chequered flag!",
+   "hints": [
+    "Point the car, then move it forward with the up arrow.",
+    "Turn left and right with the left/right arrows.",
+    "Reach the finish flag to win.",
+    "Touching another car sends you back to the start.",
+    "Stretch: add a lap timer or more traffic."
+   ]
+  },
+  "S24E2": {
+   "id": "S24E2",
+   "session": "S24",
+   "sessionTitle": "Grand Prix",
+   "title": "Home Task \u2014 Bus Dash",
+   "type": "Home Task",
+   "level": "Medium",
+   "tag": "Driving reinforce",
+   "emoji": "\ud83d\ude8c",
+   "color": "#f59e0b",
+   "starter": "starters/S24E2.sb3",
+   "desired": "finished/S24E2.sb3",
+   "sprites": [
+    "City Bus",
+    "Green Flag",
+    "Convertible 2"
+   ],
+   "backdrop": "Urban",
+   "story": "Drive the city bus on its route to the finish, dodging traffic.",
+   "hints": [
+    "Point the car, then move it forward with the up arrow.",
+    "Turn left and right with the left/right arrows.",
+    "Reach the finish flag to win.",
+    "Touching another car sends you back to the start.",
+    "Stretch: add a lap timer or more traffic."
+   ]
+  },
+  "S24E3": {
+   "id": "S24E3",
+   "session": "S24",
+   "sessionTitle": "Grand Prix",
+   "title": "Recall Test",
+   "type": "Recall Test",
+   "level": "Easy",
+   "tag": "Grand finale review",
+   "emoji": "\ud83e\udde0",
+   "color": "#e11d48",
+   "starter": "starters/S24E3.sb3",
+   "desired": null,
+   "sprites": [
+    "Gobo"
+   ],
+   "backdrop": "Chalkboard",
+   "story": "The grand finale review across every game type!",
    "hints": [
     "Press the green flag to start the quiz.",
     "Read each question and type your answer, then press Enter.",

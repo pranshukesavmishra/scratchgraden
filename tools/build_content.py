@@ -34,6 +34,10 @@ STARTER_TASK = {
  "clicker": "Click me as fast as you can — reach the target score!",
  "flappy":  "Press Space to flap — fly through the gaps!",
  "whack":   "Click the target fast — before the timer runs out!",
+ "pong":    "Move the paddle with your mouse — keep the ball up!",
+ "runner":  "Press Space to jump over the obstacles!",
+ "shooter": "Arrow keys to move, Space to shoot the enemies!",
+ "drive":   "Arrow keys to drive — reach the finish flag!",
 }
 
 
@@ -44,6 +48,10 @@ def sprites_of(template, theme):
     if template == "clicker": return [theme["target"]]
     if template == "flappy":  return [theme["player"], theme["obstacle"]]
     if template == "whack":   return [theme["target"]]
+    if template == "pong":    return [theme["paddle"], theme["ball"]]
+    if template == "runner":  return [theme["player"], theme["obstacle"]]
+    if template == "shooter": return [theme["player"], theme["bullet"], theme["enemy"]]
+    if template == "drive":   return [theme["player"], theme["goal"], theme["enemy"]]
     if template == "quiz":    return [theme.get("host", "Gobo")]
     return []
 
