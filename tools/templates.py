@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-templates.py — parameterised, playable "desired output" games.
+templates.py — parameterised, playable "desired output" projects.
 
-Each template takes a `theme` (which real library sprites/backdrop to use) and
-returns (targets, monitors). The same template + different art = a different
-game, so a handful of verified templates covers many exercises.
+Each template is a fuller, multi-sprite build (several sprites, score/lives,
+win/lose) so exercises are substantial. The generated project is the DESIRED
+OUTPUT; the starter is the same sprites with the code stripped out, so students
+build the solution themselves from the hints + desired output.
 
-Templates: collect, catch, dodge, clicker, quiz.
-All are built with game_engine and auto-verified on write.
+All templates are auto-verified (wiring + opcode names) on write.
 """
 from game_engine import (Factory, target_sprite, make_stage, var_monitor, write_project,
                          txt, num, whenflag, whenclicked, whenkey, setvar, changevar, gotoxy, sety,
@@ -16,6 +16,7 @@ from game_engine import (Factory, target_sprite, make_stage, var_monitor, write_
                          changesize, wait, repeat, forever, if_, stop, pointtowards, askandwait,
                          bounce, turnright, turnleft, goto_sprite, repeatuntil, waituntil,
                          pen_clear, pen_down, pen_up, pen_color, pen_size, pen_rainbow, drum)
+
 
 def _goto_random_top(f, y=175):
     r = f.random(-210, 210)
@@ -32,37 +33,36 @@ def four_dir(f, step=5):
     return [key_move(f, "right arrow", dx=step), key_move(f, "left arrow", dx=-step),
             key_move(f, "up arrow", dy=step), key_move(f, "down arrow", dy=-step)]
 
+def nm(base, i):
+    return base if i == 0 else base + " " + str(i + 1)
+
 # ------------------------------------------------------------ COLLECT
 def collect(theme):
     vid = "vsc"; vi = {"score": vid}
     wp = Factory("p", vi)
     ce = wp.touching(theme["enemy"])
-    moves = four_dir(wp) + [if_(ce, [gotoxy(-195, -70)])]
-    wp.stack([whenflag(), setvar("score", 0, vid), gotoxy(-195, -70), pointdir(90), forever(moves)])
-    player = target_sprite(theme["player"], theme["player"], -195, -70, theme.get("psize", 75), wp, 6)
-
-    crystals = []
+    wp.stack([whenflag(), setvar("score", 0, vid), gotoxy(-195, -70), pointdir(90),
+              forever(four_dir(wp) + [if_(ce, [gotoxy(-195, -70)])])])
+    player = target_sprite(theme["player"], theme["player"], -195, -70, theme.get("psize", 75), wp, 7)
+    gems = []
     for i, (x, y) in enumerate([(-70, -120), (70, 10), (165, -120)]):
         cf = Factory("c%d" % i, vi)
         ct = cf.touching(theme["player"])
         cf.stack([whenflag(), show(), forever([if_(ct, [changevar("score", 1, vid), hide(), stop("this script")])])])
-        crystals.append(target_sprite("Gem%d" % (i + 1), theme["collectible"], x, y, 55, cf, i + 1))
-
+        gems.append(target_sprite(nm("Gem", i), theme["collectible"], x, y, 55, cf, i + 1))
     ef = Factory("e", vi)
     ef.stack([whenflag(), gotoxy(0, 90), forever([pointtowards(theme["player"]), move(2)])])
     ef.stack([whenflag(), forever([nextcostume(), wait("0.25")])], top=True, y=220)
-    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 90, 70, ef, 4)
-
+    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 90, 70, ef, 5)
     gf = Factory("g", vi)
     eq = gf.equals(gf.rvar("score"), txt("3"))
     gf.stack([whenflag(), gotoxy(185, 70), forever([if_(eq, [sayfor(theme.get("win", "You collected all 3 — YOU WIN!"), 4), stop("all")])])])
     gf.stack([whenflag(), forever([nextcostume(), wait("0.35")])], top=True, y=220)
-    goal = target_sprite(theme["goal"], theme["goal"], 185, 70, 80, gf, 5)
-
+    goal = target_sprite(theme["goal"], theme["goal"], 185, 70, 80, gf, 6)
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage] + crystals + [enemy, goal, player], [var_monitor("score", vid)]
+    return [stage] + gems + [enemy, goal, player], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ CATCH
+# ------------------------------------------------------------ CATCH (bowl + 3 fruit + bomb + lives)
 def catch(theme):
     vid = "vsc"; vlid = "vlv"; vi = {"score": vid, "lives": vlid}
     pf = Factory("p", vi)
@@ -71,26 +71,32 @@ def catch(theme):
     eq0 = pf.equals(pf.rvar("lives"), txt("0"))
     pf.stack([whenflag(), setvar("score", 0, vid), setvar("lives", 3, vlid), sety(-140),
               forever([setx_mouse, if_(eq0, [sayfor("Game Over!", 3), stop("all")])])])
-    player = target_sprite(theme["player"], theme["player"], 0, -140, theme.get("psize", 85), pf, 3)
-
-    itf = Factory("i", vi)
-    yb = itf.ypos(); lt = itf.lt([3, yb, [4, "0"]], num(-160)); tp = itf.touching(theme["player"])
-    itf.stack([whenflag(), _goto_random_top(itf),
-               forever([changey(-6),
-                        if_(lt, [changevar("lives", -1, vlid), _goto_random_top(itf)]),
-                        if_(tp, [changevar("score", 1, vid), _goto_random_top(itf)])])])
-    item = target_sprite(theme["item"], theme["item"], 0, 170, 65, itf, 1)
-
+    player = target_sprite(theme["player"], theme["player"], 0, -140, theme.get("psize", 85), pf, 6)
+    fruits = []
+    for i in range(3):
+        itf = Factory("f%d" % i, vi)
+        yb = itf.ypos(); lt = itf.lt([3, yb, [4, "0"]], num(-160)); tp = itf.touching(theme["player"])
+        itf.stack([whenflag(), _goto_random_top(itf), wait(str(round(i * 0.6, 2))),
+                   forever([changey(-6),
+                            if_(lt, [_goto_random_top(itf)]),
+                            if_(tp, [changevar("score", 1, vid), _goto_random_top(itf)])])])
+        fruits.append(target_sprite(nm(theme["item"], i), theme["item"], -120 + i * 120, 150, 60, itf, i + 1))
+    bf = Factory("bm", vi)
+    yb2 = bf.ypos(); lt2 = bf.lt([3, yb2, [4, "0"]], num(-160)); tp2 = bf.touching(theme["player"])
+    bf.stack([whenflag(), _goto_random_top(bf),
+              forever([changey(-5),
+                       if_(lt2, [_goto_random_top(bf)]),
+                       if_(tp2, [changevar("lives", -1, vlid), _goto_random_top(bf)])])])
+    bomb = target_sprite(theme.get("bomb", "Beetle"), theme.get("bomb", "Beetle"), 180, 150, 55, bf, 5)
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, item, player], [var_monitor("score", vid, 5, 5), var_monitor("lives", vlid, 5, 40)]
+    return [stage] + fruits + [bomb, player], [var_monitor("score", vid, 5, 5), var_monitor("lives", vlid, 5, 40)]
 
-# ------------------------------------------------------------ DODGE
+# ------------------------------------------------------------ DODGE (player + 3 hazards + bonus coin)
 def dodge(theme):
     vid = "vsc"; vi = {"score": vid}
     pf = Factory("p", vi)
     pf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, -120), forever(four_dir(pf))])
     player = target_sprite(theme["player"], theme["player"], 0, -120, theme.get("psize", 70), pf, 5)
-
     enemies = []
     for i in range(3):
         ef = Factory("e%d" % i, vi)
@@ -99,22 +105,35 @@ def dodge(theme):
                   forever([changey(-5),
                            if_(lt, [changevar("score", 1, vid), _goto_random_top(ef, 185)]),
                            if_(tp, [sayfor("You got hit — Game Over!", 3), stop("all")])])])
-        enemies.append(target_sprite("Rock%d" % (i + 1), theme["enemy"], 0, 185, 65, ef, i + 1))
-
+        enemies.append(target_sprite(nm(theme["enemy"], i), theme["enemy"], -120 + i * 120, 185, 65, ef, i + 1))
+    cf = Factory("cn", vi)
+    yb2 = cf.ypos(); lt2 = cf.lt([3, yb2, [4, "0"]], num(-170)); tpc = cf.touching(theme["player"])
+    cf.stack([whenflag(), _goto_random_top(cf, 185),
+              forever([changey(-3),
+                       if_(lt2, [_goto_random_top(cf, 185)]),
+                       if_(tpc, [changevar("score", 1, vid), _goto_random_top(cf, 185)])])])
+    coin = target_sprite(theme.get("coin", "Star"), theme.get("coin", "Star"), 180, 185, 45, cf, 4)
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage] + enemies + [player], [var_monitor("score", vid)]
+    return [stage] + enemies + [coin, player], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ CLICKER
+# ------------------------------------------------------------ CLICKER (target + 2 auto-helpers)
 def clicker(theme):
     vid = "vsc"; vi = {"score": vid}
     tf = Factory("t", vi)
-    tf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, -10)])
-    tf.stack([whenclicked(), changevar("score", 1, vid), changesize(10), wait("0.05"), changesize(-10)], top=True, y=220)
-    eq = tf.equals(tf.rvar("score"), txt("25"))
-    tf.stack([whenflag(), forever([if_(eq, [sayfor("You reached 25 — amazing!", 4), stop("all")])])], top=True, y=360)
-    target = target_sprite(theme["target"], theme["target"], 0, -10, 120, tf, 1)
+    tf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, 20)])
+    tf.stack([whenclicked(), changevar("score", 1, vid), changesize(12), wait("0.05"), changesize(-12)], top=True, y=220)
+    eq = tf.equals(tf.rvar("score"), txt("50"))
+    tf.stack([whenflag(), forever([if_(eq, [sayfor("You reached 50 — amazing!", 4), stop("all")])])], top=True, y=380)
+    target = target_sprite(theme["target"], theme["target"], 0, 20, 110, tf, 1)
+    helpers = []
+    hpos = [(-175, -95), (175, -95)]
+    for i in range(2):
+        hf = Factory("h%d" % i, vi)
+        hf.stack([whenflag(), gotoxy(hpos[i][0], hpos[i][1]),
+                  forever([wait("2"), changevar("score", 1, vid), changesize(8), wait("0.1"), changesize(-8)])])
+        helpers.append(target_sprite(nm("Helper", i), theme.get("helper", "Cat 2"), hpos[i][0], hpos[i][1], 70, hf, i + 2))
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, target], [var_monitor("score", vid)]
+    return [stage, target] + helpers, [var_monitor("score", vid)]
 
 # ------------------------------------------------------------ QUIZ (Recall Test)
 def quiz(theme):
@@ -134,60 +153,71 @@ def quiz(theme):
     stage = make_stage(theme["backdrop"], variables=vi)
     return [stage, host], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ FLAPPY
+# ------------------------------------------------------------ FLAPPY (bird + 2 obstacles + coin)
 def flappy(theme):
     vid = "vsc"; vvy = "vvy"; vi = {"score": vid, "vy": vvy}
     pf = Factory("p", vi)
     ob = pf.touching(theme["obstacle"])
     yb = pf.ypos(); floor = pf.lt([3, yb, [4, "0"]], num(-170))
-    change_y_by_vy = {"op": "motion_changeyby", "inputs": {"DY": [3, [12, "vy", vvy], [4, "0"]]}}
+    dyvy = {"op": "motion_changeyby", "inputs": {"DY": [3, [12, "vy", vvy], [4, "0"]]}}
     pf.stack([whenflag(), setvar("score", 0, vid), setvar("vy", 0, vvy), gotoxy(-120, 0), pointdir(90),
-              forever([{"op": "data_changevariableby", "inputs": {"VALUE": txt("-1")}, "fields": {"VARIABLE": ["vy", vvy]}},
-                       change_y_by_vy,
+              forever([{"op": "data_changevariableby", "inputs": {"VALUE": txt("-1")}, "fields": {"VARIABLE": ["vy", vvy]}}, dyvy,
                        if_(ob, [sayfor("Ouch! Game Over", 3), stop("all")]),
                        if_(floor, [sayfor("You fell — Game Over", 3), stop("all")])])])
     pf.stack([whenkey("space"), setvar("vy", 12, vvy)], top=True, y=240)
-    player = target_sprite(theme["player"], theme["player"], -120, 0, theme.get("psize", 70), pf, 3, rot="left-right")
-
-    of = Factory("o", vi)
-    def g_edge(f):
-        r = f.random(-110, 110)
+    player = target_sprite(theme["player"], theme["player"], -120, 0, theme.get("psize", 65), pf, 4, rot="left-right")
+    obs = []
+    for i in range(2):
+        of = Factory("o%d" % i, vi)
+        def g_edge(f):
+            r = f.random(-110, 110)
+            return {"op": "motion_gotoxy", "inputs": {"X": num(240), "Y": [3, r, [4, "0"]]}}
+        xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-235))
+        of.stack([whenflag(), g_edge(of), wait(str(i * 1.5)),
+                  forever([changex(-4), if_(off, [g_edge(of), changevar("score", 1, vid)])])])
+        obs.append(target_sprite(nm(theme["obstacle"], i), theme["obstacle"], 180 + i * 60, 0, 70, of, i + 1))
+    cf = Factory("cn", vi)
+    def g_edge2(f):
+        r = f.random(-120, 120)
         return {"op": "motion_gotoxy", "inputs": {"X": num(240), "Y": [3, r, [4, "0"]]}}
-    xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-235))
-    of.stack([whenflag(), g_edge(of),
-              forever([changex(-4), if_(off, [g_edge(of), changevar("score", 1, vid)])])])
-    obstacle = target_sprite(theme["obstacle"], theme["obstacle"], 240, 0, theme.get("osize", 80), of, 1)
-
+    xb2 = cf.xpos(); off2 = cf.lt([3, xb2, [4, "0"]], num(-235)); tpc = cf.touching(theme["player"])
+    cf.stack([whenflag(), g_edge2(cf), wait("0.8"),
+              forever([changex(-3), if_(off2, [g_edge2(cf)]), if_(tpc, [changevar("score", 1, vid), g_edge2(cf)])])])
+    coin = target_sprite(theme.get("coin", "Star"), theme.get("coin", "Star"), 240, 80, 45, cf, 3)
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, obstacle, player], [var_monitor("score", vid)]
+    return [stage] + obs + [coin, player], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ WHACK
+# ------------------------------------------------------------ WHACK (3 moles + a bad one + timer)
 def whack(theme):
     vid = "vsc"; vtm = "vtm"; vi = {"score": vid, "time": vtm}
-    tf = Factory("t", vi)
-    def rgoto(f):
-        rx = f.random(-200, 200); ry = f.random(-140, 140)
+    def rgoto(ff):
+        rx = ff.random(-200, 200); ry = ff.random(-140, 140)
         return {"op": "motion_gotoxy", "inputs": {"X": [3, rx, [4, "0"]], "Y": [3, ry, [4, "0"]]}}
-    def rwait(f, a, b):
-        r = f.random(a, b)
+    def rwait(ff, a, b):
+        r = ff.random(a, b)
         return {"op": "control_wait", "inputs": {"DURATION": [3, r, [5, "1"]]}}
-    # pop-up loop
-    tf.stack([whenflag(), setvar("score", 0, vid),
-              forever([show(), rgoto(tf), rwait(tf, "0.6", "1.1"), hide(), rwait(tf, "0.3", "0.6")])])
-    # click to score
-    tf.stack([whenclicked(), changevar("score", 1, vid), hide()], top=True, y=240)
-    # countdown then game over
-    jscore = tf.join([1, [10, "Time up! Score: "]], tf.rvar("score"))
-    tf.stack([whenflag(), setvar("time", 20, vtm),
-              repeat(20, [wait("1"), changevar("time", -1, vtm)]),
-              stop("other scripts in sprite"),
-              {"op": "looks_sayforsecs", "inputs": {"MESSAGE": [3, jscore, [10, ""]], "SECS": num(5)}},
-              stop("all")], top=True, y=440)
-    target = target_sprite(theme["target"], theme["target"], 0, 0, theme.get("tsize", 90), tf, 1)
-    stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, target], [var_monitor("score", vid, 5, 5), var_monitor("time", vtm, 5, 40)]
+    def pop_scripts(f, good=True):
+        f.stack([whenflag(), forever([show(), rgoto(f), rwait(f, "0.6", "1.1"), hide(), rwait(f, "0.3", "0.6")])])
+        f.stack([whenclicked(), changevar("score", 1 if good else -2, vid), hide()], top=True, y=240)
+    targets = [make_stage(theme["backdrop"], variables=vi)]
+    holes = [(-120, -30), (0, -30), (120, -30)]
+    for i in range(3):
+        mf = Factory("m%d" % i, vi)
+        pop_scripts(mf, good=True)
+        if i == 0:
+            j = mf.join([1, [10, "Time up! Score: "]], mf.rvar("score"))
+            mf.stack([whenflag(), setvar("score", 0, vid), setvar("time", 20, vtm),
+                      repeat(20, [wait("1"), changevar("time", -1, vtm)]),
+                      stop("other scripts in sprite"),
+                      {"op": "looks_sayforsecs", "inputs": {"MESSAGE": [3, j, [10, ""]], "SECS": num(5)}},
+                      stop("all")], top=True, y=440)
+        targets.append(target_sprite(nm(theme["target"], i), theme["target"], holes[i][0], holes[i][1], 85, mf, i + 1))
+    bf = Factory("bad", vi)
+    pop_scripts(bf, good=False)
+    targets.append(target_sprite(theme.get("bad", "Ghost"), theme.get("bad", "Ghost"), 0, 90, 80, bf, 4))
+    return targets, [var_monitor("score", vid, 5, 5), var_monitor("time", vtm, 5, 40)]
 
-# ------------------------------------------------------------ PONG
+# ------------------------------------------------------------ PONG / BREAKOUT (paddle + ball + 4 bricks)
 def pong(theme):
     vid = "vsc"; vi = {"score": vid}
     pf = Factory("p", vi)
@@ -195,21 +225,28 @@ def pong(theme):
     setx_mouse = {"op": "motion_setx", "inputs": {"X": [3, mx, [4, "0"]]}}
     pf.stack([whenflag(), sety(-150), forever([setx_mouse])])
     paddle = target_sprite(theme["paddle"], theme["paddle"], 0, -150, theme.get("padsize", 100), pf, 1, rot="left-right")
-
     bf = Factory("b", vi)
     tp = bf.touching(theme["paddle"])
     yb = bf.ypos(); floor = bf.lt([3, yb, [4, "0"]], num(-165))
     flip = bf.minus(num(180), [3, bf.direction(), [4, "0"]])
     pdflip = {"op": "motion_pointindirection", "inputs": {"DIRECTION": [3, flip, [8, "90"]]}}
-    bf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, 30), pointdir(45),
+    bf.stack([whenflag(), setvar("score", 0, vid), gotoxy(0, -60), pointdir(45),
               forever([move(7), bounce(),
-                       if_(tp, [pdflip, changevar("score", 1, vid), move(12)]),
+                       if_(tp, [pdflip, move(12)]),
                        if_(floor, [sayfor("Game Over!", 3), stop("all")])])])
-    ball = target_sprite(theme["ball"], theme["ball"], 0, 30, theme.get("ballsize", 65), bf, 2)
+    ball = target_sprite(theme["ball"], theme["ball"], 0, -60, 65, bf, 2)
+    bricks = []
+    bx = [-120, -40, 40, 120]
+    for i in range(4):
+        kf = Factory("k%d" % i, vi)
+        tb = kf.touching(theme["ball"])
+        kf.stack([whenflag(), show(), gotoxy(bx[i], 130),
+                  forever([if_(tb, [changevar("score", 1, vid), hide(), stop("this script")])])])
+        bricks.append(target_sprite(nm("Brick", i), theme.get("brick", "Button2"), bx[i], 130, 70, kf, i + 3))
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, paddle, ball], [var_monitor("score", vid)]
+    return [stage, paddle, ball] + bricks, [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ RUNNER
+# ------------------------------------------------------------ RUNNER (player + 2 obstacles + coin)
 def runner(theme):
     vid = "vsc"; vvy = "vvy"; vi = {"score": vid, "vy": vvy}
     gf = Factory("p", vi)
@@ -222,47 +259,54 @@ def runner(theme):
                        if_(ob, [sayfor("Crash — Game Over!", 3), stop("all")])])])
     yb2 = gf.ypos(); near = gf.lt([3, yb2, [4, "0"]], num(-95))
     gf.stack([whenkey("space"), if_(near, [setvar("vy", 14, vvy)])], top=True, y=260)
-    player = target_sprite(theme["player"], theme["player"], -150, -100, theme.get("psize", 70), gf, 2, rot="left-right")
-
-    of = Factory("o", vi)
-    xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-240))
-    of.stack([whenflag(), gotoxy(240, -105),
-              forever([changex(-6), if_(off, [gotoxy(240, -105), changevar("score", 1, vid)])])])
-    obstacle = target_sprite(theme["obstacle"], theme["obstacle"], 240, -105, theme.get("osize", 65), of, 1)
+    player = target_sprite(theme["player"], theme["player"], -150, -100, theme.get("psize", 70), gf, 4, rot="left-right")
+    obs = []
+    for i in range(2):
+        of = Factory("o%d" % i, vi)
+        xb = of.xpos(); off = of.lt([3, xb, [4, "0"]], num(-240))
+        of.stack([whenflag(), gotoxy(240, -105), wait(str(round(i * 1.3, 2))),
+                  forever([changex(-6), if_(off, [gotoxy(240, -105), changevar("score", 1, vid)])])])
+        obs.append(target_sprite(nm(theme["obstacle"], i), theme["obstacle"], 140 + i * 60, -105, 65, of, i + 1))
+    cf = Factory("cn", vi)
+    xb2 = cf.xpos(); off2 = cf.lt([3, xb2, [4, "0"]], num(-240)); tpc = cf.touching(theme["player"])
+    cf.stack([whenflag(), gotoxy(240, -60), wait("0.7"),
+              forever([changex(-6), if_(off2, [gotoxy(240, -60)]), if_(tpc, [changevar("score", 1, vid), gotoxy(240, -60)])])])
+    coin = target_sprite(theme.get("coin", "Star"), theme.get("coin", "Star"), 60, -60, 45, cf, 3)
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, obstacle, player], [var_monitor("score", vid)]
+    return [stage] + obs + [coin, player], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ SHOOTER (single bullet)
+# ------------------------------------------------------------ SHOOTER (ship + bullet + 2 enemies)
 def shooter(theme):
     vid = "vsc"; vi = {"score": vid}
     pf = Factory("p", vi)
     kl = pf.key_pressed("left arrow"); kr = pf.key_pressed("right arrow")
     pf.stack([whenflag(), setvar("score", 0, vid), sety(-140),
               forever([if_(kl, [changex(-7)]), if_(kr, [changex(7)])])])
-    player = target_sprite(theme["player"], theme["player"], 0, -140, theme.get("psize", 80), pf, 3)
-
+    player = target_sprite(theme["player"], theme["player"], 0, -140, theme.get("psize", 80), pf, 4)
     bf = Factory("b", vi)
     sp = bf.key_pressed("space")
     en = bf.touching(theme["enemy"]); yb = bf.ypos(); topedge = bf.gt([3, yb, [4, "0"]], num(170))
     done = bf.or_(en, topedge)
     bf.stack([whenflag(),
               forever([goto_sprite(theme["player"]), hide(), waituntil(sp), show(), repeatuntil(done, [changey(14)])])])
-    bullet = target_sprite(theme["bullet"], theme["bullet"], 0, -120, theme.get("bsize", 55), bf, 2)
-
-    ef = Factory("e", vi)
-    def gtop(f):
-        r = f.random(-200, 200); return {"op": "motion_gotoxy", "inputs": {"X": [3, r, [4, "0"]], "Y": num(170)}}
-    yb2 = ef.ypos(); below = ef.lt([3, yb2, [4, "0"]], num(-175))
-    tb = ef.touching(theme["bullet"]); tp = ef.touching(theme["player"])
-    ef.stack([whenflag(), gtop(ef),
-              forever([changey(-3), if_(below, [gtop(ef)]),
-                       if_(tb, [changevar("score", 1, vid), gtop(ef)]),
-                       if_(tp, [sayfor("The enemy got you — Game Over!", 3), stop("all")])])])
-    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 170, theme.get("esize", 70), ef, 1)
+    bullet = target_sprite(theme["bullet"], theme["bullet"], 0, -120, theme.get("bsize", 55), bf, 3)
+    enemies = []
+    for i in range(2):
+        ef = Factory("e%d" % i, vi)
+        def gtop(f):
+            r = f.random(-200, 200)
+            return {"op": "motion_gotoxy", "inputs": {"X": [3, r, [4, "0"]], "Y": num(170)}}
+        yb2 = ef.ypos(); below = ef.lt([3, yb2, [4, "0"]], num(-175))
+        tb = ef.touching(theme["bullet"]); tp = ef.touching(theme["player"])
+        ef.stack([whenflag(), gtop(ef), wait(str(i * 0.8)),
+                  forever([changey(-3), if_(below, [gtop(ef)]),
+                           if_(tb, [changevar("score", 1, vid), gtop(ef)]),
+                           if_(tp, [sayfor("The enemy got you — Game Over!", 3), stop("all")])])])
+        enemies.append(target_sprite(nm(theme["enemy"], i), theme["enemy"], -80 + i * 160, 170, 70, ef, i + 1))
     stage = make_stage(theme["backdrop"], variables=vi)
-    return [stage, enemy, bullet, player], [var_monitor("score", vid)]
+    return [stage] + enemies + [bullet, player], [var_monitor("score", vid)]
 
-# ------------------------------------------------------------ DRIVE (top-down racer)
+# ------------------------------------------------------------ DRIVE (car + finish + 2 traffic cars)
 def drive(theme):
     vi = {}
     cf = Factory("c", vi)
@@ -273,14 +317,16 @@ def drive(theme):
               forever([if_(ku, [move(5)]), if_(kd, [move(-5)]), if_(kl, [turnleft(8)]), if_(kr, [turnright(8)]),
                        if_(gl, [sayfor("You reached the finish — YOU WIN!", 4), stop("all")]),
                        if_(en, [gotoxy(-200, -140)])])])
-    car = target_sprite(theme["player"], theme["player"], -200, -140, theme.get("psize", 60), cf, 3)
-
-    ef = Factory("e", vi)
-    ef.stack([whenflag(), gotoxy(0, 60), pointdir(90), forever([move(4), bounce()])])
-    enemy = target_sprite(theme["enemy"], theme["enemy"], 0, 60, theme.get("esize", 60), ef, 2, rot="left-right")
+    car = target_sprite(theme["player"], theme["player"], -200, -140, theme.get("psize", 60), cf, 4)
+    traffic = []
+    tpos = [(0, 60), (60, -20)]
+    for i in range(2):
+        ef = Factory("e%d" % i, vi)
+        ef.stack([whenflag(), gotoxy(tpos[i][0], tpos[i][1]), pointdir(90 if i == 0 else -90), forever([move(4), bounce()])])
+        traffic.append(target_sprite(nm(theme["enemy"], i), theme["enemy"], tpos[i][0], tpos[i][1], 60, ef, i + 2))
     goal = target_sprite(theme["goal"], theme["goal"], 200, 150, theme.get("gsize", 80), Factory("g", vi), 1)
     stage = make_stage(theme["backdrop"])
-    return [stage, goal, enemy, car], []
+    return [stage, goal] + traffic + [car], []
 
 # ------------------------------------------------------------ ANIMATION
 def animation(theme):
@@ -331,12 +377,12 @@ def music(theme):
     seen = {}
     for i, pad in enumerate(theme["pads"]):
         lib, drumn, x, y = pad
-        nm = lib if seen.get(lib, 0) == 0 else lib + " " + str(seen[lib] + 1)
+        name = lib if seen.get(lib, 0) == 0 else lib + " " + str(seen[lib] + 1)
         seen[lib] = seen.get(lib, 0) + 1
         pf = Factory("m%d" % i)
         pf.stack([whenflag(), gotoxy(x, y)])
         pf.stack([whenclicked(), changesize(18), drum(drumn, 0.25), changesize(-18)], top=True, y=220)
-        targets.append(target_sprite(nm, lib, x, y, theme.get("size", 90), pf, i + 1))
+        targets.append(target_sprite(name, lib, x, y, theme.get("size", 90), pf, i + 1))
     return targets, []
 
 TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clicker,
@@ -344,7 +390,6 @@ TEMPLATES = {"collect": collect, "catch": catch, "dodge": dodge, "clicker": clic
              "pong": pong, "runner": runner, "shooter": shooter, "drive": drive,
              "animation": animation, "chatbot": chatbot, "art": art, "music": music}
 
-# extensions each template needs declared in the .sb3
 TEMPLATE_EXT = {"art": ["pen"], "music": ["music"]}
 
 def build(template, theme, out_path):

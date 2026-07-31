@@ -177,7 +177,7 @@
   var desiredBtn=document.getElementById("btnDesired"); desiredBtn.style.display="";
   desiredBtn.onclick=function(){var f=document.getElementById("desiredFrame"); if(!f.src)f.src=PLAYER+encodeURIComponent(DESIRED); open("desiredOverlay");};
 
-  var chips=(ex.sprites||[]).map(function(s){return '<span class="chip">'+spriteEmoji(s)+' '+esc(cleanName(s))+'</span>';}).join("");
+  var chips=(ex.sprites||[]).map(function(s){return '<span class="chip">'+spriteEmoji(s)+' '+esc(s)+'</span>';}).join("");
   stage.innerHTML=
     '<div class="cover"><div class="cover-card">'+
       '<div class="cover-emoji" style="background:linear-gradient(135deg,'+ex.color+','+ex.color+'cc)">'+ex.emoji+'</div>'+

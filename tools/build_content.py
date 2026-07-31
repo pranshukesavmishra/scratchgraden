@@ -45,34 +45,29 @@ STARTER_TASK = {
 }
 
 
-def sprites_of(template, theme):
-    if template == "collect": return [theme["player"], theme["collectible"], theme["enemy"], theme["goal"]]
-    if template == "catch":   return [theme["player"], theme["item"]]
-    if template == "dodge":   return [theme["player"], theme["enemy"]]
-    if template == "clicker": return [theme["target"]]
-    if template == "flappy":  return [theme["player"], theme["obstacle"]]
-    if template == "whack":   return [theme["target"]]
-    if template == "pong":    return [theme["paddle"], theme["ball"]]
-    if template == "runner":  return [theme["player"], theme["obstacle"]]
-    if template == "shooter": return [theme["player"], theme["bullet"], theme["enemy"]]
-    if template == "drive":   return [theme["player"], theme["goal"], theme["enemy"]]
-    if template == "animation": return [theme["mover"], theme["scenery"]]
-    if template == "chatbot": return [theme["bot"]]
-    if template == "art":     return [theme.get("pen", "Ball")]
-    if template == "music":   return [p[0] for p in theme["pads"]]
-    if template == "quiz":    return [theme.get("host", "Gobo")]
-    return []
+import re
+
+def sprite_names(targets):
+    """Tidied sprite names from a project (drops the Stage, collapses
+    'Gem 1/2/3' to 'Gem' and appends a ×count when a sprite repeats)."""
+    counts, order = {}, []
+    for t in targets:
+        if t["isStage"]:
+            continue
+        base = re.sub(r"\s+\d+$", "", t["name"]).strip() or t["name"]
+        if base not in counts:
+            order.append(base)
+        counts[base] = counts.get(base, 0) + 1
+    return [b + (" ×" + str(counts[b]) if counts[b] > 1 else "") for b in order]
 
 
-def make_starter(finished_targets, task):
+def make_starter(finished_targets):
+    """The starter has the SPRITES ONLY — no solution code. Students build it
+    themselves using the Instructions (hints) and the Desired Output."""
     st = copy.deepcopy(finished_targets)
     for t in st:
         if not t["isStage"]:
             t["blocks"] = {}
-    f = Factory("s")
-    f.stack([whenflag(), sayfor(task, 4)])
-    _patch_menus(f); fix_parents(f.blocks)
-    st[-1]["blocks"] = f.blocks           # player is the last target in every template
     return st
 
 
@@ -93,7 +88,7 @@ def build():
                 ext = templates.TEMPLATE_EXT.get(tmpl)
                 write_project(targets, monitors, os.path.join(FINISHED, xid + ".sb3"),
                               agent="GradeNext desired-output (%s)" % tmpl, extensions=ext)
-                starter = make_starter(targets, STARTER_TASK[tmpl])
+                starter = make_starter(targets)
                 write_project(starter, [], os.path.join(STARTERS, xid + ".sb3"),
                               agent="GradeNext starter (%s)" % tmpl, extensions=ext)
                 desired = "finished/%s.sb3" % xid
@@ -102,7 +97,7 @@ def build():
                 "title": ex["title"], "type": ex["type"], "level": ex["level"],
                 "tag": ex["tag"], "emoji": ex["emoji"], "color": ex["color"],
                 "starter": "starters/%s.sb3" % xid, "desired": desired,
-                "sprites": sprites_of(tmpl, theme), "backdrop": theme.get("backdrop", ""),
+                "sprites": sprite_names(targets), "backdrop": theme.get("backdrop", ""),
                 "story": ex["story"], "hints": ex["hints"],
             }
             ex_ids.append(xid)
