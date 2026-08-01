@@ -1,0 +1,172 @@
+{
+ "lost-in-space": {
+  "sprites": [
+   "Rocketship",
+   "Earth",
+   "Monkey",
+   "Star"
+  ],
+  "backdrop": "Stars"
+ },
+ "beat-the-goalie": {
+  "sprites": [
+   "Goalie",
+   "Ball",
+   "Football"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "catch-the-dots": {
+  "sprites": [
+   "Dot",
+   "Star",
+   "Ball"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "balloons": {
+  "sprites": [
+   "Balloon1",
+   "Star",
+   "Ball"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "archery": {
+  "sprites": [
+   "Arrow1",
+   "Ball",
+   "Star"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "boat-race": {
+  "sprites": [
+   "Sailboat",
+   "Shark",
+   "Star"
+  ],
+  "backdrop": "Underwater 1"
+ },
+ "ghostbusters": {
+  "sprites": [
+   "Ghost",
+   "Bat",
+   "Star"
+  ],
+  "backdrop": "Woods"
+ },
+ "dodgeball": {
+  "sprites": [
+   "Ball",
+   "Pico Walking",
+   "Pico"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "brain-game": {
+  "sprites": [
+   "Abby",
+   "Star"
+  ],
+  "backdrop": "Chalkboard"
+ },
+ "guess-the-flag": {
+  "sprites": [
+   "Abby"
+  ],
+  "backdrop": "Chalkboard"
+ },
+ "memory": {
+  "sprites": [
+   "Ball",
+   "Star",
+   "Bat",
+   "Apple"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "chatbot": {
+  "sprites": [
+   "Robot",
+   "Abby"
+  ],
+  "backdrop": "Chalkboard"
+ },
+ "flappy-parrot": {
+  "sprites": [
+   "Parrot",
+   "Rocks",
+   "Star"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "clone-wars": {
+  "sprites": [
+   "Rocketship",
+   "Earth",
+   "Star"
+  ],
+  "backdrop": "Stars"
+ },
+ "space-junk": {
+  "sprites": [
+   "Earth",
+   "Rocks",
+   "Planet2"
+  ],
+  "backdrop": "Stars"
+ },
+ "binary-hero": {
+  "sprites": [
+   "Drum",
+   "Star",
+   "Ball"
+  ],
+  "backdrop": "Concert"
+ },
+ "synchronised-swimming": {
+  "sprites": [
+   "Cat Flying",
+   "Star"
+  ],
+  "backdrop": "Underwater 1"
+ },
+ "rock-band": {
+  "sprites": [
+   "Drum",
+   "Singer1",
+   "Microphone"
+  ],
+  "backdrop": "Concert"
+ },
+ "music-maker": {
+  "sprites": [
+   "Guitar",
+   "Keyboard",
+   "Drum"
+  ],
+  "backdrop": "Concert"
+ },
+ "paint-box": {
+  "sprites": [
+   "Pencil"
+  ],
+  "backdrop": "Blue Sky"
+ },
+ "create-your-own-world": {
+  "sprites": [
+   "Cat",
+   "Tree1",
+   "Star"
+  ],
+  "backdrop": "Woods"
+ },
+ "butterfly-garden": {
+  "sprites": [
+   "Butterfly 1",
+   "Butterfly 2"
+  ],
+  "backdrop": "Blue Sky"
+ }
+}

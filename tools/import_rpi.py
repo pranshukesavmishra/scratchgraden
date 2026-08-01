@@ -23,12 +23,19 @@ Output:
 Run: python3 tools/import_rpi.py
 """
 import os, re, sys, json, html, subprocess
+from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 CACERT = "/root/.ccr/ca-bundle.crt"
 RAW = "https://raw.githubusercontent.com/raspberrypilearning"
 BRANCH = "master"
+
+# Where this site is published. The generated starters are fetched from here by
+# the TurboWarp editor, which (unlike scratch.mit.edu) can load a project by URL.
+SITE_BASE = os.environ.get("GN_SITE_BASE",
+                           "https://pranshukesavmishra.github.io/scratchgraden/")
+TW_EDITOR = "https://turbowarp.org/editor?project_url="
 
 IMPORTED = os.path.join(ROOT, "imported")
 os.makedirs(IMPORTED, exist_ok=True)
@@ -449,19 +456,22 @@ def build_project(slug, emoji, concept, difficulty, category):
         "embedUrl": ("https://scratch.mit.edu/projects/embed/%s/?autostart=false" % embed_id) if embed_id else "",
         "projectUrl": ("https://scratch.mit.edu/projects/%s/" % embed_id) if embed_id else "",
         "starterId": starter_id,
-        # STUDENT link — must never contain the solution. A ready-made starter
-        # (sprites placed, no code) when the project provides one, otherwise a
-        # blank editor: the student builds from the step instructions.
+        # STUDENT link — must never contain the solution, but MUST already have
+        # the sprites and backdrop in place. If the project ships its own
+        # starter we use that; otherwise tools/rpi_starters.py generates a
+        # code-free starter (sprites placed, zero blocks) which we open through
+        # the TurboWarp editor (scratch.mit.edu cannot load an external file).
         "studentOpen": ("https://scratch.mit.edu/projects/%s/editor/" % starter_id) if starter_id
-                       else "https://scratch.mit.edu/projects/editor/",
-        "studentMode": ("starter" if starter_id else "blank"),
+                       else (TW_EDITOR + quote(SITE_BASE + "starters/rpi/%s.sb3" % slug, safe="")),
+        "studentMode": ("starter" if starter_id else "generated"),
+        "studentStarter": "" if starter_id else ("starters/rpi/%s.sb3" % slug),
         # TUTOR link — the finished project opened in the editor, so the tutor
         # can see the working code and guide from it. Never shown to students.
         "tutorOpen": ("https://scratch.mit.edu/projects/%s/editor/" % embed_id) if embed_id else "",
         # kept for compatibility; always the safe (student) link
         "openUrl": ("https://scratch.mit.edu/projects/%s/editor/" % starter_id) if starter_id
-                   else "https://scratch.mit.edu/projects/editor/",
-        "openMode": ("starter" if starter_id else "blank"),
+                   else (TW_EDITOR + quote(SITE_BASE + "starters/rpi/%s.sb3" % slug, safe="")),
+        "openMode": ("starter" if starter_id else "generated"),
         "editorUrl": "https://scratch.mit.edu/projects/editor/",
         "sourceUrl": meta["original_url"] or ("https://github.com/raspberrypilearning/%s" % slug),
         "githubUrl": "https://github.com/raspberrypilearning/%s" % slug,

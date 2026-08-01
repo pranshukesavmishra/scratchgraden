@@ -189,10 +189,9 @@
     // Build it — students get a starter or a blank editor, NEVER the solution.
     var tutor = GN.isTutor();
     var sMode = p.studentMode || "blank";
-    var openLabel = sMode === "starter" ? "🐱 Open the starter in Scratch →" : "🐱 Open Scratch editor →";
-    var openNote = sMode === "starter"
-      ? "The sprites and backdrop are placed for you — no solution code. Add the code yourself by following the steps."
-      : "Opens a fresh Scratch editor. Follow the steps to add the sprites and build the code yourself.";
+    var openLabel = "🐱 Open the starter in Scratch →";
+    var openNote = "Opens with every sprite and the backdrop already placed — and no code at all. "
+                 + "Build the code yourself by following the steps.";
     var buildKids = [
       h("div", { class: "rpi-card-h" }, ["🛠 Build it in Scratch"]),
       h("a", { class: "btn primary block big", href: p.studentOpen || p.editorUrl, target: "_blank", rel: "noopener" }, [openLabel]),
