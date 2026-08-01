@@ -95,6 +95,7 @@ def build():
             manifest_ex[xid] = {
                 "id": xid, "session": s["id"], "sessionTitle": s["title"],
                 "title": ex["title"], "type": ex["type"], "level": ex["level"],
+                "template": tmpl,
                 "tag": ex["tag"], "emoji": ex["emoji"], "color": ex["color"],
                 "starter": "starters/%s.sb3" % xid, "desired": desired,
                 "sprites": sprite_names(targets), "backdrop": theme.get("backdrop", ""),

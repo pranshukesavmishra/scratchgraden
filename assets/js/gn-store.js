@@ -7,6 +7,7 @@
 (function (w) {
   "use strict";
   var K_STUDENTS = "gn_students", K_ACTIVE = "gn_active", K_PROGRESS = "gn_progress";
+  var K_ROLE = "gn_role";
   var RUBRIC = ["emerging", "secure", "mastered"];
 
   function read(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } }
@@ -15,6 +16,19 @@
 
   var GN = {
     RUBRIC: RUBRIC,
+
+    /* ---------- role: one global setting for the whole platform ----------
+       'student' is the safe default: solutions, answers and teaching notes
+       are never shown. 'tutor' unlocks them so the tutor can guide. */
+    role: function () {
+      var r = null;
+      try { r = localStorage.getItem(K_ROLE); } catch (e) {}
+      return r === "tutor" ? "tutor" : "student";
+    },
+    setRole: function (r) {
+      try { localStorage.setItem(K_ROLE, r === "tutor" ? "tutor" : "student"); } catch (e) {}
+    },
+    isTutor: function () { return this.role() === "tutor"; },
 
     /* ---------- students ---------- */
     students: function () { return read(K_STUDENTS, []); },

@@ -10,7 +10,8 @@
   var app, S, mode;
 
   function qs(k) { return new URLSearchParams(location.search).get(k); }
-  function setMode(m) { mode = m; try { localStorage.setItem("gn_mode", m); } catch (e) {} render(); }
+  /* Mode is now a GLOBAL platform setting (header switch), not per session. */
+  function setMode(m) { GN.setRole(m); location.reload(); }
 
   function card(title, icon, kids, cls) {
     return h("section", { class: "lp-card " + (cls || "") }, [
@@ -64,9 +65,10 @@
             h("span", { class: "pill" }, ["⏱ " + S.minutes + " min"])
           ])
         ]),
-        h("div", { class: "lp-modeswitch" }, [
-          h("button", { class: "seg-btn" + (mode === "tutor" ? " on" : ""), onclick: function () { setMode("tutor"); } }, ["👩‍🏫 Tutor Mode"]),
-          h("button", { class: "seg-btn" + (mode === "student" ? " on" : ""), onclick: function () { setMode("student"); } }, ["🧒 Student Mode"])
+        h("div", { class: "lp-modehint" }, [
+          h("span", {}, [mode === "tutor" ? "👩‍🏫 Tutor Mode" : "🧒 Student Mode"]),
+          h("button", { class: "linkish", onclick: function () { setMode(mode === "tutor" ? "student" : "tutor"); } },
+            ["switch to " + (mode === "tutor" ? "Student" : "Tutor")])
         ])
       ]),
       journeyBar(),
@@ -99,8 +101,71 @@
       ]),
       h("a", { class: "btn primary block big", href: c.href }, ["▶ Open the build"])
     ];
-    if (c.openUrl) kids.push(h("a", { class: "btn ghost block", href: c.openUrl, target: "_blank", rel: "noopener" }, ["🐱 Open straight in Scratch"]));
+    if (c.studentOpen) kids.push(h("a", { class: "btn ghost block", href: c.studentOpen, target: "_blank", rel: "noopener" }, ["🐱 Open the student's starter"]));
+    if (GN.isTutor() && c.tutorOpen) {
+      kids.push(h("div", { class: "tutor-only" }, [
+        h("div", { class: "tutor-only-h" }, ["👩‍🏫 Tutor only"]),
+        h("a", { class: "btn ghost block", href: c.tutorOpen, target: "_blank", rel: "noopener" }, ["🔍 Open the finished code (solution)"]),
+        h("p", { class: "lp-note" }, ["Do not share this screen with the student."])
+      ]));
+    }
     return card("Today's build", "🛠", kids, "lp-build");
+  }
+
+  function mdBold(t) {
+    return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  /* WHAT to teach (subject matter), not just how */
+  function subjectCards() {
+    var d = S.deep, out = [];
+    if (!d) return out;
+    out.push(card("The content to teach — " + S.concept, "\uD83D\uDCD7", [
+      h("div", { class: "deep-text" }, d.explain.map(function (p) { return h("p", { html: mdBold(p) }); })),
+      h("div", { class: "deep-why" }, [h("b", {}, ["Why it matters: "]), d.why]),
+      h("div", { class: "deep-real" }, [h("b", {}, ["Real-world link: "]), d.real])
+    ]));
+    if (d.examples && d.examples.length) {
+      out.push(card("Worked examples to demonstrate", "\uD83D\uDCBB", [
+        h("div", { class: "wex-list" }, d.examples.map(function (ex) {
+          return h("div", { class: "wex" }, [
+            h("div", { class: "wex-t" }, [ex.title]),
+            h("pre", { class: "wex-code" }, [ex.code]),
+            h("p", { class: "wex-n" }, ["\u2192 " + ex.note])
+          ]);
+        }))
+      ]));
+    }
+    if (d.extend && d.extend.length) {
+      out.push(card("If there is time — go further", "\uD83D\uDE80", [
+        h("ul", { class: "lp-obj" }, d.extend.map(function (e) { return h("li", {}, [e]); }))
+      ], "lp-hw"));
+    }
+    return out;
+  }
+
+  /* the staged build the student works through */
+  function briefCard() {
+    var c = S.content;
+    if (!c || !c.brief) return null;
+    var b = c.brief;
+    var kids = [h("p", { class: "lp-note" }, [
+      "The student works through these " + b.stages.length + " stages (about " + b.minutes +
+      " minutes, " + b.taskCount + " tasks). Use the checkpoints to see whether they are on track."])];
+    b.stages.forEach(function (st, i) {
+      kids.push(h("details", { class: "stage" }, [
+        h("summary", {}, [
+          h("span", { class: "stage-n" }, [String(i + 1)]),
+          h("span", { class: "stage-t" }, [st.title]),
+          h("span", { class: "stage-m" }, [st.minutes + " min"])
+        ]),
+        h("p", { class: "stage-goal" }, [st.goal]),
+        h("ul", { class: "stage-tasks" }, st.tasks.map(function (t) { return h("li", {}, [t]); })),
+        h("div", { class: "stage-check" }, [h("b", {}, ["\u2705 Checkpoint: "]), st.check])
+      ]));
+    });
+    return card("Build brief the student follows", "\uD83D\uDEE0", kids, "lp-brief");
   }
 
   /* ---------------- tutor mode ---------------- */
@@ -123,6 +188,9 @@
     });
     main.appendChild(card("Run sheet — " + S.minutes + " minutes", "⏱", [rs], "lp-runsheet"));
 
+    /* WHAT to teach */
+    subjectCards().forEach(function (c) { main.appendChild(c); });
+
     /* teaching script */
     main.appendChild(card("Teaching script — what to actually do", "👩‍🏫", [
       h("ol", { class: "lp-steps" }, S.teach.map(function (t) { return h("li", {}, [t]); }))
@@ -141,6 +209,10 @@
         h("div", { class: "lp-diffbox stretch" }, [h("b", {}, ["🚀 If they finish early"]), h("p", {}, [S.stretch])])
       ])
     ]));
+
+    /* the staged build */
+    var bc = briefCard();
+    if (bc) main.appendChild(bc);
 
     /* rubric + record */
     main.appendChild(assessCard());
@@ -269,7 +341,7 @@
     var id = qs("s") || (P && P.order && P.order[0]);
     S = P && P.sessions ? P.sessions[id] : null;
     if (!S) { app.innerHTML = '<div style="padding:40px;text-align:center">Session not found. <a href="curriculum.html">Back to curriculum</a></div>'; return; }
-    try { mode = localStorage.getItem("gn_mode") || "tutor"; } catch (e) { mode = "tutor"; }
+    mode = GN.isTutor() ? "tutor" : "student";
     render();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();

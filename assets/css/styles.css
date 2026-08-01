@@ -1040,3 +1040,73 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
 /* the global `code` rule adds a light background — cancel it inside the dark
    example box, otherwise pale text sits on a pale background and vanishes */
 .bex code{background:transparent;color:inherit;padding:0;border-radius:0}
+
+/* ===================================================================
+   Role switch, subject content, worked examples, staged build briefs
+   =================================================================== */
+.head-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.role-switch{display:flex;background:#eef2fa;border-radius:999px;padding:3px;gap:2px}
+.role-btn{border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:800;color:var(--ink-soft);
+  padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.role-btn:hover{color:var(--ink)}
+.role-btn.on.student{background:var(--brand);color:#fff}
+.role-btn.on.tutor{background:#7c3aed;color:#fff}
+.mode-banner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;padding:10px 15px;
+  border-radius:12px;margin:0 0 18px}
+.mode-banner.student{background:#eef4ff;border:1px solid #cfe0ff;color:#2c4a7c}
+.mode-banner.tutor{background:#f5efff;border:1px solid #ddd0f7;color:#5b3a9e}
+.tutor-only{margin-top:12px;padding:12px;border:2px dashed #c4b5fd;border-radius:12px;background:#faf7ff}
+.tutor-only-h{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#7c3aed;margin-bottom:7px}
+.lp-modehint{font-size:12.5px;font-weight:700;color:var(--ink-soft);display:flex;gap:8px;align-items:center}
+
+/* subject content */
+.deep-text p{font-size:15px;line-height:1.68;margin:0 0 12px}
+.deep-text p:last-child{margin-bottom:0}
+.deep-why,.deep-real{margin-top:12px;padding:11px 14px;border-radius:11px;font-size:14px;line-height:1.55}
+.deep-why{background:#eef6ff;border:1px solid #cfe4ff}
+.deep-real{background:#f3fbf5;border:1px solid #c9ecd6}
+
+/* worked examples */
+.wex-list{display:flex;flex-direction:column;gap:14px}
+.wex-t{font-weight:800;font-size:14.5px;margin-bottom:7px}
+.wex-code{background:#20293b;color:#e8eefc;border-radius:11px;padding:14px 16px;margin:0;overflow-x:auto;
+  font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:13px;line-height:1.6;white-space:pre;tab-size:2}
+.wex-n{margin:7px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.5}
+
+/* block uses */
+.buses{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+.buses-h{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-faint);margin-bottom:5px}
+.buses ul{margin:0;padding-left:17px;font-size:12.5px;line-height:1.55;color:var(--ink-soft)}
+.buses li{margin:2px 0}
+
+/* staged build brief */
+.lp-brief{border:2px solid var(--warn);box-shadow:0 0 0 4px rgba(233,147,11,.09),var(--shadow-sm)}
+.stage{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;background:var(--bg)}
+.stage[open]{background:var(--surface);box-shadow:var(--shadow-sm)}
+.stage summary{display:flex;align-items:center;gap:11px;cursor:pointer;padding:12px 14px;font-weight:700;list-style:none}
+.stage summary::-webkit-details-marker{display:none}
+.stage-n{flex:none;width:25px;height:25px;border-radius:8px;background:var(--warn);color:#fff;
+  display:grid;place-items:center;font-size:12.5px;font-weight:800}
+.stage-t{flex:1;font-size:15px}
+.stage-m{font-size:11.5px;font-weight:800;color:var(--ink-faint)}
+.stage-goal{margin:0 14px 10px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.stage-tasks{margin:0 14px 12px;padding-left:20px;font-size:14px;line-height:1.6}
+.stage-tasks li{margin:6px 0}
+.stage-check{margin:0 14px 14px;padding:10px 13px;background:#eefaf2;border:1px solid #bfe8d1;
+  border-radius:10px;font-size:13.5px;line-height:1.5}
+
+@media (max-width:900px){
+  .head-right{width:100%;margin-left:0;justify-content:space-between}
+  .role-btn{padding:7px 10px;font-size:12px}
+}
+@media (prefers-color-scheme: dark){
+  .role-switch{background:#1a2233}
+  .mode-banner.student{background:#141d2e;border-color:#2f4670;color:#a9c4f0}
+  .mode-banner.tutor{background:#211a35;border-color:#413168;color:#c4b5fd}
+  .tutor-only{background:#1b1630;border-color:#4c3b7a}
+  .deep-why{background:#141d2e;border-color:#2f4670}
+  .deep-real{background:#12271c;border-color:#255139}
+  .stage{background:#1a2233}
+  .stage[open]{background:var(--surface)}
+  .stage-check{background:#12271c;border-color:#255139}
+}

@@ -7,6 +7,7 @@
 (function () {
   "use strict";
   var R = window.GN_RPI || { paths: [], projects: {} };
+  var GN = window.GN, U = window.GNUI;
   var app;
   var DONE_KEY = "gn_rpi_done";
 
@@ -185,23 +186,27 @@
     }
     side.appendChild(doCard);
 
-    // Build it — DIRECT redirect into Scratch (with the sprites already loaded)
-    var openLabel = { starter: "🐱 Open the starter in Scratch →",
-                      seeinside: "🐱 Open in Scratch →",
-                      blank: "🐱 Open Scratch editor →" }[p.openMode] || "🐱 Open in Scratch →";
-    var openNote = { starter: "The sprites and backdrop are placed for you — just add the code by following the steps. No solution code is included.",
-                     seeinside: "Opens the real project in Scratch so you can play it, look inside to see how it works, and remix your own copy — with every sprite already loaded.",
-                     blank: "Opens a fresh Scratch editor. Follow the steps to add the sprites and code." }[p.openMode];
-    var buildCard = h("div", { class: "rpi-card rpi-buildcard" }, [
+    // Build it — students get a starter or a blank editor, NEVER the solution.
+    var tutor = GN.isTutor();
+    var sMode = p.studentMode || "blank";
+    var openLabel = sMode === "starter" ? "🐱 Open the starter in Scratch →" : "🐱 Open Scratch editor →";
+    var openNote = sMode === "starter"
+      ? "The sprites and backdrop are placed for you — no solution code. Add the code yourself by following the steps."
+      : "Opens a fresh Scratch editor. Follow the steps to add the sprites and build the code yourself.";
+    var buildKids = [
       h("div", { class: "rpi-card-h" }, ["🛠 Build it in Scratch"]),
-      h("a", { class: "btn primary block big", href: p.openUrl, target: "_blank", rel: "noopener" }, [openLabel]),
-      h("p", { class: "rpi-note" }, [openNote]),
-      p.openMode !== "blank"
-        ? h("a", { class: "btn ghost block", href: p.editorUrl, target: "_blank", rel: "noopener" }, ["Start from a blank editor instead"])
-        : null,
-      h("a", { class: "btn ghost block", href: "https://scratch.mit.edu/projects/editor/?tutorial=getStarted", target: "_blank", rel: "noopener" }, ["🎬 New to Scratch? Watch the intro"])
-    ]);
-    side.appendChild(buildCard);
+      h("a", { class: "btn primary block big", href: p.studentOpen || p.editorUrl, target: "_blank", rel: "noopener" }, [openLabel]),
+      h("p", { class: "rpi-note" }, [openNote])
+    ];
+    if (tutor && p.tutorOpen) {
+      buildKids.push(h("div", { class: "tutor-only" }, [
+        h("div", { class: "tutor-only-h" }, ["👩‍🏫 Tutor only"]),
+        h("a", { class: "btn ghost block", href: p.tutorOpen, target: "_blank", rel: "noopener" }, ["🔍 Open the finished code (solution)"]),
+        h("p", { class: "rpi-note" }, ["The working project, so you can see how it is built and guide the student. Do not share this screen with them."])
+      ]));
+    }
+    buildKids.push(h("a", { class: "btn ghost block", href: "https://scratch.mit.edu/projects/editor/?tutorial=getStarted", target: "_blank", rel: "noopener" }, ["🎬 New to Scratch? Watch the intro"]));
+    side.appendChild(h("div", { class: "rpi-card rpi-buildcard" }, buildKids));
 
     // Step list
     var stepsCard = h("div", { class: "rpi-card" }, [h("div", { class: "rpi-card-h" }, ["📋 Steps"])]);
@@ -277,8 +282,9 @@
     var hs = (location.hash || "").replace(/^#\/?/, "");
     var parts = hs.split("/").filter(Boolean);
     app.innerHTML = "";
-    app.appendChild(header());
+    app.appendChild(U && U.header ? U.header("projects") : header());
     var main = h("main", { class: "c-main" });
+    if (U && U.modeBanner) main.appendChild(U.modeBanner());
     if (parts[0] === "p" && parts[1]) main.appendChild(viewProject(parts[1]));
     else main.appendChild(viewHome());
     app.appendChild(main);

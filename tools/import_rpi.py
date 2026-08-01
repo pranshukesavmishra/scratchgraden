@@ -449,13 +449,19 @@ def build_project(slug, emoji, concept, difficulty, category):
         "embedUrl": ("https://scratch.mit.edu/projects/embed/%s/?autostart=false" % embed_id) if embed_id else "",
         "projectUrl": ("https://scratch.mit.edu/projects/%s/" % embed_id) if embed_id else "",
         "starterId": starter_id,
-        # Direct "open in Scratch" link. Prefer a ready-made starter (sprites,
-        # no solution); else open the finished project's editor (see-inside);
-        # else a blank editor.
+        # STUDENT link — must never contain the solution. A ready-made starter
+        # (sprites placed, no code) when the project provides one, otherwise a
+        # blank editor: the student builds from the step instructions.
+        "studentOpen": ("https://scratch.mit.edu/projects/%s/editor/" % starter_id) if starter_id
+                       else "https://scratch.mit.edu/projects/editor/",
+        "studentMode": ("starter" if starter_id else "blank"),
+        # TUTOR link — the finished project opened in the editor, so the tutor
+        # can see the working code and guide from it. Never shown to students.
+        "tutorOpen": ("https://scratch.mit.edu/projects/%s/editor/" % embed_id) if embed_id else "",
+        # kept for compatibility; always the safe (student) link
         "openUrl": ("https://scratch.mit.edu/projects/%s/editor/" % starter_id) if starter_id
-                   else (("https://scratch.mit.edu/projects/%s/editor/" % embed_id) if embed_id
-                         else "https://scratch.mit.edu/projects/editor/"),
-        "openMode": ("starter" if starter_id else ("seeinside" if embed_id else "blank")),
+                   else "https://scratch.mit.edu/projects/editor/",
+        "openMode": ("starter" if starter_id else "blank"),
         "editorUrl": "https://scratch.mit.edu/projects/editor/",
         "sourceUrl": meta["original_url"] or ("https://github.com/raspberrypilearning/%s" % slug),
         "githubUrl": "https://github.com/raspberrypilearning/%s" % slug,

@@ -23,8 +23,10 @@ sys.path.insert(0, HERE)
 
 from concepts import CONCEPTS, STRANDS
 from spine import build_sessions, LEVELS
-from blocks import BLOCKS, CATEGORIES, PLACEHOLDERS, resolve
+from blocks import BLOCKS, CATEGORIES, PLACEHOLDERS, resolve, USES
 from questions import BANK
+from deepdive import DEEP
+from briefs import build_brief
 
 SESSION_MINUTES = 60
 QUIZ_LENGTH = 10        # questions per Recall Test
@@ -103,7 +105,9 @@ def build():
                 "kind": "project", "ref": ref, "title": p["title"],
                 "emoji": p["emoji"], "steps": p["stepCount"],
                 "href": "projects.html#/p/" + ref,
-                "openUrl": p.get("openUrl", ""), "embedUrl": p.get("embedUrl", ""),
+                "studentOpen": p.get("studentOpen", ""), "studentMode": p.get("studentMode", "blank"),
+                "tutorOpen": p.get("tutorOpen", ""),
+                "openUrl": p.get("studentOpen", ""), "embedUrl": p.get("embedUrl", ""),
                 "difficulty": p.get("difficultyLabel", ""),
                 "source": "Raspberry Pi / Code Club",
             }
@@ -117,6 +121,8 @@ def build():
                 "difficulty": e.get("level", ""),
                 "sprites": e.get("sprites", []),
                 "source": "Grade Next",
+                "brief": build_brief(e.get("template", "generic"), e["title"],
+                                     e.get("sprites", []), e.get("backdrop", "")),
             }
 
         # resolve this session's blocks to full reference entries
@@ -129,13 +135,15 @@ def build():
                 b = BLOCKS[key]
                 block_refs.append({"key": key, "category": b["category"],
                                    "color": CATEGORIES[b["category"]]["color"],
-                                   "what": b["what"], "example": b["example"], "tip": b["tip"]})
+                                   "what": b["what"], "example": b["example"], "tip": b["tip"],
+                                   "uses": USES.get(key, [])})
 
         rec = {
             "id": s["id"], "level": s["level"], "n": s["n"], "title": s["title"],
             "conceptKey": s["conceptKey"], "concept": c["name"], "strand": c["strand"],
             "strandColor": STRANDS.get(c["strand"], "#64748b"),
             "blockRefs": block_refs,
+            "deep": DEEP.get(s["conceptKey"]),
             "quizCount": min(QUIZ_LENGTH, len(by_concept.get(s["conceptKey"], []))),
             "blocks": c["blocks"], "vocab": c["vocab"], "objectives": c["objectives"],
             "hook": c["hook"], "teach": c["teach"], "watch": c["watch"], "ask": c["ask"],
@@ -174,6 +182,7 @@ def build():
             "key": key, "category": b["category"],
             "color": CATEGORIES[b["category"]]["color"],
             "what": b["what"], "example": b["example"], "tip": b["tip"],
+            "uses": USES.get(key, []),
             "sessions": taught_in.get(key, []),
         }
 
@@ -187,6 +196,8 @@ def build():
             "exerciseCount": len(exercises),
             "blockCount": len(block_lib),
             "questionCount": len(BANK),
+            "useCount": sum(len(v) for v in USES.values()),
+            "deepCount": len(DEEP),
             "minutes": SESSION_MINUTES,
             "quizLength": QUIZ_LENGTH,
             "quizPass": QUIZ_PASS,

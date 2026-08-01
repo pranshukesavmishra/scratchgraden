@@ -72,7 +72,38 @@
       h("nav", { class: "c-nav" }, nav.map(function (n) {
         return h("a", { class: "c-navbtn" + (n[2] === activeKey ? " active" : ""), href: n[0] }, [n[1]]);
       })),
-      studentSwitcher()
+      h("div", { class: "head-right" }, [roleSwitch(), studentSwitcher()])
+    ]);
+  }
+
+  /* ---- global Tutor / Student switch (applies to every page) ---- */
+  function roleSwitch() {
+    var GN = w.GN, role = GN.role();
+    function btn(r, label) {
+      return h("button", {
+        class: "role-btn" + (role === r ? " on " + r : ""),
+        title: r === "tutor" ? "Tutor Mode — solutions, answers and teaching notes visible"
+                             : "Student Mode — solutions hidden",
+        onclick: function () { if (role !== r) { GN.setRole(r); location.reload(); } }
+      }, [label]);
+    }
+    return h("div", { class: "role-switch", role: "group", "aria-label": "Mode" }, [
+      btn("student", "🧒 Student"), btn("tutor", "👩‍🏫 Tutor")
+    ]);
+  }
+
+  /* A banner making the current mode obvious, used on pages that gate content. */
+  function modeBanner() {
+    var GN = w.GN;
+    if (GN.isTutor()) {
+      return h("div", { class: "mode-banner tutor" }, [
+        h("b", {}, ["👩‍🏫 Tutor Mode"]),
+        " — solutions, answers and teaching notes are visible. Switch to Student Mode before sharing your screen.",
+        h("button", { class: "linkish", onclick: function () { GN.setRole("student"); location.reload(); } }, ["Switch to Student"])
+      ]);
+    }
+    return h("div", { class: "mode-banner student" }, [
+      h("b", {}, ["🧒 Student Mode"]), " — solutions are hidden so you can work it out yourself."
     ]);
   }
 
@@ -128,5 +159,6 @@
   }
 
   w.GNUI = { h: h, shade: shade, bar: bar, ring: ring, header: header, footer: footer,
-             studentSwitcher: studentSwitcher, addStudentFlow: addStudentFlow, emptyState: emptyState };
+             studentSwitcher: studentSwitcher, addStudentFlow: addStudentFlow, emptyState: emptyState,
+             roleSwitch: roleSwitch, modeBanner: modeBanner };
 })(window);

@@ -55,8 +55,77 @@
       ]),
       h("p", { class: "bwhat" }, [b.what]),
       h("div", { class: "bex" }, [h("span", { class: "bex-l" }, ["Example"]), h("code", {}, [b.example])]),
-      h("p", { class: "btip" }, ["💡 " + b.tip])
+      h("p", { class: "btip" }, ["💡 " + b.tip]),
+      (b.uses && b.uses.length) ? h("div", { class: "buses" }, [
+        h("div", { class: "buses-h" }, ["Ways to use it"]),
+        h("ul", {}, b.uses.map(function (u) { return h("li", {}, [u]); }))
+      ]) : null
     ]);
+  }
+
+  /* the subject content: what this topic actually IS */
+  function deepSection() {
+    var d = S.deep;
+    if (!d) return null;
+    var out = [];
+    out.push(h("section", { class: "lp-card" }, [
+      h("h3", { class: "lp-h" }, [h("span", { class: "lp-ico" }, ["📗"]), "Understanding " + S.concept]),
+      h("div", { class: "deep-text" }, d.explain.map(function (para) {
+        return h("p", { html: mdBold(para) });
+      })),
+      h("div", { class: "deep-why" }, [h("b", {}, ["Why this matters: "]), d.why]),
+      h("div", { class: "deep-real" }, [h("b", {}, ["Where you've seen it: "]), d.real])
+    ]));
+    if (d.examples && d.examples.length) {
+      out.push(h("section", { class: "lp-card" }, [
+        h("h3", { class: "lp-h" }, [h("span", { class: "lp-ico" }, ["💻"]), "Worked examples"]),
+        h("div", { class: "wex-list" }, d.examples.map(function (ex) {
+          return h("div", { class: "wex" }, [
+            h("div", { class: "wex-t" }, [ex.title]),
+            h("pre", { class: "wex-code" }, [ex.code]),
+            h("p", { class: "wex-n" }, ["→ " + ex.note])
+          ]);
+        }))
+      ]));
+    }
+    if (d.extend && d.extend.length) {
+      out.push(h("section", { class: "lp-card lp-hw" }, [
+        h("h3", { class: "lp-h" }, [h("span", { class: "lp-ico" }, ["🚀"]), "Go further"]),
+        h("ul", { class: "lp-obj" }, d.extend.map(function (e) { return h("li", {}, [e]); }))
+      ]));
+    }
+    return out;
+  }
+
+  /* tiny **bold** support for the teaching paragraphs */
+  function mdBold(t) {
+    return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  /* the staged build brief — the long-form exercise */
+  function briefSection() {
+    var c = S.content;
+    if (!c || !c.brief) return null;
+    var b = c.brief;
+    var sec = h("section", { class: "lp-card lp-brief" }, [
+      h("h3", { class: "lp-h" }, [h("span", { class: "lp-ico" }, ["🛠"]),
+        "Build brief — " + b.stages.length + " stages, about " + b.minutes + " minutes"]),
+      h("p", { class: "lp-note" }, ["Work through the stages in order. Each one ends with a checkpoint — do not move on until it passes."])
+    ]);
+    b.stages.forEach(function (st, i) {
+      sec.appendChild(h("details", { class: "stage", open: i === 0 ? "open" : null }, [
+        h("summary", {}, [
+          h("span", { class: "stage-n" }, [String(i + 1)]),
+          h("span", { class: "stage-t" }, [st.title]),
+          h("span", { class: "stage-m" }, [st.minutes + " min"])
+        ]),
+        h("p", { class: "stage-goal" }, [st.goal]),
+        h("ul", { class: "stage-tasks" }, st.tasks.map(function (t) { return h("li", {}, [t]); })),
+        h("div", { class: "stage-check" }, [h("b", {}, ["✅ Checkpoint: "]), st.check])
+      ]));
+    });
+    return sec;
   }
 
   function render() {
@@ -91,6 +160,10 @@
       ]));
     }
 
+    /* the subject content */
+    var deep = deepSection();
+    if (deep) deep.forEach(function (d) { col.appendChild(d); });
+
     /* vocabulary */
     col.appendChild(h("section", { class: "lp-card" }, [
       h("h3", { class: "lp-h" }, [h("span", { class: "lp-ico" }, ["📖"]), "Words to know"]),
@@ -111,6 +184,10 @@
           : h("li", {}, [h("b", {}, [t.slice(0, i).trim()]), h("span", { class: "lp-arrow" }, [" → "]), t.slice(i + 1).trim()]);
       }))
     ]));
+
+    /* the long-form staged build */
+    var brief = briefSection();
+    if (brief) col.appendChild(brief);
 
     /* next step */
     var st = GN.stages(S.id);

@@ -105,6 +105,7 @@
 </div>
 
 <script src="assets/js/exercises.js"></script>
+  <script src="assets/js/gn-store.js"></script>
 <script>
 (function(){
   var EDITOR="https://turbowarp.org/editor?project_url=";
@@ -193,6 +194,22 @@
       '<p class="cover-note">The editor opens in a new tab, already loaded with your sprites. (Scratch’s editor can’t run inside another web page — that’s a Scratch limitation, not a bug. Everything else stays here.)</p>'+
     '</div></div>';
   document.getElementById("coverDesired").onclick=desiredBtn.onclick;
+
+  // TUTOR ONLY: open the finished project in the editor to see the solution.
+  // Students never get this link — their starter contains no solution code.
+  try{
+    if(window.GN && window.GN.isTutor()){
+      var acts=document.querySelector(".cover-actions");
+      if(acts){
+        var a=document.createElement("a");
+        a.className="cbtn ghost"; a.target="_blank"; a.rel="noopener";
+        a.href=EDITOR+encodeURIComponent(DESIRED);
+        a.style.borderColor="#c4b5fd"; a.style.color="#6d28d9";
+        a.textContent="👩‍🏫 Tutor: open the solution";
+        acts.appendChild(a);
+      }
+    }
+  }catch(e){}
 })();
 </script>
 </body>
