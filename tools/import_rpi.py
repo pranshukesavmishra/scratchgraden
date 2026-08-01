@@ -58,6 +58,7 @@ PATHS = [
             ("catch-the-bus",   "\U0001F68C", "Motion & Sensing",   1, "game"),
             ("find-the-bug",    "\U0001F41B", "Debugging",          1, "puzzle"),
             ("beat-the-goalie", "\u26BD",     "Motion & Score",     2, "game"),
+            ("catch-the-dots",  "\U0001F7E1", "Sensing & Speed",    1, "game"),
             ("balloons",        "\U0001F388", "Click & Score",      2, "game"),
             ("archery",         "\U0001F3F9", "Aiming & Score",     2, "game"),
             ("boat-race",       "\U0001F6A4", "Sensing Colour",     2, "game"),
@@ -368,6 +369,22 @@ def extract_embed_id(md):
     return m.group(1) if m else None
 
 
+def extract_starter_id(md):
+    """Find a ready-made STARTER project link (sprites placed, no solution
+    code) so students can open Scratch already set up. Returns id or None."""
+    # 1) a markdown link whose visible text mentions starter/template
+    for m in re.finditer(r"\[([^\]]*)\]\((https://scratch\.mit\.edu/projects/(\d+)[^)]*)\)", md):
+        text = m.group(1).lower()
+        if "starter" in text or "template" in text:
+            return m.group(3)
+    # 2) the phrase 'starter project' near a plain projects/<id> link
+    for m in re.finditer(r"starter project.{0,120}?scratch\.mit\.edu/projects/(\d+)", md, re.S | re.I):
+        return m.group(1)
+    for m in re.finditer(r"scratch\.mit\.edu/projects/(\d+).{0,60}?starter", md, re.S | re.I):
+        return m.group(1)
+    return None
+
+
 def extract_intro(md):
     """Short human intro = first paragraph after the first '## What you will make'."""
     m = re.search(r"##\s*What you will make\s*\n+(.+)", md)
@@ -390,19 +407,25 @@ def build_project(slug, emoji, concept, difficulty, category):
     step_titles = meta["steps"] or []
     n_steps = len(step_titles) or 8
 
-    steps, embed_id, intro, is_scratch = [], None, "", False
+    steps, embed_id, starter_id, intro, is_scratch, full_md = [], None, None, "", False, []
     for idx in range(1, n_steps + 1):
         smd, ok = fetch("%s/%s/%s/en/step_%d.md" % (RAW, slug, BRANCH, idx))
         if not ok:
             break
+        full_md.append(smd)
         if "```blocks3" in smd or "scratch.mit.edu" in smd or "block3" in smd:
             is_scratch = True
         if embed_id is None:
             embed_id = extract_embed_id(smd)
+        if starter_id is None:
+            starter_id = extract_starter_id(smd)
         if idx == 1 and not intro:
             intro = extract_intro(smd)
         title = step_titles[idx - 1] if idx - 1 < len(step_titles) else ("Step %d" % idx)
         steps.append({"n": idx, "title": title, "html": md_to_html(slug, smd)})
+    # don't mistake the finished-project embed for a starter
+    if starter_id and starter_id == embed_id:
+        starter_id = None
 
     if not steps:
         print("  ! no steps for %s" % slug); return None
@@ -425,13 +448,22 @@ def build_project(slug, emoji, concept, difficulty, category):
         "embedId": embed_id,
         "embedUrl": ("https://scratch.mit.edu/projects/embed/%s/?autostart=false" % embed_id) if embed_id else "",
         "projectUrl": ("https://scratch.mit.edu/projects/%s/" % embed_id) if embed_id else "",
+        "starterId": starter_id,
+        # Direct "open in Scratch" link. Prefer a ready-made starter (sprites,
+        # no solution); else open the finished project's editor (see-inside);
+        # else a blank editor.
+        "openUrl": ("https://scratch.mit.edu/projects/%s/editor/" % starter_id) if starter_id
+                   else (("https://scratch.mit.edu/projects/%s/editor/" % embed_id) if embed_id
+                         else "https://scratch.mit.edu/projects/editor/"),
+        "openMode": ("starter" if starter_id else ("seeinside" if embed_id else "blank")),
         "editorUrl": "https://scratch.mit.edu/projects/editor/",
         "sourceUrl": meta["original_url"] or ("https://github.com/raspberrypilearning/%s" % slug),
         "githubUrl": "https://github.com/raspberrypilearning/%s" % slug,
         "stepCount": len(steps),
         "steps": steps,
     }
-    print("  + %-22s %2d steps  embed=%s" % (slug, len(steps), embed_id))
+    print("  + %-22s %2d steps  embed=%s  open=%s(%s)"
+          % (slug, len(steps), embed_id, proj["openMode"], starter_id or embed_id or "blank"))
     return proj
 
 

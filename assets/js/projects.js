@@ -152,7 +152,7 @@
     // title band
     wrap.appendChild(h("div", { class: "rpi-title", style: "--pc:" + color }, [
       thumb(p.emoji, color, true),
-      h("div", {}, [
+      h("div", { class: "rpi-title-txt" }, [
         h("h1", {}, [p.title]),
         h("p", { class: "rpi-sub" }, [p.intro || p.description || ""]),
         h("div", { class: "rpi-tags" }, [
@@ -160,7 +160,8 @@
           h("span", { class: "tag-chip" }, ["⭐ " + p.concept]),
           h("span", { class: "pc-diff mini" }, [diffBar(p.difficulty), h("span", {}, [p.difficultyLabel])])
         ])
-      ])
+      ]),
+      h("a", { class: "btn primary big rpi-title-cta", href: p.openUrl, target: "_blank", rel: "noopener" }, ["🐱 Open in Scratch →"])
     ]));
 
     // layout: main (steps) + sidebar (desired output + tools)
@@ -175,18 +176,27 @@
         h("iframe", { src: p.embedUrl, title: p.title + " — finished project", allowtransparency: "true", frameborder: "0", scrolling: "no", allowfullscreen: "true" })
       ]));
       doCard.appendChild(h("p", { class: "rpi-note" }, ["▶ Click the green flag above to play the finished project — this is what you'll build."]));
-      doCard.appendChild(h("a", { class: "btn ghost block", href: p.projectUrl, target: "_blank", rel: "noopener" }, ["↗ Open finished project on Scratch"]));
+      doCard.appendChild(h("a", { class: "btn ghost block", href: p.projectUrl, target: "_blank", rel: "noopener" }, ["↗ Open finished project"]));
     } else if (p.heroImage) {
       doCard.appendChild(h("img", { class: "rpi-embed-img", src: p.heroImage, alt: p.title }));
       doCard.appendChild(h("p", { class: "rpi-note" }, ["This is the kind of result you'll create. Follow the steps to build your own version."]));
     }
     side.appendChild(doCard);
 
-    // Build it
-    var buildCard = h("div", { class: "rpi-card" }, [
-      h("div", { class: "rpi-card-h" }, ["🛠 Build it yourself"]),
-      h("p", { class: "rpi-note" }, ["Open the Scratch editor in a new tab, then follow the steps here. Keep both open side by side."]),
-      h("a", { class: "btn primary block big", href: p.editorUrl, target: "_blank", rel: "noopener" }, ["🐱 Open Scratch Editor →"]),
+    // Build it — DIRECT redirect into Scratch (with the sprites already loaded)
+    var openLabel = { starter: "🐱 Open the starter in Scratch →",
+                      seeinside: "🐱 Open in Scratch →",
+                      blank: "🐱 Open Scratch editor →" }[p.openMode] || "🐱 Open in Scratch →";
+    var openNote = { starter: "The sprites and backdrop are placed for you — just add the code by following the steps. No solution code is included.",
+                     seeinside: "Opens the real project in Scratch so you can play it, look inside to see how it works, and remix your own copy — with every sprite already loaded.",
+                     blank: "Opens a fresh Scratch editor. Follow the steps to add the sprites and code." }[p.openMode];
+    var buildCard = h("div", { class: "rpi-card rpi-buildcard" }, [
+      h("div", { class: "rpi-card-h" }, ["🛠 Build it in Scratch"]),
+      h("a", { class: "btn primary block big", href: p.openUrl, target: "_blank", rel: "noopener" }, [openLabel]),
+      h("p", { class: "rpi-note" }, [openNote]),
+      p.openMode !== "blank"
+        ? h("a", { class: "btn ghost block", href: p.editorUrl, target: "_blank", rel: "noopener" }, ["Start from a blank editor instead"])
+        : null,
       h("a", { class: "btn ghost block", href: "https://scratch.mit.edu/projects/editor/?tutorial=getStarted", target: "_blank", rel: "noopener" }, ["🎬 New to Scratch? Watch the intro"])
     ]);
     side.appendChild(buildCard);

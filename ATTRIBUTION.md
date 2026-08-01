@@ -30,6 +30,7 @@ Foundation.
 | Broadcasting spells | <https://github.com/raspberrypilearning/broadcasting-spells> |
 | Butterfly garden | <https://github.com/raspberrypilearning/butterfly-garden> |
 | Catch the bus | <https://github.com/raspberrypilearning/catch-the-bus> |
+| Catch the dots | <https://github.com/raspberrypilearning/catch-the-dots> |
 | Chatbot | <https://github.com/raspberrypilearning/chatbot> |
 | Clone wars | <https://github.com/raspberrypilearning/clone-wars> |
 | Create your own world | <https://github.com/raspberrypilearning/create-your-own-world> |

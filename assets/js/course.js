@@ -64,7 +64,7 @@
       h("div", { class: "rpi-banner-txt" }, [
         h("div", { class: "rpi-banner-kicker" }, ["★ NEW · Ready-made real projects"]),
         h("h2", {}, ["Explore the Real Project Library"]),
-        h("p", {}, ["27 complete, professionally-made Scratch projects — Ghostbusters, Flappy Parrot, Rock Band, Chatbot and more — imported from the Raspberry Pi Foundation / Code Club curriculum. Each shows the real finished game, then guides you step by step."])
+        h("p", {}, ["28 complete, professionally-made Scratch projects — Ghostbusters, Flappy Parrot, Rock Band, Chatbot and more — imported from the Raspberry Pi Foundation / Code Club curriculum. Each opens directly in Scratch with the sprites ready, shows the real finished game, then guides you step by step."])
       ]),
       h("span", { class: "rpi-banner-go" }, ["Open Library →"])
     ]));

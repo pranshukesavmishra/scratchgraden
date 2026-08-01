@@ -652,3 +652,13 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
 @media (prefers-color-scheme: dark){
   .rpi-banner{background:linear-gradient(120deg,#1b2740,#231b3d 60%,#2a1830);border-color:#332a4d}
 }
+
+/* direct "Open in Scratch" CTA in the project title band */
+.rpi-title{flex-wrap:wrap}
+.rpi-title-txt{flex:1;min-width:220px}
+.rpi-title-cta{flex:none;white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.10),var(--shadow-sm)}
+.rpi-buildcard{border:2px solid var(--brand);box-shadow:0 0 0 4px rgba(76,151,255,.10),var(--shadow-sm)}
+.rpi-buildcard .btn.big{box-shadow:0 3px 0 rgba(0,0,0,.10)}
+@media (max-width:560px){ .rpi-title-cta{width:100%;margin-top:6px} }
+.rpi-side .btn.block{font-size:14px;padding:9px 12px}
+.rpi-side .btn.block.big{font-size:15px;padding:12px 14px}
