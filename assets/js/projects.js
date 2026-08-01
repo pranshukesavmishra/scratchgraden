@@ -59,8 +59,10 @@
         h("div", {}, [h("div", { class: "c-name" }, ["Grade Next"]), h("div", { class: "c-sub" }, ["Real Project Library"])])
       ]),
       h("nav", { class: "c-nav" }, [
-        h("a", { class: "c-navbtn", href: "index.html" }, ["🎮 Game Course"]),
-        h("a", { class: "c-navbtn", href: "blocklab.html" }, ["🧪 Block Lab"])
+        h("a", { class: "c-navbtn", href: "index.html" }, ["🏠 Dashboard"]),
+        h("a", { class: "c-navbtn", href: "curriculum.html" }, ["📚 Curriculum"]),
+        h("a", { class: "c-navbtn active", href: "projects.html" }, ["🚀 Projects"]),
+        h("a", { class: "c-navbtn", href: "report.html" }, ["📊 Reports"])
       ])
     ]);
   }

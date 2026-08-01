@@ -67,7 +67,7 @@
 <div class="app">
   <div class="toolbar">
     <div class="tb-left">
-      <a class="back" id="back" href="index.html">← Go Back</a>
+      <a class="back" id="back" href="curriculum.html">← Go Back</a>
       <span class="logo"><span class="mark">🐱 Scratch</span> <span class="full" style="font-weight:800"> Academy</span></span>
       <div class="proj" id="projName">Exercise</div>
     </div>
@@ -150,7 +150,7 @@
 
   document.getElementById("projName").textContent=ex.title;
   document.title=ex.title+" · Grade Next";
-  document.getElementById("back").href="index.html#/session/"+ex.session;
+  document.getElementById("back").href="curriculum.html";
   var dl=document.getElementById("btnDownload"); dl.href=STARTER; dl.setAttribute("download",id+".sb3");
 
   // Instructions modal content
