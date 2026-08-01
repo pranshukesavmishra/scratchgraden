@@ -474,3 +474,181 @@ code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monosp
   .tag-chip{background:#3a2f1c;color:#ffcf80}
   .c-search{background:#131a26}
 }
+
+/* ===================================================================
+   REAL PROJECT LIBRARY (imported Raspberry Pi / Code Club projects)
+   =================================================================== */
+/* category badges */
+.type-badge.cat-animation{background:#e0f2fe;color:#0369a1}
+.type-badge.cat-game{background:#dcfce7;color:#15803d}
+.type-badge.cat-puzzle{background:#fef3c7;color:#b45309}
+.type-badge.cat-quiz{background:#fef9c3;color:#a16207}
+.type-badge.cat-chatbot{background:#ede9fe;color:#6d28d9}
+.type-badge.cat-music{background:#ffedd5;color:#c2410c}
+.type-badge.cat-art{background:#fce7f3;color:#be185d}
+.type-badge.cat-sandbox{background:#cffafe;color:#0e7490}
+.type-badge.cat-tool{background:#e2e8f0;color:#475569}
+
+/* hero */
+.rpi-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#eef4ff,#f7f0ff)}
+.rpi-hero-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:#7c3aed;background:#efe7ff;padding:6px 13px;border-radius:999px;margin-bottom:12px}
+.rpi-hero-src{font-size:13.5px;color:var(--ink-faint);margin-top:10px}
+.rpi-hero-src a{color:var(--brand-dark);font-weight:700}
+
+/* learning paths */
+.rpi-path{margin:34px 0}
+.rpi-path-head{display:flex;align-items:center;gap:14px;margin:0 0 16px}
+.rpi-path-emoji{width:52px;height:52px;flex:none;display:grid;place-items:center;font-size:26px;border-radius:15px}
+.rpi-path-head h2{margin:0;font-size:22px}
+.rpi-path-head p{margin:2px 0 0;color:var(--ink-soft);font-size:14px}
+.rpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+
+/* project card */
+.pc{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);
+  transition:transform .12s ease,box-shadow .18s ease,border-color .18s ease}
+.pc:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--brand)}
+.pc-hero{position:relative;aspect-ratio:16/10;background:#f0f4fb;display:grid;place-items:center;overflow:hidden}
+.pc-hero img{width:100%;height:100%;object-fit:cover}
+.pc-hero-plain{aspect-ratio:16/10}
+.pc-emoji{position:absolute;right:10px;bottom:8px;font-size:28px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+.pc-emoji.big{position:static;font-size:52px}
+.pc-body{padding:15px 16px 17px;display:flex;flex-direction:column;gap:9px;flex:1}
+.pc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pc-steps{font-size:12px;font-weight:700;color:var(--ink-faint)}
+.pc-body h3{margin:0;font-size:18px;line-height:1.25}
+.pc-desc{margin:0;font-size:13.5px;color:var(--ink-soft);flex:1;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pc-diff{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--ink-soft)}
+.pc-diff.mini .seg{width:16px;height:6px}
+.pc-prog{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;color:var(--ink-soft)}
+.pc-prog .bar{flex:1}
+
+/* ---- project viewer ---- */
+.rpi-title{display:flex;align-items:center;gap:18px;margin:6px 0 22px;padding:18px 20px;
+  background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pc,#4c97ff);
+  border-radius:16px;box-shadow:var(--shadow-sm)}
+.rpi-title h1{margin:0;font-size:26px}
+.rpi-sub{margin:5px 0 10px;color:var(--ink-soft);font-size:15px}
+.rpi-tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+.rpi-grid{display:grid;grid-template-columns:1fr 350px;gap:22px;align-items:start}
+.rpi-main{min-width:0}
+.rpi-side{position:sticky;top:74px;display:flex;flex-direction:column;gap:14px}
+.rpi-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow-sm)}
+.rpi-card-h{font-weight:800;font-size:14px;margin-bottom:10px}
+.rpi-embed{position:relative;width:100%;aspect-ratio:485/402;border-radius:10px;overflow:hidden;background:#0b1220;border:1px solid var(--line)}
+.rpi-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.rpi-embed-img{width:100%;border-radius:10px;display:block}
+.rpi-note{font-size:12.5px;color:var(--ink-soft);margin:9px 0 0;line-height:1.45}
+.rpi-steplist{list-style:none;margin:0;padding:0;counter-reset:none}
+.rpi-steplist li{margin:0}
+.rpi-steplist a{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:9px;text-decoration:none;
+  color:var(--ink-soft);font-size:13.5px;font-weight:600}
+.rpi-steplist a:hover{background:#eef2fa;color:var(--ink)}
+.rpi-steplist li.active a{background:#e7efff;color:var(--brand-dark);font-weight:800}
+.rpi-steplist li.seen .sl-n{background:var(--good);color:#fff}
+.sl-n{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;
+  background:#e9eef8;color:var(--ink-soft)}
+.rpi-steplist li.active .sl-n{background:var(--brand);color:#fff}
+.rpi-attr{font-size:11.5px;color:var(--ink-faint);line-height:1.5;padding:2px 4px}
+.rpi-attr a{color:var(--ink-soft);font-weight:700}
+
+.rpi-prog{margin-bottom:16px}
+.rpi-prog-txt{font-size:13px;font-weight:800;color:var(--ink-soft);margin-bottom:7px}
+.rpi-step{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow-sm)}
+.rpi-step h3{font-size:22px;margin:0 0 14px}
+.rpi-step h4{font-size:17px;margin:18px 0 8px}
+.rpi-step p{line-height:1.6;margin:0 0 12px}
+.rpi-step ul,.rpi-step ol{margin:0 0 14px;padding-left:22px;line-height:1.65}
+.rpi-step li{margin:4px 0}
+.rpi-img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:6px 0;cursor:zoom-in;
+  box-shadow:var(--shadow-sm);transition:transform .1s}
+.rpi-img:hover{transform:scale(1.01)}
+.rpi-howto{background:#f3f7ff;border:1px dashed #b9d0ff;border-radius:10px;padding:10px 13px;font-size:14px;color:#31507e}
+
+/* task / hint / challenge blocks */
+.rpi-task{position:relative;background:#f7faff;border:1px solid #e2ebfa;border-radius:12px;padding:14px 16px 6px;margin:0 0 14px}
+.rpi-task-chip{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  color:#2563eb;background:#e0ecff;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+.rpi-hints{background:#fff8ec;border:1px solid #ffe4b3;border-radius:12px;padding:12px 15px;margin:0 0 14px}
+.rpi-challenge{background:#fdf1f5;border:1px solid #ffd0e0;border-radius:12px;padding:12px 16px;margin:14px 0}
+.rpi-chip{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  color:#be185d;background:#ffe1ec;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+.rpi-collapse{margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rpi-collapse summary{cursor:pointer;padding:9px 13px;font-weight:700;font-size:14px;background:#f2f5fb;list-style:none}
+.rpi-collapse summary::-webkit-details-marker{display:none}
+.rpi-collapse summary::before{content:"▸ ";color:var(--brand-dark)}
+.rpi-collapse[open] summary::before{content:"▾ "}
+.rpi-collapse>*:not(summary){padding:0 14px}
+.rpi-blocks{background:#20293b;color:#e8eefc;border-radius:12px;padding:30px 16px 15px;position:relative;overflow-x:auto;
+  font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:13px;line-height:1.6;white-space:pre;margin:0 0 14px;tab-size:2}
+.rpi-blabel{position:absolute;top:0;left:0;font-family:var(--font);font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.6px;color:#ffce54;background:#161d2b;padding:4px 12px;border-radius:0 0 10px 0}
+.blk{background:#e9eef8;color:var(--ink);border-radius:6px;padding:.08em .42em;font-family:inherit;font-weight:600;font-size:.92em}
+code.blk.block3control,code.blk.block3events{background:#fff3d9;color:#a15c00}
+code.blk.block3looks{background:#efe7ff;color:#6d28d9}
+code.blk.block3motion{background:#e0ecff;color:#1d4ed8}
+code.blk.block3sound{background:#f2e6ff;color:#8e2fd0}
+code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490}
+
+.rpi-stepnav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}
+.rpi-stepnav-mid{font-size:13px;font-weight:700;color:var(--ink-faint);text-align:center;flex:1;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn.big{padding:13px 20px;font-size:15px}
+
+/* image lightbox */
+.rpi-lb{position:fixed;inset:0;background:rgba(10,15,25,.85);display:grid;place-items:center;z-index:200;padding:24px;cursor:zoom-out}
+.rpi-lb img{max-width:96vw;max-height:92vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+
+@media (max-width:900px){
+  .rpi-grid{grid-template-columns:1fr}
+  .rpi-side{position:static;order:-1}
+}
+
+@media (prefers-color-scheme: dark){
+  .rpi-hero{background:linear-gradient(135deg,#1b2740,#231b3d)}
+  .rpi-hero-badge{background:#2b2447;color:#c3b0ff}
+  .pc,.rpi-card,.rpi-step,.rpi-title{background:var(--surface)}
+  .pc-hero{background:#1a2233}
+  .rpi-steplist a:hover{background:#20293b}
+  .rpi-steplist li.active a{background:#1e2c40;color:#8fbcff}
+  .sl-n{background:#2a3346;color:var(--ink-soft)}
+  .rpi-task{background:#18202f;border-color:#26324a}
+  .rpi-task-chip{background:#1e2c40;color:#8fbcff}
+  .rpi-hints{background:#241f14;border-color:#4a3a1c}
+  .rpi-challenge{background:#291a22;border-color:#4a2436}
+  .rpi-chip{background:#3a1f2a;color:#ff9db4}
+  .rpi-howto{background:#141d2e;border-color:#2f4670;color:#a9c4f0}
+  .rpi-collapse summary{background:#1a2233}
+  .type-badge.cat-animation{background:#12303f;color:#7dd3fc}
+  .type-badge.cat-game{background:#123322;color:#86efac}
+  .type-badge.cat-puzzle{background:#3a2c12;color:#fcd34d}
+  .type-badge.cat-quiz{background:#3a3512;color:#fde047}
+  .type-badge.cat-chatbot{background:#241b3f;color:#c4b5fd}
+  .type-badge.cat-music{background:#3a230f;color:#fdba74}
+  .type-badge.cat-art{background:#3a1428;color:#f9a8d4}
+  .type-badge.cat-sandbox{background:#0e3038;color:#67e8f9}
+  .type-badge.cat-tool{background:#232c3a;color:#cbd5e1}
+}
+
+/* home banner -> Real Project Library */
+.c-navbtn.feature{background:linear-gradient(135deg,#7c3aed,#4c97ff);color:#fff;box-shadow:var(--shadow-sm)}
+.c-navbtn.feature:hover{filter:brightness(1.06);color:#fff}
+.rpi-banner{display:flex;align-items:center;gap:20px;margin:0 0 26px;padding:20px 24px;text-decoration:none;color:inherit;
+  background:linear-gradient(120deg,#eef3ff 0%,#f3ecff 60%,#ffeef7 100%);
+  border:1px solid #e2ddf5;border-radius:20px;box-shadow:var(--shadow-sm);transition:transform .12s,box-shadow .18s}
+.rpi-banner:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.rpi-banner-emoji{font-size:52px;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.15))}
+.rpi-banner-txt{flex:1;min-width:0}
+.rpi-banner-kicker{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7c3aed;margin-bottom:3px}
+.rpi-banner-txt h2{margin:0 0 5px;font-size:22px}
+.rpi-banner-txt p{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.5}
+.rpi-banner-go{flex:none;font-weight:800;color:#fff;background:linear-gradient(135deg,#7c3aed,#4c97ff);
+  padding:11px 18px;border-radius:999px;box-shadow:var(--shadow-sm);white-space:nowrap}
+@media (max-width:720px){ .rpi-banner{flex-wrap:wrap} .rpi-banner-go{width:100%;text-align:center} }
+@media (prefers-color-scheme: dark){
+  .rpi-banner{background:linear-gradient(120deg,#1b2740,#231b3d 60%,#2a1830);border-color:#332a4d}
+}

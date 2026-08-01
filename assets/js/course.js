@@ -44,6 +44,7 @@
         h("div", {}, [h("div", { class: "c-name" }, ["Grade Next"]), h("div", { class: "c-sub" }, ["Scratch Coding Academy"])])
       ]),
       h("nav", { class: "c-nav" }, [
+        h("a", { class: "c-navbtn feature", href: "projects.html" }, ["🚀 Real Project Library"]),
         h("a", { class: "c-navbtn", href: "blocklab.html" }, ["🧪 Block Lab"]),
         h("a", { class: "c-navbtn", href: "index-classic.html" }, ["📚 Full Curriculum"])
       ])
@@ -56,6 +57,16 @@
     wrap.appendChild(h("section", { class: "c-hero" }, [
       h("h1", {}, ["Build real games, one session at a time 🎮"]),
       h("p", {}, ["Pick a session, open an exercise, and the Scratch editor opens right here — pre-loaded with the sprites. Read the Instructions, watch the Desired Output, then build it."])
+    ]));
+    // Prominent banner -> the imported, ready-made Real Project Library
+    wrap.appendChild(h("a", { class: "rpi-banner", href: "projects.html" }, [
+      h("div", { class: "rpi-banner-emoji" }, ["🚀"]),
+      h("div", { class: "rpi-banner-txt" }, [
+        h("div", { class: "rpi-banner-kicker" }, ["★ NEW · Ready-made real projects"]),
+        h("h2", {}, ["Explore the Real Project Library"]),
+        h("p", {}, ["27 complete, professionally-made Scratch projects — Ghostbusters, Flappy Parrot, Rock Band, Chatbot and more — imported from the Raspberry Pi Foundation / Code Club curriculum. Each shows the real finished game, then guides you step by step."])
+      ]),
+      h("span", { class: "rpi-banner-go" }, ["Open Library →"])
     ]));
     var grid = h("div", { class: "session-grid" });
     C.sessions.forEach(function (s) {
