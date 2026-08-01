@@ -41,8 +41,9 @@
         ])
       ]),
       h("div", { class: "cont-actions" }, [
-        h("a", { class: "btn primary big", href: "lesson.html?s=" + s.id }, ["▶ Open lesson plan"]),
-        s.content ? h("a", { class: "btn ghost", href: s.content.href }, ["Go to the build"]) : null
+        h("a", { class: "btn primary big", href: "learn.html?s=" + s.id }, ["▶ Start learning"]),
+        h("a", { class: "btn ghost", href: "quiz.html?s=" + s.id }, ["🧠 Recall Test"]),
+        h("a", { class: "btn ghost", href: "lesson.html?s=" + s.id }, ["👩‍🏫 Lesson plan"])
       ])
     ]);
   }
@@ -98,10 +99,10 @@
     main.appendChild(continueCard());
 
     main.appendChild(h("div", { class: "tiles" }, [
-      tile("curriculum.html", "📚", "Curriculum", P.meta.sessionCount + " sessions with full lesson plans", "#4c97ff"),
+      tile("curriculum.html", "📚", "Curriculum", P.meta.sessionCount + " sessions · learn, test, then build", "#4c97ff"),
+      tile("blocklab.html", "🧪", "Block Lab", P.meta.blockCount + " Scratch blocks explained with examples", "#f59e0b"),
       tile("projects.html", "🚀", "Project Library", P.meta.projectCount + " real guided Scratch projects", "#7c3aed"),
-      tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399"),
-      tile("blocklab.html", "🧪", "Block Lab", "Explore every Scratch block by category", "#f59e0b")
+      tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399")
     ]));
 
     var m = masteryCard(); if (m) main.appendChild(m);

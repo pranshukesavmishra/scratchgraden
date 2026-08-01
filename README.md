@@ -12,11 +12,31 @@ host (or GitHub Pages) and it runs.
 | | |
 |---|---|
 | **100 sessions** | 2 levels × 50, each a full 60-minute lesson plan |
+| **Learn → Practice → Apply** | every session: study the blocks, pass a Recall Test, then build |
+| **104 blocks** | every Scratch block explained with an example and the gotcha |
+| **490 MCQ questions** | 10 per topic, shuffled each attempt, with teaching explanations |
 | **49 concepts** | every Scratch block family, from first block to clones, lists and physics |
 | **28 guided projects** | real Raspberry Pi / Code Club projects (CC BY-SA 4.0), 227 steps |
 | **90 exercises** | generated game exercises with sprites pre-loaded and no solution code |
 | **Assessment** | 3-level rubric per session, tutor notes, skills mastery map |
 | **Parent reports** | printable report card and certificates |
+
+### The learning loop
+
+Content alone does not teach. Every session runs the same three stages, and
+progress is tracked for each one:
+
+1. **Learn** (`learn.html`) — the idea in plain language, then every new block
+   with what it does, a copyable example and the mistake to avoid.
+2. **Practice** (`quiz.html`) — a 10-question multiple-choice **Recall Test**
+   drawn from a bank of 10+ per topic. Questions and options are reshuffled
+   every attempt, each answer gets an explanation that teaches, and 7/10 is
+   needed to pass.
+3. **Apply** — the real build: a guided project or an exercise, opened
+   directly in Scratch with the sprites already loaded.
+
+The **Block Lab** shows all 104 blocks by category, which session teaches each
+one, and which the student has already unlocked.
 
 ### The part that matters
 
@@ -37,11 +57,13 @@ tutoring business work is the **delivery system**, so every session ships with:
 |---|---|
 | `index.html` | Dashboard — continue where you left off, skills map, progress |
 | `curriculum.html` | The 100-session scope & sequence, searchable and filterable |
+| `learn.html?s=L1S24` | **Learn** — the idea, the new blocks, examples and pitfalls |
+| `quiz.html?s=L1S24` | **Recall Test** — 10 MCQs, instant feedback, pass to unlock |
 | `lesson.html?s=L1S24` | The lesson plan — **Tutor Mode** and **Student Mode** |
 | `projects.html` | The Real Project Library (28 imported guided projects) |
 | `exercise.html?ex=S1E1` | Exercise launcher — opens Scratch with the sprites loaded |
 | `report.html` | Parent progress report, certificates, export/import |
-| `blocklab.html` | Reference: every Scratch block by category |
+| `blocklab.html` | Every Scratch block by category, with unlock tracking |
 | `index-classic.html` | The original written curriculum (kept for reference) |
 
 Every project and exercise opens **directly in Scratch with the sprites already
@@ -66,6 +88,8 @@ python3 tools/build_platform.py  # merge spine + concepts + content -> platform.
 
 ```
 tools/concepts.py        the teaching knowledge base (49 concepts) — edit to improve teaching
+tools/blocks.py          the block reference (104 blocks: meaning, example, gotcha)
+tools/questions.py       the MCQ bank (490 questions, 10+ per concept)
 tools/spine.py           the 100-session curriculum scope & sequence
 tools/build_platform.py  merges everything into assets/js/platform.js
 tools/import_rpi.py      imports the Raspberry Pi / Code Club projects

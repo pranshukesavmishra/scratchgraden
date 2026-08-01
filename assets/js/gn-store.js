@@ -75,6 +75,44 @@
       if (all[st]) { delete all[st][sessionId]; write(K_PROGRESS, all); }
     },
 
+    /* ---------- the Learn -> Practice -> Apply journey ---------- */
+    markLearned: function (sessionId, studentId) {
+      return this.saveSession(sessionId, { learned: true, status: "started" }, studentId);
+    },
+    markApplied: function (sessionId, studentId) {
+      return this.saveSession(sessionId, { applied: true, status: "started" }, studentId);
+    },
+    /* record a Recall Test attempt; keeps the best score */
+    saveQuiz: function (sessionId, score, total, passMark, studentId) {
+      var rec = this.sessionRecord(sessionId, studentId) || {};
+      var q = rec.quiz || { attempts: 0, best: 0, total: total };
+      q.attempts += 1;
+      q.last = score;
+      q.total = total;
+      if (score > q.best) q.best = score;
+      q.passed = q.best >= passMark;
+      return this.saveSession(sessionId, { quiz: q, status: "started" }, studentId);
+    },
+    /* which of the three stages are done */
+    stages: function (sessionId, studentId) {
+      var r = this.sessionRecord(sessionId, studentId) || {};
+      return {
+        learn: !!r.learned,
+        quiz: !!(r.quiz && r.quiz.passed),
+        apply: !!r.applied,
+        quizBest: r.quiz ? r.quiz.best : null,
+        quizTotal: r.quiz ? r.quiz.total : null,
+        attempts: r.quiz ? r.quiz.attempts : 0,
+        done: r.status === "done"
+      };
+    },
+    /* percent through the 3-stage journey for one session */
+    journeyPct: function (sessionId, studentId) {
+      var s = this.stages(sessionId, studentId), n = 0;
+      if (s.learn) n++; if (s.quiz) n++; if (s.apply) n++;
+      return Math.round((n / 3) * 100);
+    },
+
     /* ---------- derived stats ---------- */
     stats: function (P, studentId) {
       var prog = this.progress(studentId), done = 0, started = 0, rub = { emerging: 0, secure: 0, mastered: 0 };
@@ -93,19 +131,27 @@
       ids.forEach(function (id) { if ((prog[id] || {}).status === "done") done++; });
       return { done: done, total: ids.length, pct: ids.length ? Math.round((done / ids.length) * 100) : 0 };
     },
-    /* mastery per Scratch strand, 0-100, from rubric levels of completed sessions */
+    /* Mastery per Scratch strand, 0-100. Blends the tutor's rubric judgement with
+       the child's Recall Test score, so mastery reflects both observed work and
+       tested understanding. Sessions only assessed one way still count. */
     mastery: function (P, studentId) {
       var prog = this.progress(studentId), out = {};
       Object.keys(P.skills || {}).forEach(function (strand) {
         var sk = P.skills[strand], score = 0, max = 0, touched = 0;
         sk.sessions.forEach(function (sid) {
-          max += 3;
+          max += 1;
           var r = prog[sid];
-          if (r && r.status === "done") {
-            touched++;
+          if (!r) return;
+          var parts = [];
+          if (r.status === "done" || r.rubric) {
             var i = RUBRIC.indexOf(r.rubric);
-            score += (i >= 0 ? i + 1 : 2);
+            parts.push(i >= 0 ? (i + 1) / 3 : 2 / 3);
           }
+          if (r.quiz && r.quiz.total) parts.push(r.quiz.best / r.quiz.total);
+          if (!parts.length) return;
+          touched++;
+          var avg = parts.reduce(function (a, b) { return a + b; }, 0) / parts.length;
+          score += avg;
         });
         out[strand] = { strand: strand, color: sk.color, total: sk.sessions.length,
                         touched: touched, pct: max ? Math.round((score / max) * 100) : 0 };

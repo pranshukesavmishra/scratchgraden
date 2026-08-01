@@ -26,6 +26,25 @@
                         text.slice(i + 1).trim()]);
   }
 
+  /* the student's 3-stage journey, shown so the tutor can see where they are */
+  function journeyBar() {
+    var st = GN.stages(S.id);
+    var steps = [
+      { n: 1, label: "Learn", icon: "📖", href: "learn.html?s=" + S.id, done: st.learn },
+      { n: 2, label: "Recall Test", icon: "🧠", href: "quiz.html?s=" + S.id, done: st.quiz },
+      { n: 3, label: "Build it", icon: "🛠", href: S.content ? S.content.href : "#", done: st.apply }
+    ];
+    return h("div", { class: "journey" }, steps.map(function (s, i) {
+      return h("a", { class: "jstep" + (s.done ? " done" : ""), href: s.href }, [
+        h("span", { class: "jn" }, [s.done ? "✓" : String(s.n)]),
+        h("span", { class: "jlabel" }, [s.icon + " " + s.label]),
+        i < 2 ? h("span", { class: "jarrow" }, ["→"]) : null
+      ]);
+    }).concat([
+      st.quizBest != null ? h("span", { class: "jscore" }, ["Recall Test best: " + st.quizBest + "/" + st.quizTotal]) : null
+    ]));
+  }
+
   /* ---------------- header block ---------------- */
   function sessionHead() {
     var lvl = P.levels.filter(function (l) { return l.level === S.level; })[0] || {};
@@ -50,6 +69,7 @@
           h("button", { class: "seg-btn" + (mode === "student" ? " on" : ""), onclick: function () { setMode("student"); } }, ["🧒 Student Mode"])
         ])
       ]),
+      journeyBar(),
       h("div", { class: "lp-nav" }, [
         prev ? h("a", { class: "btn ghost sm", href: "lesson.html?s=" + prev }, ["← " + P.sessions[prev].title]) : h("span", {}),
         next ? h("a", { class: "btn ghost sm", href: "lesson.html?s=" + next }, [P.sessions[next].title + " →"]) : h("span", {})

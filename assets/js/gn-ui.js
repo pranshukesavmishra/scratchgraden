@@ -59,6 +59,7 @@
     var nav = [
       ["index.html", "🏠 Dashboard", "home"],
       ["curriculum.html", "📚 Curriculum", "curriculum"],
+      ["blocklab.html", "🧪 Block Lab", "blocklab"],
       ["projects.html", "🚀 Projects", "projects"],
       ["report.html", "📊 Reports", "report"]
     ];

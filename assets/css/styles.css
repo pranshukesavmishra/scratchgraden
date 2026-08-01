@@ -893,3 +893,150 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
   .rub-pill.secure{background:#1e2c40;color:#8fbcff}
   .rub-pill.mastered{background:#12331f;color:#86efac}
 }
+
+/* ===================================================================
+   LEARN -> PRACTICE -> APPLY journey, Block Lab and Recall Test
+   =================================================================== */
+.journey{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:14px}
+.jstep{display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;text-decoration:none;
+  background:#eef2fa;color:var(--ink-soft);font-size:13.5px;font-weight:700;transition:background .15s,color .15s}
+.jstep:hover{background:#e3ebf9;color:var(--ink)}
+.jstep.on{background:var(--brand);color:#fff}
+.jstep.done{background:#e4f7ec;color:#15803d}
+.jstep.on.done{background:var(--good);color:#fff}
+.jn{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.5);display:grid;place-items:center;
+  font-size:11.5px;font-weight:800;flex:none}
+.jstep.on .jn{background:rgba(255,255,255,.3)}
+.jarrow{margin-left:4px;color:var(--ink-faint);font-weight:800}
+.lp-next{border:2px solid var(--good);box-shadow:0 0 0 4px rgba(47,174,102,.09),var(--shadow-sm)}
+.next-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.learn-idea{font-size:16px;line-height:1.6;margin:0}
+
+/* block cards (shared by Learn and Block Lab) */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.bcard{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--bc,#4c97ff);
+  border-radius:13px;padding:14px}
+.bcard.unlocked{background:linear-gradient(135deg,rgba(47,174,102,.07),transparent 60%)}
+.bcard-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+.bchip{color:#fff;font-size:12.5px;font-weight:800;padding:5px 11px;border-radius:8px;
+  font-family:"SFMono-Regular",Consolas,Menlo,monospace;box-shadow:0 2px 0 rgba(0,0,0,.13) inset}
+.bcat{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-faint)}
+.bunlock{font-size:11px;font-weight:800;color:#15803d;background:#dcfce7;padding:3px 9px;border-radius:999px}
+.bwhat{margin:0 0 9px;font-size:13.5px;line-height:1.5}
+.bex{background:#20293b;color:#e8eefc;border-radius:9px;padding:8px 11px;margin-bottom:8px;overflow-x:auto}
+.bex-l{display:block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#ffce54;margin-bottom:3px}
+.bex code{font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:12px;white-space:pre}
+.btip{margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.45}
+.btaught{display:block;margin-top:9px;font-size:12px;font-weight:700;color:var(--brand-dark);text-decoration:none}
+.btaught:hover{text-decoration:underline}
+
+/* Block Lab */
+.blab-sec{margin:0 0 28px}
+.blab-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;margin-bottom:14px;
+  background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--bc);
+  border-radius:15px;box-shadow:var(--shadow-sm)}
+.blab-emoji{width:46px;height:46px;flex:none;display:grid;place-items:center;font-size:23px;border-radius:13px}
+.blab-head h2{margin:0;font-size:19px}
+.blab-head p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
+.blab-count{margin-left:auto;font-size:12.5px;font-weight:800;color:var(--ink-faint)}
+
+/* Recall Test */
+.quiz-wrap{max-width:760px;margin:0 auto}
+.quiz-prog{margin-bottom:16px}
+.quiz-prog-txt{font-size:13px;font-weight:800;color:var(--ink-soft);margin-bottom:7px}
+.quiz-dots{display:flex;gap:5px;margin-top:9px;flex-wrap:wrap}
+.qdot{width:11px;height:11px;border-radius:50%}
+.qdot.right{background:var(--good)}
+.qdot.wrong{background:var(--bad)}
+.quiz-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm)}
+.quiz-stem{margin:0 0 18px;font-size:21px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:10px}
+.qopt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;font:inherit;font-size:15.5px;
+  padding:14px 16px;border:2px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:13px;cursor:pointer;transition:border-color .12s,background .12s,transform .08s}
+.qopt:hover:not(:disabled){border-color:var(--brand);transform:translateX(2px)}
+.qopt:disabled{cursor:default}
+.qletter{flex:none;width:29px;height:29px;border-radius:9px;background:#eef2fa;display:grid;place-items:center;
+  font-weight:800;font-size:14px;color:var(--ink-soft)}
+.qtext{flex:1}
+.qmark{font-weight:800;font-size:19px}
+.qopt.correct{border-color:var(--good);background:#eefaf2}
+.qopt.correct .qletter{background:var(--good);color:#fff}
+.qopt.correct .qmark{color:var(--good)}
+.qopt.chosen-wrong{border-color:var(--bad);background:#fdeeed}
+.qopt.chosen-wrong .qletter{background:var(--bad);color:#fff}
+.qopt.chosen-wrong .qmark{color:var(--bad)}
+.qopt.dim{opacity:.55}
+.qwhy{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:14.5px;line-height:1.55}
+.qwhy.ok{background:#eefaf2;border:1px solid #bfe8d1}
+.qwhy.no{background:#fff6ec;border:1px solid #ffd9b3}
+.quiz-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;justify-content:center}
+.quiz-result{text-align:center;background:var(--surface);border:2px solid var(--line);border-radius:20px;
+  padding:30px 24px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.quiz-result.pass{border-color:var(--good);background:linear-gradient(160deg,#f2fbf6,var(--surface) 60%)}
+.quiz-result.fail{border-color:var(--warn);background:linear-gradient(160deg,#fffaf1,var(--surface) 60%)}
+.qr-emoji{font-size:52px}
+.quiz-result h2{margin:6px 0 14px;font-size:27px}
+.quiz-result .gn-ringwrap{margin:0 auto}
+.qr-score{font-size:19px;font-weight:800;margin:12px 0 6px}
+.qr-msg{margin:0 auto;max-width:460px;color:var(--ink-soft);font-size:14.5px;line-height:1.55}
+.qr-best{margin-top:10px;font-size:13px;color:var(--ink-faint);font-weight:700}
+.qrev{padding:14px 16px;border-radius:12px;margin-bottom:11px;border:1px solid var(--line)}
+.qrev.ok{background:#f5fbf7;border-color:#cfe9da}
+.qrev.no{background:#fff7f6;border-color:#f5d4d0}
+.qrev-h{display:flex;gap:9px;font-weight:700;font-size:14.5px;line-height:1.45}
+.qrev-n{flex:none;font-weight:800}
+.qrev.ok .qrev-n{color:var(--good)}
+.qrev.no .qrev-n{color:var(--bad)}
+.qrev-a{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+.qrev-why{font-size:13px;color:var(--ink-soft);margin-top:7px;font-style:italic}
+
+@media (max-width:640px){
+  .journey{gap:4px}
+  .jstep{padding:7px 10px;font-size:12.5px}
+  .jlabel{display:none}
+  .quiz-stem{font-size:18px}
+  .qopt{font-size:14.5px;padding:12px 13px}
+}
+@media (prefers-color-scheme: dark){
+  .jstep{background:#1a2233}
+  .jstep:hover{background:#20293b}
+  .jstep.done{background:#12331f;color:#86efac}
+  .bcard{background:#1a2233}
+  .bcard.unlocked{background:linear-gradient(135deg,rgba(47,174,102,.12),#1a2233 60%)}
+  .bunlock{background:#12331f;color:#86efac}
+  .blab-head,.quiz-card,.quiz-result{background:var(--surface)}
+  .qopt{background:var(--surface);color:var(--ink)}
+  .qletter{background:#1a2233}
+  .qopt.correct{background:#12271c}
+  .qopt.chosen-wrong{background:#2a1614}
+  .qwhy.ok{background:#12271c;border-color:#255139}
+  .qwhy.no{background:#2a2114;border-color:#5a4420}
+  .qrev.ok{background:#141f19;border-color:#25412f}
+  .qrev.no{background:#241715;border-color:#4a2a26}
+  .quiz-result.pass{background:linear-gradient(160deg,#12271c,var(--surface) 60%)}
+  .quiz-result.fail{background:linear-gradient(160deg,#2a2114,var(--surface) 60%)}
+}
+
+/* session row: student journey + tutor plan link */
+.sess-row{padding:0;overflow:hidden}
+.sess-hit{display:flex;align-items:center;gap:13px;flex:1;min-width:0;padding:11px 0 11px 15px;
+  text-decoration:none;color:inherit}
+.sess-side{display:flex;align-items:center;gap:12px;padding-right:15px;flex:none}
+.sess-stages{display:flex;gap:4px}
+.sdot{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;font-size:12px;
+  background:#eef2fa;opacity:.42;filter:grayscale(1)}
+.sdot.on{background:#dcfce7;opacity:1;filter:none}
+.sess-plan{font-size:12px;font-weight:800;color:var(--ink-faint);text-decoration:none;white-space:nowrap;
+  padding:6px 10px;border-radius:999px;border:1px solid var(--line)}
+.sess-plan:hover{color:var(--brand-dark);border-color:var(--brand);background:#eef4ff}
+.jscore{font-size:12.5px;font-weight:800;color:var(--ink-soft);margin-left:6px}
+@media (max-width:720px){ .sess-plan{display:none} }
+@media (prefers-color-scheme: dark){
+  .sdot{background:#1a2233}
+  .sdot.on{background:#12331f}
+  .sess-plan:hover{background:#1e2c40}
+}
+/* the global `code` rule adds a light background — cancel it inside the dark
+   example box, otherwise pale text sits on a pale background and vanishes */
+.bex code{background:transparent;color:inherit;padding:0;border-radius:0}

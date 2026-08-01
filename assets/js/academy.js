@@ -16,18 +16,28 @@
     var st = statusOf(s.id);
     var mark = st === "done" ? "✓" : (st === "started" ? "◐" : s.n);
     var c = s.content;
-    return h("a", { class: "sess-row " + st, href: "lesson.html?s=" + s.id }, [
-      h("span", { class: "sess-n", style: "background:" + (st === "done" ? "var(--good)" : st === "started" ? "var(--warn)" : "#e9eef8") +
-                 (st === "none" ? "" : ";color:#fff") }, [String(mark)]),
-      h("div", { class: "sess-main" }, [
-        h("div", { class: "sess-title" }, [s.title]),
-        h("div", { class: "sess-meta" }, [
-          h("span", { class: "strand-dot", style: "background:" + s.strandColor }),
-          h("span", { class: "sess-concept" }, [s.concept]),
-          c ? h("span", { class: "sess-content" }, [(c.kind === "project" ? "🚀 " : "🎮 ") + c.title]) : h("span", { class: "sess-content build" }, ["🛠 Build session"])
+    var stg = GN.stages(s.id);
+    return h("div", { class: "sess-row " + st }, [
+      h("a", { class: "sess-hit", href: "learn.html?s=" + s.id }, [
+        h("span", { class: "sess-n", style: "background:" + (st === "done" ? "var(--good)" : st === "started" ? "var(--warn)" : "#e9eef8") +
+                   (st === "none" ? "" : ";color:#fff") }, [String(mark)]),
+        h("div", { class: "sess-main" }, [
+          h("div", { class: "sess-title" }, [s.title]),
+          h("div", { class: "sess-meta" }, [
+            h("span", { class: "strand-dot", style: "background:" + s.strandColor }),
+            h("span", { class: "sess-concept" }, [s.concept]),
+            c ? h("span", { class: "sess-content" }, [(c.kind === "project" ? "🚀 " : "🎮 ") + c.title]) : h("span", { class: "sess-content build" }, ["🛠 Build session"])
+          ])
         ])
       ]),
-      h("span", { class: "sess-go" }, ["Lesson plan →"])
+      h("div", { class: "sess-side" }, [
+        h("div", { class: "sess-stages", title: "Learn · Recall Test · Build" }, [
+          h("span", { class: "sdot" + (stg.learn ? " on" : ""), title: "Learn" }, ["📖"]),
+          h("span", { class: "sdot" + (stg.quiz ? " on" : ""), title: "Recall Test" }, ["🧠"]),
+          h("span", { class: "sdot" + (stg.apply ? " on" : ""), title: "Build" }, ["🛠"])
+        ]),
+        h("a", { class: "sess-plan", href: "lesson.html?s=" + s.id, title: "Tutor lesson plan" }, ["👩‍🏫 Plan"])
+      ])
     ]);
   }
 
