@@ -19,6 +19,21 @@
   function continueCard() {
     var stu = GN.active();
     if (!stu) {
+      if (!GN.isTutor()) {
+        // Students never manage accounts — send them straight into the course.
+        var first = P.order[0];
+        return h("section", { class: "cont-card" }, [
+          h("div", { class: "cont-txt" }, [
+            h("div", { class: "cont-kicker" }, ["Start here"]),
+            h("h2", {}, ["Session 1 · " + P.sessions[first].title]),
+            h("p", {}, ["Learn the blocks, take the Recall Test, then build it for real."])
+          ]),
+          h("div", { class: "cont-actions" }, [
+            h("a", { class: "btn primary big", href: "learn.html?s=" + first }, ["▶ Start learning"]),
+            h("a", { class: "btn ghost", href: "curriculum.html" }, ["See all 100 sessions"])
+          ])
+        ]);
+      }
       return h("section", { class: "cont-card" }, [
         h("div", { class: "cont-txt" }, [
           h("div", { class: "cont-kicker" }, ["Get started"]),
@@ -43,7 +58,7 @@
       h("div", { class: "cont-actions" }, [
         h("a", { class: "btn primary big", href: "learn.html?s=" + s.id }, ["▶ Start learning"]),
         h("a", { class: "btn ghost", href: "quiz.html?s=" + s.id }, ["🧠 Recall Test"]),
-        h("a", { class: "btn ghost", href: "lesson.html?s=" + s.id }, ["👩‍🏫 Lesson plan"])
+        GN.isTutor() ? h("a", { class: "btn ghost", href: "lesson.html?s=" + s.id }, ["👩‍🏫 Lesson plan"]) : null
       ])
     ]);
   }
@@ -98,11 +113,12 @@
 
     main.appendChild(continueCard());
 
+    main.appendChild(U.modeBanner());
     main.appendChild(h("div", { class: "tiles" }, [
       tile("curriculum.html", "📚", "Curriculum", P.meta.sessionCount + " sessions · learn, test, then build", "#4c97ff"),
       tile("blocklab.html", "🧪", "Block Lab", P.meta.blockCount + " Scratch blocks explained with examples", "#f59e0b"),
       tile("projects.html", "🚀", "Project Library", P.meta.projectCount + " real guided Scratch projects", "#7c3aed"),
-      tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399")
+      GN.isTutor() ? tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399") : null
     ]));
 
     var m = masteryCard(); if (m) main.appendChild(m);

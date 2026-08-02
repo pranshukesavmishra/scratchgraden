@@ -41,7 +41,7 @@
             h("span", { class: "tag-chip" }, ["⭐ " + S.concept])
           ])
         ]),
-        h("a", { class: "btn ghost sm", href: "lesson.html?s=" + S.id }, ["👩‍🏫 Tutor view"])
+        GN.isTutor() ? h("a", { class: "btn ghost sm", href: "lesson.html?s=" + S.id }, ["👩‍🏫 Lesson plan"]) : null
       ]),
       journey("learn")
     ]);
@@ -50,11 +50,11 @@
   function blockCard(b) {
     return h("div", { class: "bcard", style: "--bc:" + b.color }, [
       h("div", { class: "bcard-top" }, [
-        h("code", { class: "bchip", style: "background:" + b.color }, [b.key]),
+        window.SB ? SB.chip(b.key) : h("code", { class: "bchip", style: "background:" + b.color }, [b.key]),
         h("span", { class: "bcat" }, [b.category])
       ]),
       h("p", { class: "bwhat" }, [b.what]),
-      h("div", { class: "bex" }, [h("span", { class: "bex-l" }, ["Example"]), h("code", {}, [b.example])]),
+      window.SB ? SB.render(b.example) : h("div", { class: "bex" }, [h("code", {}, [b.example])]),
       h("p", { class: "btip" }, ["💡 " + b.tip]),
       (b.uses && b.uses.length) ? h("div", { class: "buses" }, [
         h("div", { class: "buses-h" }, ["Ways to use it"]),
@@ -82,7 +82,7 @@
         h("div", { class: "wex-list" }, d.examples.map(function (ex) {
           return h("div", { class: "wex" }, [
             h("div", { class: "wex-t" }, [ex.title]),
-            h("pre", { class: "wex-code" }, [ex.code]),
+            window.SB ? SB.render(ex.code) : h("pre", { class: "wex-code" }, [ex.code]),
             h("p", { class: "wex-n" }, ["→ " + ex.note])
           ]);
         }))
@@ -132,6 +132,7 @@
     app.innerHTML = "";
     app.appendChild(U.header("curriculum"));
     var main = h("main", { class: "c-main" });
+    main.appendChild(U.modeBanner());
     main.appendChild(head());
 
     var grid = h("div", { class: "lp-grid" });

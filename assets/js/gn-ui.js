@@ -107,11 +107,18 @@
     ]);
   }
 
-  /* ---- student switcher (drives all progress) ---- */
+  /* ---- student switcher (drives all progress) ----
+     Adding and switching students is a TUTOR task. A student never sees
+     account management — at most, their own name. */
   function studentSwitcher() {
     var GN = w.GN;
     var list = GN.students(), active = GN.active();
     var wrap = h("div", { class: "gn-switch" });
+
+    if (!GN.isTutor()) {
+      if (active) wrap.appendChild(h("span", { class: "gn-whoami" }, ["👋 " + active.name]));
+      return wrap;
+    }
 
     if (!list.length) {
       wrap.appendChild(h("button", { class: "btn primary sm", onclick: function () { addStudentFlow(); } },

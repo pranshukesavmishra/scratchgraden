@@ -131,7 +131,7 @@
         h("div", { class: "wex-list" }, d.examples.map(function (ex) {
           return h("div", { class: "wex" }, [
             h("div", { class: "wex-t" }, [ex.title]),
-            h("pre", { class: "wex-code" }, [ex.code]),
+            window.SB ? SB.render(ex.code) : h("pre", { class: "wex-code" }, [ex.code]),
             h("p", { class: "wex-n" }, ["\u2192 " + ex.note])
           ]);
         }))
@@ -223,8 +223,8 @@
       h("ul", { class: "lp-obj" }, S.objectives.map(function (o) { return h("li", {}, [o]); }))
     ]));
     side.appendChild(card("Blocks introduced", "🧩", [
-      h("div", { class: "blk-list" }, S.blocks.map(function (b) {
-        return h("code", { class: "blk", style: "background:" + S.strandColor + "22;color:" + U.shade(S.strandColor, -55) }, [b]);
+      h("div", { class: "blk-list sb-list" }, (S.blockRefs && S.blockRefs.length ? S.blockRefs.map(function (b) { return b.key; }) : S.blocks).map(function (b) {
+        return window.SB ? SB.chip(b) : h("code", { class: "blk" }, [b]);
       }))
     ]));
     side.appendChild(card("Key vocabulary", "📖", [
@@ -291,7 +291,11 @@
     return card("Record the outcome", "📝", [box], "lp-assess");
   }
 
-  /* ---------------- student mode ---------------- */
+  /* ---------------- student mode ----------------
+     Students get the FULL subject content: the idea, every block with all
+     its uses, the worked examples, the vocabulary and the whole staged
+     build. Only solutions, check-question answers, the run sheet and the
+     tutor's script are withheld. */
   function studentView() {
     var wrap = h("div", { class: "lp-grid" });
     var main = h("div", { class: "lp-main" });
@@ -301,11 +305,17 @@
       h("ul", { class: "lp-obj big" }, S.objectives.map(function (o) { return h("li", {}, [o]); }))
     ], "lp-student-obj"));
 
-    main.appendChild(card("New blocks you'll use", "🧩", [
-      h("div", { class: "blk-list big" }, S.blocks.map(function (b) {
-        return h("code", { class: "blk", style: "background:" + S.strandColor + "22;color:" + U.shade(S.strandColor, -55) }, [b]);
-      }))
-    ]));
+    main.appendChild(card("The big idea", "💡", [
+      h("p", { class: "learn-idea" }, [S.hook])
+    ], "lp-hook"));
+
+    if (S.blockRefs && S.blockRefs.length) {
+      main.appendChild(card("Your new blocks (" + S.blockRefs.length + ")", "🧩", [
+        h("div", { class: "bgrid" }, S.blockRefs.map(studentBlockCard))
+      ]));
+    }
+
+    subjectCards().forEach(function (c) { main.appendChild(c); });
 
     main.appendChild(card("Words to know", "📖", [
       h("dl", { class: "lp-vocab" }, S.vocab.reduce(function (acc, v) {
@@ -316,20 +326,49 @@
       }, []))
     ]));
 
+    main.appendChild(card("Mistakes to avoid", "⚠️", [
+      h("ul", { class: "lp-watch" }, S.watch.map(pair))
+    ], "lp-warn"));
+
+    var bc = briefCard();
+    if (bc) main.appendChild(bc);
+
     main.appendChild(card("Stuck? Try this", "🫱", [h("p", {}, [S.support])], "lp-hook"));
     main.appendChild(card("Finished early? Challenge", "🚀", [h("p", {}, [S.stretch])], "lp-hw"));
 
     side.appendChild(buildCard());
     side.appendChild(card("Your homework", "🏠", [h("p", {}, [S.homework])], "lp-hw"));
+    side.appendChild(card("Test yourself", "🧠", [
+      h("p", { class: "lp-note" }, ["Ten questions on this topic, with an explanation for every answer."]),
+      h("a", { class: "btn primary block", href: "quiz.html?s=" + S.id }, ["Take the Recall Test →"])
+    ]));
 
     wrap.appendChild(main); wrap.appendChild(side);
     return wrap;
+  }
+
+  /* a block card for students — same detail, shown as a real Scratch block */
+  function studentBlockCard(b) {
+    return h("div", { class: "bcard", style: "--bc:" + b.color }, [
+      h("div", { class: "bcard-top" }, [
+        window.SB ? SB.chip(b.key) : h("code", { class: "bchip", style: "background:" + b.color }, [b.key]),
+        h("span", { class: "bcat" }, [b.category])
+      ]),
+      h("p", { class: "bwhat" }, [b.what]),
+      window.SB ? SB.render(b.example) : h("pre", { class: "wex-code" }, [b.example]),
+      h("p", { class: "btip" }, ["💡 " + b.tip]),
+      (b.uses && b.uses.length) ? h("div", { class: "buses" }, [
+        h("div", { class: "buses-h" }, ["Ways to use it"]),
+        h("ul", {}, b.uses.map(function (u) { return h("li", {}, [u]); }))
+      ]) : null
+    ]);
   }
 
   function render() {
     app.innerHTML = "";
     app.appendChild(U.header("curriculum"));
     var main = h("main", { class: "c-main" });
+    main.appendChild(U.modeBanner());
     main.appendChild(sessionHead());
     main.appendChild(mode === "student" ? studentView() : tutorView());
     app.appendChild(main);

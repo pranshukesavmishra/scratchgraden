@@ -263,6 +263,9 @@
       chip.textContent = "Do this";
       tasks[i].insertBefore(chip, tasks[i].firstChild);
     }
+    // turn the project's block pseudocode into real, colour-coded Scratch blocks
+    if (window.SB) SB.upgradeAll(root, "pre.rpi-blocks");
+
     // open images in a lightbox on click
     root.querySelectorAll("img.rpi-img").forEach(function (img) {
       img.addEventListener("click", function () { lightbox(img.src, img.alt); });

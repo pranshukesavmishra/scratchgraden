@@ -29,12 +29,16 @@
     var s = first ? P.sessions[first] : null;
     return h("div", { class: "bcard" + (unlocked ? " unlocked" : ""), style: "--bc:" + b.color }, [
       h("div", { class: "bcard-top" }, [
-        h("code", { class: "bchip", style: "background:" + b.color }, [b.key]),
+        window.SB ? SB.chip(b.key) : h("code", { class: "bchip", style: "background:" + b.color }, [b.key]),
         unlocked ? h("span", { class: "bunlock" }, ["✓ learned"]) : null
       ]),
       h("p", { class: "bwhat" }, [b.what]),
-      h("div", { class: "bex" }, [h("span", { class: "bex-l" }, ["Example"]), h("code", {}, [b.example])]),
+      window.SB ? SB.render(b.example) : h("div", { class: "bex" }, [h("code", {}, [b.example])]),
       h("p", { class: "btip" }, ["💡 " + b.tip]),
+      (b.uses && b.uses.length) ? h("div", { class: "buses" }, [
+        h("div", { class: "buses-h" }, ["Ways to use it"]),
+        h("ul", {}, b.uses.map(function (u) { return h("li", {}, [u]); }))
+      ]) : null,
       s ? h("a", { class: "btaught", href: "learn.html?s=" + s.id }, [
         "Taught in L" + s.level + " S" + s.n + " · " + s.title + " →"]) : null
     ]);
