@@ -236,6 +236,7 @@
 
   function boot() {
     app = document.getElementById("app");
+    if (GN && GN.ensureLearner && !GN.isTutor()) GN.ensureLearner();
     S = P && P.sessions ? P.sessions[qs("s")] : null;
     if (!S) { app.innerHTML = '<div style="padding:40px;text-align:center">Session not found. <a href="curriculum.html">Back to curriculum</a></div>'; return; }
     render();

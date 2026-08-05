@@ -17,23 +17,9 @@
   }
 
   function continueCard() {
-    var stu = GN.active();
+    // A learner profile always exists so progress is always tracked.
+    var stu = GN.isTutor() ? GN.active() : GN.ensureLearner();
     if (!stu) {
-      if (!GN.isTutor()) {
-        // Students never manage accounts — send them straight into the course.
-        var first = P.order[0];
-        return h("section", { class: "cont-card" }, [
-          h("div", { class: "cont-txt" }, [
-            h("div", { class: "cont-kicker" }, ["Start here"]),
-            h("h2", {}, ["Session 1 · " + P.sessions[first].title]),
-            h("p", {}, ["Learn the blocks, take the Recall Test, then build it for real."])
-          ]),
-          h("div", { class: "cont-actions" }, [
-            h("a", { class: "btn primary big", href: "learn.html?s=" + first }, ["▶ Start learning"]),
-            h("a", { class: "btn ghost", href: "curriculum.html" }, ["See all 100 sessions"])
-          ])
-        ]);
-      }
       return h("section", { class: "cont-card" }, [
         h("div", { class: "cont-txt" }, [
           h("div", { class: "cont-kicker" }, ["Get started"]),
@@ -47,7 +33,7 @@
     var st = GN.stats(P);
     return h("section", { class: "cont-card" }, [
       h("div", { class: "cont-txt" }, [
-        h("div", { class: "cont-kicker" }, ["Next up for " + stu.name]),
+        h("div", { class: "cont-kicker" }, [GN.isTutor() ? ("Next up for " + stu.name) : "Next up"]),
         h("h2", {}, ["Session " + s.n + " · " + s.title]),
         h("p", {}, [s.concept + (s.content ? " — building " + s.content.title : "")]),
         h("div", { class: "cont-prog" }, [
@@ -63,14 +49,50 @@
     ]);
   }
 
+  /* At-a-glance analytics: sessions done, stages passed, tests passed, time. */
+  function statsStrip() {
+    var stu = GN.isTutor() ? GN.active() : GN.ensureLearner();
+    if (!stu) return h("span", {});
+    var st = GN.stats(P), prog = GN.progress(stu.id);
+    var learned = 0, quizzed = 0, built = 0, bestSum = 0, bestN = 0;
+    Object.keys(prog).forEach(function (k) {
+      var r = prog[k];
+      if (r.learned) learned++;
+      if (r.quiz && r.quiz.passed) quizzed++;
+      if (r.applied) built++;
+      if (r.quiz && r.quiz.total) { bestSum += (r.quiz.best / r.quiz.total) * 100; bestN++; }
+    });
+    var avg = bestN ? Math.round(bestSum / bestN) : 0;
+    function stat(n, label, color) {
+      return h("div", { class: "stat", style: "--sc2:" + color }, [
+        h("b", {}, [String(n)]), h("span", {}, [label])]);
+    }
+    return h("section", { class: "panel stats-panel" }, [
+      h("h2", { class: "panel-h" }, ["📈 " + (GN.isTutor() ? stu.name + "'s progress" : "Your progress")]),
+      h("div", { class: "stat-row" }, [
+        stat(st.done + " / " + st.total, "sessions completed", "#4c97ff"),
+        stat(learned, "topics learned", "#9966ff"),
+        stat(quizzed, "recall tests passed", "#34d399"),
+        stat(built, "projects built", "#f59e0b"),
+        stat(avg + "%", "average test score", "#ec4899")
+      ]),
+      h("div", { class: "stat-bar" }, [
+        U.bar(st.pct, "#4c97ff"),
+        h("span", {}, [st.pct + "% of the whole course"])
+      ])
+    ]);
+  }
+
   function masteryCard() {
-    var stu = GN.active();
+    var stu = GN.isTutor() ? GN.active() : GN.ensureLearner();
     if (!stu) return null;
     var m = GN.mastery(P);
     var keys = Object.keys(m).sort(function (a, b) { return m[b].pct - m[a].pct; });
     return h("section", { class: "panel" }, [
       h("h2", { class: "panel-h" }, ["🧠 Skills map"]),
-      h("p", { class: "panel-sub" }, ["Mastery across the Scratch block families, from the rubric level recorded in each completed session."]),
+      h("p", { class: "panel-sub" }, [GN.isTutor()
+        ? "Mastery across the Scratch block families, from the rubric level recorded in each completed session."
+        : "How much of each Scratch block family you have covered so far — from your completed sessions and Recall Test scores."]),
       h("div", { class: "mastery" }, keys.map(function (k) {
         var x = m[k];
         return h("div", { class: "mrow" }, [
@@ -112,13 +134,16 @@
     ]));
 
     main.appendChild(continueCard());
+    main.appendChild(statsStrip());
 
     main.appendChild(U.modeBanner());
     main.appendChild(h("div", { class: "tiles" }, [
       tile("curriculum.html", "📚", "Curriculum", P.meta.sessionCount + " sessions · learn, test, then build", "#4c97ff"),
       tile("blocklab.html", "🧪", "Block Lab", P.meta.blockCount + " Scratch blocks explained with examples", "#f59e0b"),
       tile("projects.html", "🚀", "Project Library", P.meta.projectCount + " real guided Scratch projects", "#7c3aed"),
-      GN.isTutor() ? tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399") : null
+      GN.isTutor()
+        ? tile("report.html", "📊", "Progress & reports", "Parent-ready report cards and certificates", "#34d399")
+        : tile("report.html", "📊", "My progress", "Sessions completed, skills mastered and certificates", "#34d399")
     ]));
 
     var m = masteryCard(); if (m) main.appendChild(m);

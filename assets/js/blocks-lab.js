@@ -68,6 +68,7 @@
   }
 
   function render(keep) {
+    if (!GN.isTutor()) GN.ensureLearner();   // progress must always be tracked
     var y = window.scrollY;
     app.innerHTML = "";
     app.appendChild(U.header("blocklab"));
@@ -78,7 +79,8 @@
     main.appendChild(h("section", { class: "c-hero" }, [
       h("h1", {}, ["🧪 Block Lab"]),
       h("p", {}, ["Every one of the " + P.meta.blockCount + " Scratch blocks taught across the course — what it does, an example you can copy, and the mistake to avoid. " +
-                  (GN.active() ? GN.active().name + " has unlocked " + nUn + " so far." : "Add a student to track which blocks you've learned.")])
+                  (GN.isTutor() && GN.active() ? GN.active().name + " has unlocked " + nUn + " so far."
+                                               : "You have unlocked " + nUn + " so far.")])
     ]));
     main.appendChild(toolbar());
 

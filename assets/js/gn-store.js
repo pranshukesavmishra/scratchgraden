@@ -53,6 +53,15 @@
       l.forEach(function (s) { if (s.id === id) s.name = name; });
       write(K_STUDENTS, l);
     },
+    /* Progress tracking must ALWAYS work, in either role. If no profile
+       exists yet we create a default learner silently, so a student never
+       loses their session history just because nobody pressed "Add student". */
+    ensureLearner: function () {
+      if (this.students().length) return this.active();
+      var st = this.addStudent("My progress", 1);
+      this.setActive(st.id);
+      return st;
+    },
     activeId: function () { return read(K_ACTIVE, null); },
     setActive: function (id) { write(K_ACTIVE, id); },
     active: function () {

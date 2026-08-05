@@ -69,7 +69,7 @@
         h("td", {}, [h("b", {}, ["L" + d.s.level + "S" + d.s.n]), " " + d.s.title]),
         h("td", {}, [d.s.concept]),
         h("td", {}, [d.r.rubric ? h("span", { class: "rub-pill " + d.r.rubric }, [d.r.rubric]) : "—"]),
-        h("td", { class: "rep-notes" }, [d.r.notes || ""])
+        GN.isTutor() ? h("td", { class: "rep-notes" }, [d.r.notes || ""]) : null
       ]);
     });
     return h("section", { class: "panel" }, [
@@ -77,7 +77,8 @@
       h("div", { class: "rep-tablewrap" }, [
         h("table", { class: "rep-table" }, [
           h("thead", {}, [h("tr", {}, [h("th", {}, ["Date"]), h("th", {}, ["Session"]),
-            h("th", {}, ["Concept"]), h("th", {}, ["Level"]), h("th", {}, ["Tutor notes"])])]),
+            h("th", {}, ["Concept"]), h("th", {}, ["Level"]),
+            GN.isTutor() ? h("th", {}, ["Tutor notes"]) : null])]),
           h("tbody", {}, rows)
         ])
       ])
@@ -115,6 +116,13 @@
   }
 
   function dataTools() {
+    if (!GN.isTutor()) {
+      return h("section", { class: "panel no-print" }, [
+        h("h2", { class: "panel-h" }, ["Save your report"]),
+        h("p", { class: "panel-sub" }, ["Print this page or save it as a PDF to show your family."]),
+        h("button", { class: "btn primary", onclick: function () { window.print(); } }, ["🖨 Print / save as PDF"])
+      ]);
+    }
     return h("section", { class: "panel no-print" }, [
       h("h2", { class: "panel-h" }, ["Records"]),
       h("p", { class: "panel-sub" }, ["Progress is stored in this browser. Export a backup to move a student to another device or to keep an off-line record."]),
@@ -149,7 +157,7 @@
     app.innerHTML = "";
     app.appendChild(U.header("report"));
     var main = h("main", { class: "c-main" });
-    var stu = GN.active();
+    var stu = GN.isTutor() ? GN.active() : GN.ensureLearner();
 
     if (!stu) {
       main.appendChild(h("section", { class: "c-hero" }, [h("h1", {}, ["Progress reports"])]));
@@ -158,8 +166,8 @@
     } else {
       main.appendChild(h("section", { class: "rep-head" }, [
         h("div", {}, [
-          h("div", { class: "rep-kicker" }, ["Progress report"]),
-          h("h1", {}, [stu.name]),
+          h("div", { class: "rep-kicker" }, [GN.isTutor() ? "Progress report" : "My progress"]),
+          h("h1", {}, [GN.isTutor() ? stu.name : "Your Scratch journey"]),
           h("p", {}, ["Grade Next Scratch Academy · started " + fmt(stu.createdAt)])
         ]),
         h("div", { class: "rep-logo" }, ["🐱"])

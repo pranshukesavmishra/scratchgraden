@@ -1155,3 +1155,20 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
   .sb-stack{background:#151d2b}
   .sb-input{background:#e9eefc;color:#1f2a3d}
 }
+
+/* at-a-glance progress analytics on the dashboard */
+.stats-panel{background:linear-gradient(135deg,#f7faff,var(--surface) 60%)}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:14px}
+.stat{text-align:center;padding:14px 10px;background:var(--bg);border-radius:13px;
+  border-bottom:4px solid var(--sc2,#4c97ff)}
+.stat b{display:block;font-size:24px;line-height:1.1;color:var(--sc2,#4c97ff)}
+.stat span{display:block;margin-top:4px;font-size:11.5px;font-weight:700;color:var(--ink-soft);line-height:1.3}
+.stat-bar{display:flex;align-items:center;gap:11px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.stat-bar .bar{flex:1}
+.gn-whoami{font-size:13.5px;font-weight:800;color:var(--ink-soft);padding:7px 12px;
+  background:#eef2fa;border-radius:999px;white-space:nowrap}
+@media (prefers-color-scheme: dark){
+  .stats-panel{background:linear-gradient(135deg,#18202f,var(--surface) 60%)}
+  .stat{background:#1a2233}
+  .gn-whoami{background:#1a2233}
+}
