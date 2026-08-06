@@ -45,6 +45,22 @@
     },
     checkPin: function (p) { return String(p == null ? "" : p).trim() === this.pin(); },
 
+    /* ---------- theme: light / dark, chosen by the user ----------
+       An inline script in each page's <head> applies the saved choice
+       before first paint; this API backs the header toggle. */
+    theme: function () {
+      var t = null; try { t = localStorage.getItem("gn_theme"); } catch (e) {}
+      if (t === "light" || t === "dark") return t;
+      try { return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+      catch (e) { return "light"; }
+    },
+    setTheme: function (t) {
+      t = t === "dark" ? "dark" : "light";
+      try { localStorage.setItem("gn_theme", t); } catch (e) {}
+      document.documentElement.setAttribute("data-theme", t);
+      return t;
+    },
+
     /* ---------- active level: the platform is split into two parts ---------- */
     level: function () {
       var n = 1; try { n = parseInt(localStorage.getItem("gn_level") || "1", 10); } catch (e) {}

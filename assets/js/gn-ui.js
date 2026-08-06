@@ -88,10 +88,27 @@
         return h("a", { class: "c-navbtn" + (n[2] === activeKey ? " active" : ""), href: n[0] }, [n[1]]);
       })),
       h("div", { class: "head-right" }, [
+        themeBtn(),
         h("button", { class: "search-btn", title: "Search (Ctrl+K)", onclick: openPalette }, ["🔍"]),
         levelSwitch(), roleSwitch(), studentSwitcher()
       ])
     ]);
+  }
+
+  /* ---- one-tap light / dark switch; no reload needed ---- */
+  function themeBtn() {
+    var GN = w.GN;
+    function icon(t) { return t === "dark" ? "☀️" : "🌙"; }
+    function tip(t) { return t === "dark" ? "Switch to light theme" : "Switch to dark theme"; }
+    var cur = GN.theme();
+    var btn = h("button", { class: "theme-btn", title: tip(cur), "aria-label": tip(cur) }, [icon(cur)]);
+    btn.addEventListener("click", function () {
+      var next = GN.setTheme(GN.theme() === "dark" ? "light" : "dark");
+      btn.textContent = icon(next);
+      btn.title = tip(next);
+      btn.setAttribute("aria-label", tip(next));
+    });
+    return btn;
   }
 
   /* ---- Level 1 / Level 2: the platform is split into two parts ---- */
