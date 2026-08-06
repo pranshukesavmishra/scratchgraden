@@ -1577,3 +1577,16 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
   .cert2-title{font-size:23px}
   .cert2-watermark{font-size:64px}
 }
+
+/* level access control: pinned students, locked cards */
+.lv-btn.locked{opacity:.55}
+.lv-card.lv-open{cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+.lv-card.lv-open:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(45,17,81,.16)}
+.lv-card.lv-locked{opacity:.62;filter:saturate(.55)}
+.lv-card{position:relative;display:flex;flex-direction:column;gap:8px}
+.lv-ribbon{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(135deg,#7F5DF9,#FF6AC6);
+  color:#fff;border-radius:999px;padding:3px 10px;box-shadow:0 3px 10px rgba(127,93,249,.35)}
+.lv-go{margin-top:auto;align-self:flex-start;pointer-events:none}
+.lv-move{align-self:flex-start;font-size:12.5px}
+.btaught.bonus{color:var(--ink-faint);cursor:default;text-decoration:none}

@@ -61,13 +61,35 @@
       return t;
     },
 
-    /* ---------- active level: the platform is split into two parts ---------- */
+    /* ---------- active level: the platform is split into two parts ----------
+       In Student Mode the student's ASSIGNED level is the law: the whole
+       platform (curriculum, puzzles, cards, projects, blocks) shows only
+       that level and the other one stays locked until the tutor moves
+       them. Tutors switch freely with the header control. */
     level: function () {
+      if (!this.isTutor()) {
+        var stu = this.active();
+        if (stu && (stu.level === 1 || stu.level === 2)) return stu.level;
+      }
       var n = 1; try { n = parseInt(localStorage.getItem("gn_level") || "1", 10); } catch (e) {}
       return n === 2 ? 2 : 1;
     },
     setLevel: function (n) {
-      try { localStorage.setItem("gn_level", n === 2 ? "2" : "1"); } catch (e) {}
+      n = n === 2 ? 2 : 1;
+      if (!this.isTutor()) {
+        var stu = this.active();
+        if (stu && stu.level !== n) return false;   // students can't leave their level
+      }
+      try { localStorage.setItem("gn_level", String(n)); } catch (e) {}
+      return true;
+    },
+    /* tutor action: move a student to the other level */
+    setStudentLevel: function (id, n) {
+      n = n === 2 ? 2 : 1;
+      var l = this.students();
+      l.forEach(function (s) { if (s.id === id) s.level = n; });
+      write(K_STUDENTS, l);
+      return n;
     },
 
     /* ---------- students ---------- */

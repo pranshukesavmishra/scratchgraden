@@ -302,3 +302,114 @@ USES = {
  "set tempo to ()": ["Speed a song up as the level gets harder", "Slow music for a calm scene", "Match two parts to the same speed"],
  "rest for () beats": ["Gaps that make a rhythm groove", "Space between musical phrases", "Timing a call-and-response"],
 }
+
+
+# =====================================================================
+# Full-palette additions — the rest of the standard Scratch 3.0 palette:
+# reporters, layers, sound effects, list tools, stage sensing and the
+# remaining Pen / Music extension blocks. Same format as everything above.
+# =====================================================================
+EXTRA_BLOCKS = {
+ # ---------------- Motion ----------------
+ "set y to ()": B("Motion", "Puts the sprite at an exact up/down position.", "set y to -120", "Set y to the ground height to snap a jumper back onto the floor."),
+ "direction": B("Motion", "Reports which way the sprite is facing, in degrees.", "if (direction) = 90", "90 means facing right, -90 left, 0 up, 180 down."),
+ "glide () secs to [mouse-pointer]": B("Motion", "Glides smoothly to wherever the mouse is.", "glide 0.5 secs to mouse-pointer", "A pet that lazily follows you — glide keeps it relaxed instead of instant."),
+
+ # ---------------- Looks ----------------
+ "think ()": B("Looks", "Shows a thought bubble that stays until you change it.", "think Hmm...", "Thought bubbles are for ideas the character keeps to itself."),
+ "set () effect to ()": B("Looks", "Sets a visual effect to an exact strength.", "set [ghost] effect to 50", "Set jumps straight to a value; change adds to it. Use set 0 to fix one effect."),
+ "go to [front] layer": B("Looks", "Brings the sprite in front of every other sprite.", "go to front layer", "Give the player sprite this at the start so nothing hides it."),
+ "go [forward] () layers": B("Looks", "Moves the sprite a few steps forward or backward in the pile.", "go forward 1 layers", "Layers are like a pile of paper — this shuffles one sheet at a time."),
+ "size": B("Looks", "Reports the sprite's size as a percentage.", "if (size) > 150", "100 is normal size. Check it before growing so sprites don't get huge."),
+ "costume name": B("Looks", "Reports the name of the costume the sprite is wearing.", "if (costume name) = walking", "Name your costumes properly and this block becomes really useful."),
+ "backdrop number": B("Looks", "Reports which backdrop the stage is showing.", "if (backdrop number) = 2", "Great for 'only spawn enemies on the game backdrop'."),
+ "switch backdrop to () and wait": B("Looks", "Changes the backdrop and waits for its scripts to finish.", "switch backdrop to Level 2 and wait", "Use it when the new backdrop runs an intro you must not talk over."),
+
+ # ---------------- Sound ----------------
+ "set volume to () %": B("Sound", "Sets the loudness of this sprite's sounds exactly.", "set volume to 50 %", "Each sprite has its OWN volume — quiet footsteps, loud explosions."),
+ "volume": B("Sound", "Reports this sprite's current volume.", "if (volume) > 80", "Show it while testing to see exactly how loud things are."),
+ "change [pitch] effect by ()": B("Sound", "Makes sounds higher or lower step by step.", "change [pitch] effect by 10", "Raise the pitch a little every level and the music gets more exciting."),
+ "set [pitch] effect to ()": B("Sound", "Sets the sound effect to an exact amount.", "set [pitch] effect to 100", "Pitch 100 is one octave up; -100 is one octave down — instant chipmunk or giant."),
+ "clear sound effects": B("Sound", "Removes every sound effect from this sprite.", "clear sound effects", "Run it at the green flag so old effects don't leak into a new game."),
+
+ # ---------------- Events ----------------
+ "when [loudness] > ()": B("Events", "Starts the script when the microphone hears a loud sound.", "when [loudness] > 30", "Clap-controlled games! It also works with [timer] in the dropdown."),
+
+ # ---------------- Control ----------------
+ "stop [other scripts in sprite]": B("Control", "Stops this sprite's other scripts, but lets this one keep going.", "stop [other scripts in sprite]", "Perfect for a 'game over' script that must keep running while it stops the rest."),
+
+ # ---------------- Sensing ----------------
+ "mouse down?": B("Sensing", "True while the mouse button is being held.", "if <mouse down?> then", "Combine with mouse x and mouse y to make a paint brush."),
+ "loudness": B("Sensing", "Reports how loud the microphone is, 0 to 100.", "if (loudness) > 40", "The browser will ask permission to use the microphone the first time."),
+ "username": B("Sensing", "Reports the name of the signed-in Scratch account.", "say join Hello (username)", "On the Scratch website it greets each player by name; empty when offline."),
+ "current [year]": B("Sensing", "Reports the current year, month, date, hour, minute or second.", "say current [year]", "Make a real clock: show current hour and minute in a forever loop."),
+ "days since 2000": B("Sensing", "Reports how many days have passed since 1 January 2000.", "set [today] to (days since 2000)", "Save it, then compare tomorrow — that's how you build a daily streak."),
+ "[x position] of ()": B("Sensing", "Reads a value that belongs to ANOTHER sprite, like its x position or size.", "set [target x] to ([x position] of Ball)", "This is how one sprite spies on another — a goalkeeper tracking the ball."),
+ "set drag mode ()": B("Sensing", "Chooses whether the player can drag the sprite in full-screen mode.", "set drag mode [draggable]", "Draggable puzzle pieces; not-draggable for everything the player shouldn't move."),
+
+ # ---------------- Operators ----------------
+ "letter () of ()": B("Operators", "Picks one letter out of a word.", "say letter 1 of (answer)", "Letter 1 is the first letter — great for initials or hangman games."),
+ "length of ()": B("Operators", "Counts the letters in some text.", "if (length of (answer)) > 10", "This one counts letters; the orange one counts list items. Check the shape!"),
+ "() contains ()?": B("Operators", "True if some text contains certain letters.", "if <(answer) contains yes?> then", "Accept 'yes', 'YES' and 'yes please' with one friendly check."),
+ "abs of ()": B("Operators", "Turns a number positive — the maths family also has sqrt, floor and more.", "set [gap] to (abs of ((x position) - (target x)))", "abs of the difference between two positions = the distance between them."),
+
+ # ---------------- Variables (lists) ----------------
+ "insert () at () of []": B("Variables", "Squeezes a new item into the middle of a list.", "insert (name) at 1 of [high scores]", "Insert at 1 pushes everything else down — instant 'new leader' move."),
+ "replace item () of [] with ()": B("Variables", "Swaps one list item for a new value.", "replace item 1 of [scores] with (score)", "The list stays the same length — only that one slot changes."),
+ "item # of () in []": B("Variables", "Finds WHERE something is in a list.", "set [spot] to (item # of (answer) in [answers])", "Reports 0 when it isn't found — check for 0 to say 'not in my list'."),
+ "show list []": B("Variables", "Displays the whole list on the stage.", "show list [high scores]", "Show it at the end of the game as a scoreboard."),
+ "hide list []": B("Variables", "Hides the list from the stage.", "hide list [high scores]", "Keep lists hidden during play — they cover a lot of the screen."),
+
+ # ---------------- Pen ----------------
+ "stamp": B("Pen", "Prints a copy of the sprite's picture onto the stage.", "stamp", "Stamps are just ink — they can't move or be touched afterwards."),
+ "change pen size by ()": B("Pen", "Makes the pen thicker or thinner step by step.", "change pen size by 1", "Grow the size inside a loop for lines that swell like a brush stroke."),
+ "set pen [transparency] to ()": B("Pen", "Makes pen ink see-through — also sets saturation and brightness.", "set pen [transparency] to 50", "Half-transparent trails layer up beautifully in spiral art."),
+
+ # ---------------- Music ----------------
+ "change tempo by ()": B("Music", "Speeds the music up or slows it down step by step.", "change tempo by 10", "Raise the tempo every level — players FEEL the game getting faster."),
+ "tempo": B("Music", "Reports the current speed of the music in beats per minute.", "if (tempo) > 200", "Show it while composing so you know exactly how fast you've gone."),
+}
+BLOCKS.update(EXTRA_BLOCKS)
+
+EXTRA_USES = {
+ "set y to ()": ["Snap a jumper back to the ground", "Line sprites up in a neat row", "Reset a falling object to the top", "Pin a health bar to the top of the stage"],
+ "direction": ["Check which way a car is facing", "Bounce with custom angles", "Show a compass reading", "Flip a costume when walking left"],
+ "glide () secs to [mouse-pointer]": ["A pet that follows you lazily", "A magnet effect", "Guide a kite towards the mouse", "A menu sprite drifting to the cursor"],
+ "think ()": ["Show a character's secret plan", "Hint at the answer without saying it", "A robot 'processing…' moment", "Quiet reactions in a story"],
+ "set () effect to ()": ["Set ghost to 50 for a spooky look", "Reset colour to 0 after a power-up", "Pixelate a sprite for a retro intro", "Whirl a portal to full strength"],
+ "go to [front] layer": ["Keep the player above the scenery", "Pop a dialogue box over everything", "Bring the winner to the front", "Keep score displays visible"],
+ "go [forward] () layers": ["Tuck a sprite behind one prop", "Layer a parade of characters", "Slide a card under another", "Fix 'my sprite is hiding' bugs"],
+ "size": ["Stop growing at 200%", "Shrink until a sprite disappears", "Make bounce height depend on size", "Debug why a sprite looks wrong"],
+ "costume name": ["Run walk logic only in the walking costume", "Check which face a dice shows", "Match sounds to the current costume"],
+ "backdrop number": ["Spawn enemies only on the game screen", "Play menu music on backdrop 1", "Lock controls on the title screen"],
+ "switch backdrop to () and wait": ["Play a cut-scene between levels", "Wait for an intro animation", "Let a backdrop's sound finish before starting"],
+ "set volume to () %": ["Quiet background music under speech", "A volume slider in an options menu", "Mute one sprite without muting the game"],
+ "volume": ["Show the current volume in a menu", "Fade out by checking volume in a loop", "Debug why a sound is silent"],
+ "change [pitch] effect by ()": ["Music that rises as danger grows", "A slide-whistle fall", "Engine pitch that follows speed", "Silly voices step by step"],
+ "set [pitch] effect to ()": ["Chipmunk voice at +100", "Monster voice at -100", "Reset pitch to 0 after an effect", "Tune one sound to two uses"],
+ "clear sound effects": ["Reset audio at the green flag", "Stop a voice effect after a power-up ends", "Clean up between scenes"],
+ "when [loudness] > ()": ["Clap to make the bird flap", "Shout to launch the rocket", "A noise-o-meter for the classroom", "Blow into the mic to inflate a balloon"],
+ "stop [other scripts in sprite]": ["A game-over script that stops the rest", "Cancel a walk when a cut-scene starts", "Stop old loops before restarting a level"],
+ "mouse down?": ["A paint brush that draws while held", "Drag-to-aim then release to fire", "Hold to charge a jump", "Click-and-hold menus"],
+ "loudness": ["A bar that dances to noise", "Voice-controlled jumping", "Detect claps to change scenes", "A baby-monitor style alert"],
+ "username": ["Greet the player by name", "Sign a high score automatically", "Personalise a certificate"],
+ "current [year]": ["A working clock on the stage", "A birthday countdown", "Show today's date on a diary page", "Night mode after 8pm"],
+ "days since 2000": ["Build a daily streak counter", "Measure days between two visits", "A plant that grows a little every real day"],
+ "[x position] of ()": ["A goalkeeper tracking the ball's x", "An enemy copying the player's height", "A shadow following another sprite", "A boss reacting to your size"],
+ "set drag mode ()": ["Draggable jigsaw pieces", "Lock the player sprite in full screen", "A sorting game with movable cards"],
+ "letter () of ()": ["Show a word one letter at a time", "Make initials from a name", "Hangman reveals", "Check if a word starts with 'a'"],
+ "length of ()": ["Limit names to 10 letters", "Score longer words higher", "Check a password isn't empty", "Type-writer effects letter by letter"],
+ "() contains ()?": ["Accept many spellings of an answer", "Search chat input for a keyword", "Filter rude words", "Check if a filename has '.png'"],
+ "abs of ()": ["Distance between two sprites on one axis", "Make speed positive whichever way you face", "How far off was the player's guess?"],
+ "insert () at () of []": ["Push a new leader to the top of the scoreboard", "Queue a song next rather than last", "Slot a card into a sorted hand"],
+ "replace item () of [] with ()": ["Update a player's best score in place", "Tick off a to-do item as DONE", "Rotate inventory slots"],
+ "item # of () in []": ["Find which question the player answered", "Check a player's rank by name", "Say 'not found' when the answer is 0"],
+ "show list []": ["Reveal the scoreboard at game over", "Show collected items in a backpack screen", "Display the questions being asked"],
+ "hide list []": ["Hide working data during play", "Clear the screen for a title page", "Tidy up before a screenshot"],
+ "stamp": ["Spirograph and mandala art", "Footprints behind a walker", "A rubber-stamp painting app", "Freeze a crowd of copies without clones"],
+ "change pen size by ()": ["Brush strokes that swell and shrink", "Thicker lines as the pen speeds up", "A growing spiral"],
+ "set pen [transparency] to ()": ["Layered, glassy spiral art", "Soft shadows under sprites", "Watercolour-style painting"],
+ "change tempo by ()": ["Speed the music up each level", "Slow everything for a slow-motion moment", "A DJ deck with + and - buttons"],
+ "tempo": ["Show BPM while composing", "Cap the tempo so it stays playable", "Sync two instruments to one speed"],
+}
+USES.update(EXTRA_USES)

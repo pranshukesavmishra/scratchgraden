@@ -77,7 +77,7 @@
       ["curriculum.html", "📚 Curriculum", "curriculum"],
       ["puzzles.html", "🧩 Puzzles", "puzzles"],
       ["flashcards.html", "🃏 Cards", "cards"],
-      ["blocklab.html", "🧪 Blocks", "blocklab"],
+      ["blocklab.html", "🧪 Block Lab", "blocklab"],
       ["projects.html", "🚀 Projects", "projects"],
       ["report.html", "📊 Reports", "report"]
     ];
@@ -111,16 +111,28 @@
     return btn;
   }
 
-  /* ---- Level 1 / Level 2: the platform is split into two parts ---- */
+  /* ---- Level 1 / Level 2: the platform is split into two parts ----
+     Students are pinned to their assigned level; the other side of the
+     switch shows a lock. Tutors switch freely. */
   function levelSwitch() {
-    var GN = w.GN, lv = GN.level();
+    var GN = w.GN, lv = GN.level(), pinned = !GN.isTutor();
     function btn(n, label) {
+      var locked = pinned && lv !== n;
       return h("button", {
-        class: "lv-btn" + (lv === n ? " on" : ""),
-        title: n === 1 ? "Level 1 — Foundations (sessions 1–50)"
+        class: "lv-btn" + (lv === n ? " on" : "") + (locked ? " locked" : ""),
+        title: locked ? "Locked — your tutor moves you up when you're ready"
+             : n === 1 ? "Level 1 — Foundations (sessions 1–50)"
                        : "Level 2 — Logic, Data & Game Engineering (sessions 1–50)",
-        onclick: function () { if (lv !== n) { GN.setLevel(n); location.reload(); } }
-      }, [label]);
+        onclick: function () {
+          if (lv === n) return;
+          if (locked) {
+            alert("🔒 You're a Level " + lv + " student, so Level " + n +
+                  " is locked. Your tutor moves you up when you're ready!");
+            return;
+          }
+          GN.setLevel(n); location.reload();
+        }
+      }, [locked ? "🔒 " + label : label]);
     }
     return h("div", { class: "level-switch", role: "group", "aria-label": "Level" }, [
       btn(1, "Level 1"), btn(2, "Level 2")
@@ -187,7 +199,11 @@
     var sel = h("select", { class: "gn-select", title: "Active student",
       onchange: function () {
         if (sel.value === "__add") { addStudentFlow(); return; }
-        GN.setActive(sel.value); location.reload();
+        GN.setActive(sel.value);
+        // land the tutor on the chosen student's level
+        var chosen = GN.students().filter(function (s) { return s.id === sel.value; })[0];
+        if (chosen) GN.setLevel(chosen.level);
+        location.reload();
       } });
     list.forEach(function (s) {
       var o = h("option", { value: s.id }, [s.name + " · L" + s.level]);

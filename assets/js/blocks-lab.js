@@ -40,7 +40,8 @@
         h("ul", {}, b.uses.map(function (u) { return h("li", {}, [u]); }))
       ]) : null,
       s ? h("a", { class: "btaught", href: "learn.html?s=" + s.id }, [
-        "Taught in L" + s.level + " S" + s.n + " · " + s.title + " →"]) : null
+        "Taught in L" + s.level + " S" + s.n + " · " + s.title + " →"])
+        : h("span", { class: "btaught bonus" }, ["🧰 Bonus palette block — try it in any project"])
     ]);
   }
 
@@ -82,7 +83,7 @@
 
     main.appendChild(h("section", { class: "c-hero" }, [
       h("h1", {}, ["🧪 Block Lab"]),
-      h("p", {}, ["Every one of the " + P.meta.blockCount + " Scratch blocks taught across the course — what it does, an example you can copy, and the mistake to avoid. " +
+      h("p", {}, ["The complete Scratch palette — all " + P.meta.blockCount + " blocks — with what each one does, an example you can copy, and the mistake to avoid. " +
                   (GN.isTutor() && GN.active() ? GN.active().name + " has unlocked " + nUn + " so far."
                                                : "You have unlocked " + nUn + " so far.")])
     ]));
@@ -96,7 +97,9 @@
       var list = Object.keys(P.blocks).filter(function (k) {
         var b = P.blocks[k];
         if (b.category !== cat) return false;
-        if (filter.scope === "level" && !b.sessions.some(function (sid) {
+        // blocks taught in sessions stay level-scoped; bonus palette blocks
+        // (no session) belong to both levels
+        if (filter.scope === "level" && b.sessions.length && !b.sessions.some(function (sid) {
           return P.sessions[sid] && P.sessions[sid].level === GN.level(); })) return false;
         if (filter.only === "unlocked" && !un[k]) return false;
         if (filter.only === "locked" && un[k]) return false;

@@ -123,7 +123,9 @@
     main.appendChild(h("div", { class: "lv-note" }, [
       h("span", { class: "lv-chip l" + LV }, ["LEVEL " + LV]),
       h("span", {}, [(LV === 1 ? "Foundations" : "Logic, Data & Game Engineering") +
-        " — sessions 1–50. Change level with the switch in the header."])
+        " — sessions 1–50. " + (GN.isTutor()
+          ? "Change level with the switch in the header."
+          : "This is your level — your tutor moves you up when you're ready.")])
     ]));
     var any = false;
     P.levels.filter(function (lv) { return lv.level === LV; }).forEach(function (lv) {

@@ -29,6 +29,7 @@
     [/^when .*clone/i, "Control"],
     [/^when/i, "Events"],
     [/^(broadcast)/i, "Events"],
+    [/^go (to )?\[?(front|back|forward|backward)/i, "Looks"],
     [/^(forever|repeat|if |else|end$|wait |stop |create clone|delete this clone)/i, "Control"],
 
     [/^set (x|y) to/i, "Motion"],
@@ -50,6 +51,19 @@
     [/^(touching|key |distance to|mouse )/i, "Sensing"],
 
     [/^define/i, "MyBlocks"],
+
+    [/^(x position|y position|direction)$/i, "Motion"],
+    [/^(size|costume name|costume number|backdrop number|backdrop name)$/i, "Looks"],
+    [/^(volume$|set volume|clear sound effects)/i, "Sound"],
+    [/^(set|change) \[?pitch/i, "Sound"],
+    [/^(loudness|username|days since 2000|mouse down)/i, "Sensing"],
+    [/^(current \[?|set drag mode)/i, "Sensing"],
+    [/^\[.+\] of \(/i, "Sensing"],
+    [/^(letter |length of \()/i, "Operators"],
+    [/^\(.*\) *(contains|mod\b|[+\-*\/<>=])/i, "Operators"],
+    [/^(show list|hide list|item #)/i, "Variables"],
+    [/^(stamp$|change pen size)/i, "Pen"],
+    [/^(change tempo|tempo$)/i, "Music"],
 
     [/^(set|change) /i, "Variables"],
     [/^(show variable|hide variable|add |delete |insert |replace )/i, "Variables"],

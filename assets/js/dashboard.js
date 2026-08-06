@@ -162,19 +162,52 @@
     ]);
   }
 
+  /* The two levels, end to end: a student's assigned level opens with one
+     click, the other stays locked. Tutors open either and can move the
+     active student between levels right here. */
   function levelsCard() {
+    var isT = GN.isTutor();
+    var stu = isT ? GN.active() : GN.ensureLearner();
     return h("section", { class: "panel" }, [
       h("h2", { class: "panel-h" }, ["📚 Your two levels"]),
+      h("p", { class: "panel-sub" }, [isT
+        ? "Open a level, or move " + (stu ? stu.name : "the student") + " to the other level when they're ready."
+        : "You're a Level " + GN.level() + " student — that level is yours to explore. The other unlocks when your tutor moves you up."]),
       h("div", { class: "lv-cards" }, P.levels.map(function (lv) {
         var ls = GN.levelStats(P, lv.level);
-        return h("div", { class: "lv-card" + (lv.level === GN.level() ? " lv-active" : ""),
-          style: "--lvc:" + lv.color }, [
-          h("span", { class: "lv-card-emoji" }, [lv.emoji]),
+        var mine = stu && stu.level === lv.level;
+        var open = isT || mine;
+        var card = h("div", {
+          class: "lv-card" + (lv.level === GN.level() ? " lv-active" : "") + (open ? " lv-open" : " lv-locked"),
+          style: "--lvc:" + lv.color,
+          role: open ? "button" : null, tabindex: open ? "0" : null,
+          onclick: function () {
+            if (!open) {
+              alert("🔒 Level " + lv.level + " is locked. Your tutor moves you up when you're ready!");
+              return;
+            }
+            if (GN.setLevel(lv.level) !== false) location.href = "curriculum.html";
+          }
+        }, [
+          mine && stu ? h("span", { class: "lv-ribbon" }, [isT ? stu.name + "'s level" : "Your level"]) : null,
+          h("span", { class: "lv-card-emoji" }, [open ? lv.emoji : "🔒"]),
           h("h3", {}, [lv.title]),
           h("p", {}, [lv.blurb]),
           U.bar(ls.pct, lv.color),
-          h("span", { class: "lv-card-meta" }, [ls.done + " / " + ls.total + " sessions"])
+          h("span", { class: "lv-card-meta" }, [ls.done + " / " + ls.total + " sessions"]),
+          h("span", { class: "btn " + (open ? "primary" : "ghost") + " lv-go" }, [
+            open ? "▶ Open Level " + lv.level : "🔒 Locked"])
         ]);
+        if (isT && stu && !mine) {
+          card.appendChild(h("button", { class: "btn ghost lv-move", onclick: function (e) {
+            e.stopPropagation();
+            if (!confirm("Move " + stu.name + " to " + lv.title + "?\n\nTheir platform will show Level " + lv.level + " from now on.")) return;
+            GN.setStudentLevel(stu.id, lv.level);
+            GN.setLevel(lv.level);
+            location.reload();
+          } }, ["⤴ Move " + stu.name + " here"]));
+        }
+        return card;
       }))
     ]);
   }
