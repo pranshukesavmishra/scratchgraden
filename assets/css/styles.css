@@ -1428,3 +1428,152 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
 .lv-card.lv-active{outline:3px solid var(--gn-purple-light);outline-offset:2px}
 .btn.review-pill{background:linear-gradient(135deg,#7F5DF9,#FF6AC6)!important;color:#fff!important;
   border:0!important;box-shadow:var(--glow-brand)}
+
+/* brand line: "Scratch Academy by GradeNext" top-left */
+.gn-brandline{display:inline-flex;align-items:center;gap:10px}
+.gn-markwrap .gn-mark{width:40px;height:40px;display:block;filter:drop-shadow(0 3px 6px rgba(112,61,132,.3))}
+.gn-brandtxt{display:flex;flex-direction:column;line-height:1.05}
+.gn-brand-main{font-family:var(--font-heading);font-weight:800;font-size:17.5px;color:var(--gn-purple-deep);letter-spacing:-.01em}
+.gn-brand-by{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gn-pink);margin-top:2px}
+@media (prefers-color-scheme: dark){ .gn-brand-main{color:#F3EEF8} }
+
+/* ================= Code Puzzles ================= */
+.pz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.pz-card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--sc);
+  border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:0 4px 16px rgba(45,17,81,.06)}
+.pz-card.solved{background:linear-gradient(160deg,#FBF4FF,#FFF6FB)}
+.pz-card h3{font-size:15.5px;margin:2px 0;line-height:1.3}
+.pz-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pz-meta{font-size:12px;color:var(--ink-faint);margin:0 0 4px}
+.pz-card .btn{margin-top:auto}
+.pz-stars span{color:#d8d2e2;font-size:15px}
+.pz-stars span.on{color:#f5b301;text-shadow:0 1px 4px rgba(245,179,1,.5)}
+.pz-stars.big{display:block;margin:8px 0}
+.pz-stars.big span{font-size:38px}
+.pz-play{max-width:860px;margin:0 auto}
+.pz-playhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pz-playhead h2{margin:6px 0}
+.pz-mist{font-size:13px;font-weight:700;color:var(--ink-soft);background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+.pz-mist b{color:var(--gn-pink)}
+.pz-progress{display:flex;align-items:center;gap:10px;margin:12px 0}
+.pz-progress .bar{flex:1}
+.pz-progress>span{font-size:12.5px;color:var(--ink-faint);white-space:nowrap}
+.pz-board{background:var(--surface);border:1.5px dashed var(--gn-border-strong);border-radius:16px;
+  min-height:150px;padding:18px;
+  background-image:radial-gradient(circle,rgba(112,61,132,.14) 1px,transparent 1.5px);
+  background-size:17px 17px}
+.pz-board-h{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gn-purple);margin-bottom:10px}
+.pz-board-empty{color:var(--ink-faint);font-size:14px;padding:22px 6px}
+.pz-traywrap{margin-top:18px}
+.pz-tray{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
+.pz-chip{border:0;background:transparent;padding:0;cursor:pointer;transition:transform .12s ease}
+.pz-chip:hover{transform:translateY(-2px) scale(1.04)}
+.pz-chip .sb-chip{cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.22)}
+.pz-chip.shake{animation:pzshake .4s}
+@keyframes pzshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.pz-done{text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  padding:28px;margin-top:18px;box-shadow:0 10px 30px rgba(45,17,81,.10)}
+.pz-done-emoji{font-size:52px}
+.pz-note{max-width:520px;margin:10px auto;color:var(--ink-soft);font-size:14px}
+
+/* ================= Flashcards ================= */
+.fc-counts{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.fc-count{padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:600;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-soft)}
+.fc-count b{font-size:14px;margin-right:3px}
+.fc-count.new b{color:#64748b}.fc-count.learning b{color:#e9930b}
+.fc-count.mastered b{color:#2fae66}.fc-count.due b{color:var(--gn-pink)}
+.fc-cta{display:flex;gap:10px;align-items:center;margin:18px 0 24px;flex-wrap:wrap}
+.fc-alldone{font-size:14.5px;font-weight:600;color:var(--ink-soft);background:var(--gn-soft-purple);
+  border:1px solid var(--gn-border-strong);border-radius:13px;padding:12px 16px}
+.fc-browse{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px}
+.fc-mini{text-align:left;background:var(--surface);border:1px solid var(--line);
+  border-left:4px solid var(--sc);border-radius:12px;padding:10px 13px;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;font-family:inherit;font-size:inherit;color:inherit}
+.fc-mini:hover{border-color:var(--gn-border-strong)}
+.fc-mini-term{font-weight:800;font-size:13.5px}
+.fc-box{align-self:flex-start;font-size:9.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.06em;padding:2.5px 9px;border-radius:999px;background:#eef1f6;color:#64748b}
+.fc-box.b1{background:#fef3c7;color:#b45309}
+.fc-box.b2{background:#dbeafe;color:#1d4ed8}
+.fc-box.b3{background:#dcfce7;color:#15803d}
+.fc-mini-def{font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+.fc-study{max-width:640px;margin:0 auto}
+.fc-card{display:block;width:100%;min-height:290px;border-radius:26px;border:2px solid var(--line);
+  cursor:pointer;background:var(--surface);box-shadow:0 16px 44px rgba(45,17,81,.13);
+  padding:30px;font-family:inherit;color:inherit;text-align:center;transition:transform .15s ease;
+  margin-top:8px}
+.fc-card:hover{transform:translateY(-3px)}
+.fc-card.flipped{background:linear-gradient(160deg,#703D84,#8D4DA5);color:#fff;border-color:transparent}
+.fc-facelabel{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+  opacity:.6;margin-bottom:18px}
+.fc-term{font-size:38px;font-weight:800;font-family:var(--font-heading);line-height:1.15;
+  overflow-wrap:break-word}
+.fc-def{font-size:19px;font-weight:600;line-height:1.6}
+.fc-hint{margin-top:24px;font-size:12.5px;color:var(--ink-faint)}
+.fc-src{margin-top:20px;font-size:12px;opacity:.75}
+.fc-grade{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.fc-grade .btn{display:flex;flex-direction:column;gap:2px;min-width:118px;padding:11px 16px;border:0}
+.fc-grade .btn small{font-weight:600;font-size:10.5px;opacity:.85}
+.fc-again{background:#fee2e2;color:#b91c1c}
+.fc-good{background:#dcfce7;color:#15803d}
+.fc-easy{background:linear-gradient(135deg,#7F5DF9,#FF6AC6);color:#fff;box-shadow:var(--glow-brand)}
+.fc-kbd{font-size:12px;color:var(--ink-faint)}
+.fc-done{max-width:640px;margin:20px auto}
+
+/* ================= printable certificate ================= */
+.cert2-tools{display:flex;gap:10px;align-items:center;margin:16px 0;flex-wrap:wrap}
+.cert2-samplenote{font-size:12.5px;color:var(--ink-faint);max-width:340px}
+.cert2{display:flex;justify-content:center;margin:8px 0 34px}
+.cert2-frame{position:relative;background:linear-gradient(160deg,#FFFDF8,#FBF4FF);width:100%;
+  max-width:880px;padding:52px 46px;text-align:center;border:3px solid var(--gn-purple);
+  border-radius:6px;outline:10px solid rgba(112,61,132,.09);
+  box-shadow:0 22px 64px rgba(45,17,81,.18);color:#2D1151;overflow:hidden}
+.cert2-frame::before{content:"";position:absolute;inset:11px;border:1.5px solid rgba(245,0,126,.45);
+  border-radius:3px;pointer-events:none}
+.cert2-brand{display:flex;justify-content:center;margin-bottom:20px}
+.cert2-brand .gn-brand-main{color:#2D1151}
+.cert2-title{font-family:var(--font-heading);font-size:32px;font-weight:800;letter-spacing:.07em;
+  color:var(--gn-purple-deep);text-transform:uppercase}
+.cert2-line{font-size:14px;color:#6b5a80;margin-top:16px}
+.cert2-name{font-size:46px;font-weight:800;font-family:var(--font-heading);margin-top:6px;
+  background:linear-gradient(135deg,#703D84,#F5007E);-webkit-background-clip:text;
+  background-clip:text;color:transparent;overflow-wrap:break-word}
+.cert2-level{font-size:22px;font-weight:800;margin-top:10px;color:var(--gn-purple-deep)}
+.cert2-detail{font-size:13px;color:#6b5a80;margin-top:8px}
+.cert2-sig{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:46px}
+.cert2-sigcol{flex:1;font-size:11px;color:#6b5a80;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.cert2-sigline{border-bottom:2px solid var(--gn-purple-deep);height:36px;margin-bottom:7px}
+.cert2-date{border-bottom:2px solid var(--gn-purple-deep);padding-bottom:7px;margin-bottom:7px;
+  font-size:15px;color:#2D1151;font-weight:700;text-transform:none;letter-spacing:0}
+.cert2-seal{width:76px;height:76px;border-radius:50%;flex:0 0 auto;
+  background:linear-gradient(135deg,#703D84,#F5007E);display:flex;align-items:center;
+  justify-content:center;font-size:34px;box-shadow:0 8px 24px rgba(245,0,126,.35)}
+.cert2-foot{margin-top:28px;font-size:12px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gn-pink)}
+.cert2-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:120px;font-weight:800;color:rgba(112,61,132,.10);transform:rotate(-24deg);
+  pointer-events:none;letter-spacing:.12em;font-family:var(--font-heading)}
+
+/* report header logo (was an emoji) */
+.rep-logo{font-size:inherit!important}
+.rep-logo .gn-mark{width:50px;height:50px}
+
+/* site chrome never prints — reports and certificates come out clean */
+@media print{
+  .c-head,.c-foot,.cert2-tools{display:none!important}
+  body{background:#fff}
+  .cert2-frame{box-shadow:none;outline-width:6px}
+  .c-main{max-width:none;padding:0}
+}
+@media (max-width:700px){
+  .fc-term{font-size:28px}
+  .cert2-frame{padding:34px 20px}
+  .cert2-name{font-size:32px}
+  .cert2-title{font-size:23px}
+  .cert2-watermark{font-size:64px}
+}

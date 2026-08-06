@@ -95,7 +95,8 @@
         stat(quizzed, "recall tests passed", "#34d399"),
         stat(built, "projects built", "#f59e0b"),
         stat(avg + "%", "average test score", "#ec4899"),
-        stat("🔥 " + stk.current, "day streak", "#F5007E")
+        stat("🔥 " + stk.current, "day streak", "#F5007E"),
+        stat(GN.weekActive(stu.id) + " / 7", "days active this week", "#7F5DF9")
       ]),
       h("div", { class: "stat-bar" }, [
         U.bar(st.pct, "#4c97ff"),
@@ -166,8 +167,8 @@
       h("h2", { class: "panel-h" }, ["📚 Your two levels"]),
       h("div", { class: "lv-cards" }, P.levels.map(function (lv) {
         var ls = GN.levelStats(P, lv.level);
-        return h("a", { class: "lv-card" + (lv.level === GN.level() ? " lv-active" : ""), href: "curriculum.html",
-          onclick: function () { GN.setLevel(lv.level); }, style: "--lvc:" + lv.color }, [
+        return h("div", { class: "lv-card" + (lv.level === GN.level() ? " lv-active" : ""),
+          style: "--lvc:" + lv.color }, [
           h("span", { class: "lv-card-emoji" }, [lv.emoji]),
           h("h3", {}, [lv.title]),
           h("p", {}, [lv.blurb]),
@@ -196,6 +197,8 @@
     main.appendChild(U.modeBanner());
     main.appendChild(h("div", { class: "tiles" }, [
       tile("curriculum.html", "📚", "Curriculum", P.meta.sessionCount + " sessions · learn, test, then build", "#4c97ff"),
+      tile("puzzles.html", "🧩", "Code Puzzles", "Rebuild real scripts from shuffled blocks — earn stars", "#F5007E"),
+      tile("flashcards.html", "🃏", "Flashcards", "Coding words trainer that remembers what you find hard", "#7F5DF9"),
       tile("blocklab.html", "🧪", "Block Lab", P.meta.blockCount + " Scratch blocks explained with examples", "#f59e0b"),
       tile("projects.html", "🚀", "Project Library", P.meta.projectCount + " real guided Scratch projects", "#7c3aed"),
       GN.isTutor()

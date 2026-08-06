@@ -54,36 +54,36 @@
       h("div", { class: "gn-ringtxt" }, [h("b", {}, [pct + "%"]), label ? h("span", {}, [label]) : null])]);
   }
 
-  /* ---- the GradeNext logo from the brand kit: grad-cap G + coding X ---- */
+  /* ---- brand mark + the full platform name, exactly as specified ---- */
   function logoEl() {
-    var cap = '<svg class="gn-cap" viewBox="0 0 64 44" aria-hidden="true">' +
-      '<path d="M32 2 2 15l30 13 24-10.4V30h6V15z" fill="#703D84"/>' +
-      '<path d="M14 24v9c0 4.4 8 8.5 18 8.5s18-4.1 18-8.5v-9l-18 7.8z" fill="#5A2F6B"/>' +
-      '<circle cx="61" cy="31" r="2.6" fill="#F5007E"/></svg>';
-    return h("span", { class: "gn-logo", "aria-label": "GradeNext" }, [
-      h("span", { class: "gn-logo-g", html: "G" + cap }),
-      h("span", { class: "gn-logo-rest" }, ["rade"]),
-      h("span", { class: "gn-logo-rest" }, ["ne"]),
-      h("span", { class: "gn-logo-x" }, ["X"]),
-      h("span", { class: "gn-logo-rest" }, ["t"])
+    var mark = '<svg class="gn-mark" viewBox="0 0 64 64" aria-hidden="true">' +
+      '<rect width="64" height="64" rx="15" fill="#703D84"/>' +
+      '<text x="32" y="41" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="800" font-size="30" fill="#fff">G</text>' +
+      '<path d="M32 8 12 16l20 8 15-6v7h4v-9z" fill="#F5007E"/>' +
+      '<rect x="17" y="47" width="30" height="5" rx="2.5" fill="#F5007E"/></svg>';
+    return h("span", { class: "gn-brandline" }, [
+      h("span", { class: "gn-markwrap", html: mark }),
+      h("span", { class: "gn-brandtxt" }, [
+        h("span", { class: "gn-brand-main" }, ["Scratch Academy"]),
+        h("span", { class: "gn-brand-by" }, ["by GradeNext"])
+      ])
     ]);
   }
 
   /* ---- header shared by every page ---- */
   function header(activeKey) {
     var nav = [
-      ["index.html", "🏠 Dashboard", "home"],
+      ["index.html", "🏠 Home", "home"],
       ["curriculum.html", "📚 Curriculum", "curriculum"],
-      ["blocklab.html", "🧪 Block Lab", "blocklab"],
+      ["puzzles.html", "🧩 Puzzles", "puzzles"],
+      ["flashcards.html", "🃏 Cards", "cards"],
+      ["blocklab.html", "🧪 Blocks", "blocklab"],
       ["projects.html", "🚀 Projects", "projects"],
       ["report.html", "📊 Reports", "report"]
     ];
     initPaletteOnce();
     return h("header", { class: "c-head" }, [
-      h("a", { class: "c-brand", href: "index.html" }, [
-        logoEl(),
-        h("div", { class: "c-brand-txt" }, [h("div", { class: "c-sub" }, ["Scratch Academy"])])
-      ]),
+      h("a", { class: "c-brand", href: "index.html" }, [logoEl()]),
       h("nav", { class: "c-nav" }, nav.map(function (n) {
         return h("a", { class: "c-navbtn" + (n[2] === activeKey ? " active" : ""), href: n[0] }, [n[1]]);
       })),
@@ -116,9 +116,17 @@
     function btn(r, label) {
       return h("button", {
         class: "role-btn" + (role === r ? " on " + r : ""),
-        title: r === "tutor" ? "Tutor Mode — solutions, answers and teaching notes visible"
+        title: r === "tutor" ? "Tutor Mode — needs the tutor PIN. Solutions, answers and teaching notes become visible."
                              : "Student Mode — solutions hidden",
-        onclick: function () { if (role !== r) { GN.setRole(r); location.reload(); } }
+        onclick: function () {
+          if (role === r) return;
+          if (r === "tutor") {
+            var p = prompt("🔒 Enter the tutor PIN to unlock Tutor Mode:");
+            if (p === null) return;
+            if (!GN.checkPin(p)) { alert("That PIN isn't right. Tutor Mode stays locked."); return; }
+          }
+          GN.setRole(r); location.reload();
+        }
       }, [label]);
     }
     return h("div", { class: "role-switch", role: "group", "aria-label": "Mode" }, [
@@ -193,7 +201,7 @@
 
   function emptyState(msg, ctaLabel, ctaFn) {
     return h("div", { class: "gn-empty" }, [
-      h("div", { class: "gn-empty-emoji" }, ["🐱"]),
+      h("div", { class: "gn-empty-emoji" }, ["🎈"]),
       h("p", {}, [msg]),
       ctaLabel ? h("button", { class: "btn primary", onclick: ctaFn }, [ctaLabel]) : null
     ]);

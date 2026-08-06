@@ -120,12 +120,10 @@
     main.appendChild(toolbar());
     // The curriculum shows ONE level at a time — switch with the header control.
     var LV = GN.level();
-    var other = LV === 1 ? 2 : 1;
     main.appendChild(h("div", { class: "lv-note" }, [
       h("span", { class: "lv-chip l" + LV }, ["LEVEL " + LV]),
-      h("span", {}, [LV === 1 ? "Foundations — sessions 1–50" : "Logic, Data & Game Engineering — sessions 1–50"]),
-      h("button", { class: "linkish", onclick: function () { GN.setLevel(other); location.reload(); } },
-        ["Switch to Level " + other + " →"])
+      h("span", {}, [(LV === 1 ? "Foundations" : "Logic, Data & Game Engineering") +
+        " — sessions 1–50. Change level with the switch in the header."])
     ]));
     var any = false;
     P.levels.filter(function (lv) { return lv.level === LV; }).forEach(function (lv) {

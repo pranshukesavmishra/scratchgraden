@@ -1,7 +1,7 @@
 /* Scratch Academy by GradeNext — offline support.
    Network-first with cache fallback: pages stay fresh when online and
    keep working (lessons, quizzes, briefs) when the connection drops. */
-var CACHE = "sa-gn-v1";
+var CACHE = "sa-gn-v2";
 self.addEventListener("install", function (e) { self.skipWaiting(); });
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (keys) {

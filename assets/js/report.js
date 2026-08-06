@@ -95,7 +95,9 @@
       return h("section", { class: "panel" }, [
         h("h2", { class: "panel-h" }, ["Certificate"]),
         h("p", { class: "panel-sub" }, ["A certificate unlocks when a level is fully completed — " +
-          (next.total - next.done) + " sessions to go."])
+          (next.total - next.done) + " sessions to go."]),
+        GN.isTutor() ? h("a", { class: "btn ghost no-print", href: "certificate.html?lv=" + (l1.pct < 100 ? 1 : 2) },
+          ["👀 Preview the certificate (sample)"]) : null
       ]);
     }
     return h("section", { class: "panel" }, [
@@ -107,8 +109,10 @@
             h("div", { class: "cert-kicker" }, ["Certificate of completion"]),
             h("h3", {}, [stu.name]),
             h("p", {}, ["has successfully completed ", h("b", {}, [e.name]),
-                        " of the Grade Next Scratch Academy."]),
-            h("div", { class: "cert-foot" }, ["Grade Next · " + fmt(new Date().toISOString())])
+                        " of Scratch Academy by GradeNext."]),
+            h("div", { class: "cert-foot" }, ["GradeNext · " + fmt(new Date().toISOString())]),
+            h("a", { class: "btn primary no-print", href: "certificate.html?lv=" + e.lv },
+              ["🎓 Open the printable certificate"])
           ])
         ]);
       }))
@@ -152,7 +156,16 @@
         h("a", { class: "btn ghost", target: "_blank", rel: "noopener",
           href: "https://wa.me/?text=" + shareText() }, ["💬 Share on WhatsApp"]),
         h("a", { class: "btn ghost",
-          href: "mailto:?subject=" + encodeURIComponent("Scratch progress update") + "&body=" + shareText() }, ["✉️ Email to parent"])
+          href: "mailto:?subject=" + encodeURIComponent("Scratch progress update") + "&body=" + shareText() }, ["✉️ Email to parent"]),
+        h("button", { class: "btn ghost", onclick: function () {
+          var cur = prompt("Current tutor PIN:");
+          if (cur === null) return;
+          if (!GN.checkPin(cur)) { alert("That isn't the current PIN."); return; }
+          var nw = prompt("New PIN (4–6 digits):");
+          if (nw === null) return;
+          if (GN.setPin(nw)) alert("Tutor PIN updated. It now protects the Tutor Mode switch on every page.");
+          else alert("PIN not changed — it must be 4 to 6 digits.");
+        } }, ["🔒 Change tutor PIN"])
       ])
     ]);
   }
@@ -186,9 +199,9 @@
         h("div", {}, [
           h("div", { class: "rep-kicker" }, [GN.isTutor() ? "Progress report" : "My progress"]),
           h("h1", {}, [GN.isTutor() ? stu.name : "Your Scratch journey"]),
-          h("p", {}, ["Grade Next Scratch Academy · started " + fmt(stu.createdAt)])
+          h("p", {}, ["Scratch Academy by GradeNext · started " + fmt(stu.createdAt)])
         ]),
-        h("div", { class: "rep-logo" }, ["🐱"])
+        h("div", { class: "rep-logo" }, [U.logoEl()])
       ]));
       main.appendChild(summary(stu));
       main.appendChild(U.badgesPanel(P));

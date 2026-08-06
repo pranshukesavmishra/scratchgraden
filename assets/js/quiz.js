@@ -12,6 +12,36 @@
 
   function qs_(k) { return new URLSearchParams(location.search).get(k); }
 
+  /* tiny WebAudio feedback sounds — no files, and silent on old browsers */
+  var AC = null;
+  function ping(kind) {
+    try {
+      AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+      if (AC.state === "suspended") AC.resume();
+      var t0 = AC.currentTime;
+      var notes = kind === "right" ? [[660, 0, 0.09], [988, 0.09, 0.14]]
+                : kind === "wrong" ? [[196, 0, 0.22]]
+                : [[523, 0, 0.13], [659, 0.13, 0.13], [784, 0.26, 0.13], [1047, 0.39, 0.3]];
+      notes.forEach(function (n) {
+        var o = AC.createOscillator(), g = AC.createGain();
+        o.type = kind === "wrong" ? "triangle" : "sine";
+        o.frequency.value = n[0];
+        g.gain.setValueAtTime(0.0001, t0 + n[1]);
+        g.gain.exponentialRampToValueAtTime(0.12, t0 + n[1] + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + n[1] + n[2]);
+        o.connect(g); g.connect(AC.destination);
+        o.start(t0 + n[1]); o.stop(t0 + n[1] + n[2] + 0.05);
+      });
+    } catch (e) {}
+  }
+
+  function answer(i) {
+    var q = quiz.qs[quiz.i];
+    quiz.answers[quiz.i] = i;
+    ping(i === q.correct ? "right" : "wrong");
+    render();
+  }
+
   function shuffle(a) {
     a = a.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -116,7 +146,7 @@
         else cls += " dim";
       }
       opts.appendChild(h("button", { class: cls, disabled: answered || null,
-        onclick: function () { if (!answered) { quiz.answers[quiz.i] = i; render(); } } }, [
+        onclick: function () { if (!answered) answer(i); } }, [
         h("span", { class: "qletter" }, ["ABCD"[i]]),
         h("span", { class: "qtext" }, [opt]),
         answered && i === q.correct ? h("span", { class: "qmark" }, ["✓"]) : null,
@@ -150,7 +180,7 @@
     var sc = score();
     if (!REVIEW && !quiz.practice) GN.saveQuiz(S.id, sc, quiz.qs.length, P.meta.quizPass);
     var passed = REVIEW ? (sc / quiz.qs.length >= 0.7) : sc >= P.meta.quizPass;
-    if (passed && U.confetti) U.confetti();
+    if (passed) { ping("pass"); if (U.confetti) U.confetti(); }
   }
 
   /* ---------------- result view ---------------- */
@@ -250,7 +280,7 @@
       var given = quiz.answers[quiz.i] !== undefined;
       if (!given && /^[1-4]$/.test(e.key)) {
         var i = parseInt(e.key, 10) - 1;
-        if (i < quiz.qs[quiz.i].options.length) { quiz.answers[quiz.i] = i; render(); e.preventDefault(); }
+        if (i < quiz.qs[quiz.i].options.length) { answer(i); e.preventDefault(); }
       } else if (given && (e.key === "Enter" || e.key === " ")) {
         var btn = document.querySelector(".quiz-actions .btn.primary");
         if (btn) { btn.click(); e.preventDefault(); }

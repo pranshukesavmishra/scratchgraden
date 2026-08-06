@@ -30,6 +30,21 @@
     },
     isTutor: function () { return this.role() === "tutor"; },
 
+    /* ---------- tutor PIN ----------
+       Switching into Tutor Mode needs a PIN, so a student can't just flip
+       the switch and read the solutions. Default is 2468 until changed. */
+    pin: function () {
+      var p = null; try { p = localStorage.getItem("gn_pin"); } catch (e) {}
+      return (p && /^\d{4,6}$/.test(p)) ? p : "2468";
+    },
+    setPin: function (p) {
+      p = String(p == null ? "" : p).replace(/\D/g, "");
+      if (p.length < 4 || p.length > 6) return false;
+      try { localStorage.setItem("gn_pin", p); } catch (e) {}
+      return true;
+    },
+    checkPin: function (p) { return String(p == null ? "" : p).trim() === this.pin(); },
+
     /* ---------- active level: the platform is split into two parts ---------- */
     level: function () {
       var n = 1; try { n = parseInt(localStorage.getItem("gn_level") || "1", 10); } catch (e) {}
@@ -224,6 +239,17 @@
         if (run > best) best = run;
       }
       return { current: cur, best: best, days: days.length };
+    },
+    /* how many of the last 7 days (today included) had any activity */
+    weekActive: function (studentId) {
+      var st = studentId || this.activeId();
+      var days = (read("gn_activity", {})[st]) || [];
+      var n = 0, now = new Date();
+      for (var i = 0; i < 7; i++) {
+        var d = new Date(now); d.setDate(now.getDate() - i);
+        if (days.indexOf(d.toISOString().slice(0, 10)) >= 0) n++;
+      }
+      return n;
     },
 
     unlockedCount: function (P, studentId) {

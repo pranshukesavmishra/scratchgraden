@@ -8,8 +8,6 @@
   "use strict";
   var R = window.GN_RPI || { paths: [], projects: {} };
   var GN = window.GN, U = window.GNUI;
-  var showAllLevels = false;
-
   /* which curriculum level uses each project (from the spine) */
   var LEVEL_OF = {};
   (function () {
@@ -85,14 +83,11 @@
     var LV = GN.level();
     wrap.appendChild(h("div", { class: "lv-note" }, [
       h("span", { class: "lv-chip l" + LV }, ["LEVEL " + LV]),
-      h("span", {}, [showAllLevels ? "Showing projects from both levels."
-                                   : "Showing the projects used in Level " + LV + " sessions."]),
-      h("button", { class: "linkish", onclick: function () { showAllLevels = !showAllLevels; render(); } },
-        [showAllLevels ? "Show only Level " + LV + " →" : "Show all projects →"])
+      h("span", {}, ["The projects used in Level " + LV + " sessions. Change level with the switch in the header."])
     ]));
     R.paths.forEach(function (path) {
       var slugs = path.projects.filter(function (slug) {
-        return R.projects[slug] && (showAllLevels || projLevel(slug) === LV);
+        return R.projects[slug] && projLevel(slug) === LV;
       });
       if (!slugs.length) return;
       var sec = h("section", { class: "rpi-path" });

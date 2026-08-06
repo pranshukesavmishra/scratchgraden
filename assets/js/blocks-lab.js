@@ -47,7 +47,11 @@
   function toolbar() {
     var q = h("input", { class: "c-search", type: "search", placeholder: "🔎 Search blocks (e.g. clone, score, touching)" });
     q.value = filter.q;
-    q.addEventListener("input", function () { filter.q = q.value.toLowerCase(); render(true); });
+    q.addEventListener("input", function () {
+      filter.q = q.value.toLowerCase();
+      filter.scope = filter.q ? "all" : "level";   // searching looks across both levels
+      render(true);
+    });
 
     var cats = h("select", { class: "gn-select", onchange: function () { filter.cat = cats.value; render(true); } },
       [h("option", { value: "" }, ["All categories"])].concat(
@@ -57,13 +61,6 @@
           return o;
         })));
 
-    var scope = h("select", { class: "gn-select", onchange: function () { filter.scope = scope.value; render(true); } },
-      [["level", "Level " + GN.level() + " blocks"], ["all", "Both levels"]].map(function (p) {
-        var o = h("option", { value: p[0] }, [p[1]]);
-        if (filter.scope === p[0]) o.selected = true;
-        return o;
-      }));
-
     var only = h("select", { class: "gn-select", onchange: function () { filter.only = only.value; render(true); } },
       [["all", "All blocks"], ["unlocked", "Only what I've learned"], ["locked", "Not learned yet"]].map(function (p) {
         var o = h("option", { value: p[0] }, [p[1]]);
@@ -71,7 +68,7 @@
         return o;
       }));
 
-    return h("div", { class: "gn-toolbar" }, [q, cats, scope, only]);
+    return h("div", { class: "gn-toolbar" }, [q, cats, only]);
   }
 
   function render(keep) {
