@@ -7,7 +7,7 @@
 (function () {
   "use strict";
   var P = window.GN_PLATFORM, GN = window.GN, U = window.GNUI, h = U.h;
-  var app, filter = { cat: "", q: "", only: "all" };
+  var app, filter = { cat: "", q: "", only: "all", scope: "level" };
 
   function qs(k) { return new URLSearchParams(location.search).get(k); }
 
@@ -57,6 +57,13 @@
           return o;
         })));
 
+    var scope = h("select", { class: "gn-select", onchange: function () { filter.scope = scope.value; render(true); } },
+      [["level", "Level " + GN.level() + " blocks"], ["all", "Both levels"]].map(function (p) {
+        var o = h("option", { value: p[0] }, [p[1]]);
+        if (filter.scope === p[0]) o.selected = true;
+        return o;
+      }));
+
     var only = h("select", { class: "gn-select", onchange: function () { filter.only = only.value; render(true); } },
       [["all", "All blocks"], ["unlocked", "Only what I've learned"], ["locked", "Not learned yet"]].map(function (p) {
         var o = h("option", { value: p[0] }, [p[1]]);
@@ -64,7 +71,7 @@
         return o;
       }));
 
-    return h("div", { class: "gn-toolbar" }, [q, cats, only]);
+    return h("div", { class: "gn-toolbar" }, [q, cats, scope, only]);
   }
 
   function render(keep) {
@@ -92,6 +99,8 @@
       var list = Object.keys(P.blocks).filter(function (k) {
         var b = P.blocks[k];
         if (b.category !== cat) return false;
+        if (filter.scope === "level" && !b.sessions.some(function (sid) {
+          return P.sessions[sid] && P.sessions[sid].level === GN.level(); })) return false;
         if (filter.only === "unlocked" && !un[k]) return false;
         if (filter.only === "locked" && un[k]) return false;
         if (filter.q && (k + " " + b.what + " " + b.example).toLowerCase().indexOf(filter.q) < 0) return false;
@@ -118,6 +127,8 @@
   function boot() {
     app = document.getElementById("app");
     if (!P || !P.blocks) { app.innerHTML = '<div style="padding:40px;text-align:center">Block data failed to load.</div>'; return; }
+    var q0 = qs("q");
+    if (q0) { filter.q = q0.toLowerCase(); filter.scope = "all"; }
     var s = qs("strand");
     // the curriculum uses strand names; map the ones that match a block category
     if (s && P.blockCategories[s]) filter.cat = s;

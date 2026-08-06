@@ -148,9 +148,27 @@
           var btn = h("button", { class: "btn ghost", onclick: function () { inp.click(); } }, ["⬆ Import backup"]);
           return h("span", {}, [btn, inp]);
         })(),
-        h("button", { class: "btn primary", onclick: function () { window.print(); } }, ["🖨 Print / save as PDF"])
+        h("button", { class: "btn primary", onclick: function () { window.print(); } }, ["🖨 Print / save as PDF"]),
+        h("a", { class: "btn ghost", target: "_blank", rel: "noopener",
+          href: "https://wa.me/?text=" + shareText() }, ["💬 Share on WhatsApp"]),
+        h("a", { class: "btn ghost",
+          href: "mailto:?subject=" + encodeURIComponent("Scratch progress update") + "&body=" + shareText() }, ["✉️ Email to parent"])
       ])
     ]);
+  }
+
+  /* a parent-friendly progress summary for WhatsApp / email */
+  function shareText() {
+    var stu = GN.active(); if (!stu) return "";
+    var st = GN.stats(P, stu.id), stk = GN.streak(stu.id);
+    var l1 = GN.levelStats(P, 1, stu.id), l2 = GN.levelStats(P, 2, stu.id);
+    var badges = GN.achievements(P, stu.id).filter(function (b) { return b.earned; });
+    var txt = "🎓 " + stu.name + " — Scratch Academy by GradeNext progress\n" +
+      "Sessions completed: " + st.done + " of " + st.total + "\n" +
+      "Level 1: " + l1.pct + "% · Level 2: " + l2.pct + "%\n" +
+      "Skills mastered: " + st.rubric.mastered + " · Learning streak: " + stk.current + " days\n" +
+      "Achievements: " + (badges.length ? badges.map(function (b) { return b.emoji + " " + b.name; }).join(", ") : "coming soon!");
+    return encodeURIComponent(txt);
   }
 
   function render() {
@@ -173,6 +191,7 @@
         h("div", { class: "rep-logo" }, ["🐱"])
       ]));
       main.appendChild(summary(stu));
+      main.appendChild(U.badgesPanel(P));
       main.appendChild(masteryTable(stu));
       main.appendChild(certificate(stu));
       main.appendChild(journal(stu));

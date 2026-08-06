@@ -16,6 +16,12 @@
     ]);
   }
 
+  function lvSessions() {
+    var lv = GN.level();
+    var row = P.levels.filter(function (l) { return l.level === lv; })[0];
+    return row ? row.sessions : P.order;
+  }
+
   function continueCard() {
     // A learner profile always exists so progress is always tracked.
     var stu = GN.isTutor() ? GN.active() : GN.ensureLearner();
@@ -29,11 +35,19 @@
         h("button", { class: "btn primary big", onclick: function () { U.addStudentFlow(); } }, ["＋ Add a student"])
       ]);
     }
-    var nid = GN.nextSession(P), s = P.sessions[nid];
+    // next unfinished session WITHIN the active level
+    var ids = lvSessions(), prog = GN.progress(), nid = null;
+    for (var i = 0; i < ids.length; i++) {
+      if ((prog[ids[i]] || {}).status !== "done") { nid = ids[i]; break; }
+    }
+    if (!nid) nid = ids[ids.length - 1] || P.order[0];
+    var s = P.sessions[nid];
     var st = GN.stats(P);
+    var learnedN = 0;
+    Object.keys(prog).forEach(function (k) { if (prog[k].learned) learnedN++; });
     return h("section", { class: "cont-card" }, [
       h("div", { class: "cont-txt" }, [
-        h("div", { class: "cont-kicker" }, [GN.isTutor() ? ("Next up for " + stu.name) : "Next up"]),
+        h("div", { class: "cont-kicker" }, [(GN.isTutor() ? ("Next up for " + stu.name) : "Next up") + " · Level " + GN.level()]),
         h("h2", {}, ["Session " + s.n + " · " + s.title]),
         h("p", {}, [s.concept + (s.content ? " — building " + s.content.title : "")]),
         h("div", { class: "cont-prog" }, [
@@ -44,7 +58,9 @@
       h("div", { class: "cont-actions" }, [
         h("a", { class: "btn primary big", href: "learn.html?s=" + s.id }, ["▶ Start learning"]),
         h("a", { class: "btn ghost", href: "quiz.html?s=" + s.id }, ["🧠 Recall Test"]),
-        GN.isTutor() ? h("a", { class: "btn ghost", href: "lesson.html?s=" + s.id }, ["👩‍🏫 Lesson plan"]) : null
+        GN.isTutor() ? h("a", { class: "btn ghost", href: "lesson.html?s=" + s.id }, ["👩‍🏫 Lesson plan"]) : null,
+        learnedN >= 3 ? h("a", { class: "btn ghost review-pill", href: "quiz.html?mode=review",
+          title: "10 questions from everything you have learned so far" }, ["🔀 Mixed Review"]) : null
       ])
     ]);
   }
@@ -63,6 +79,9 @@
       if (r.quiz && r.quiz.total) { bestSum += (r.quiz.best / r.quiz.total) * 100; bestN++; }
     });
     var avg = bestN ? Math.round(bestSum / bestN) : 0;
+    var lvIds = lvSessions(), lvDone = 0;
+    lvIds.forEach(function (id) { if ((prog[id] || {}).status === "done") lvDone++; });
+    var stk = GN.streak(stu.id);
     function stat(n, label, color) {
       return h("div", { class: "stat", style: "--sc2:" + color }, [
         h("b", {}, [String(n)]), h("span", {}, [label])]);
@@ -70,11 +89,13 @@
     return h("section", { class: "panel stats-panel" }, [
       h("h2", { class: "panel-h" }, ["📈 " + (GN.isTutor() ? stu.name + "'s progress" : "Your progress")]),
       h("div", { class: "stat-row" }, [
-        stat(st.done + " / " + st.total, "sessions completed", "#4c97ff"),
+        stat(lvDone + " / " + lvIds.length, "Level " + GN.level() + " sessions", "#703D84"),
+        stat(st.done + " / " + st.total, "sessions overall", "#4c97ff"),
         stat(learned, "topics learned", "#9966ff"),
         stat(quizzed, "recall tests passed", "#34d399"),
         stat(built, "projects built", "#f59e0b"),
-        stat(avg + "%", "average test score", "#ec4899")
+        stat(avg + "%", "average test score", "#ec4899"),
+        stat("🔥 " + stk.current, "day streak", "#F5007E")
       ]),
       h("div", { class: "stat-bar" }, [
         U.bar(st.pct, "#4c97ff"),
@@ -105,12 +126,48 @@
     ]);
   }
 
+  /* class leaderboard — tutors with 2+ students */
+  function leaderboard() {
+    if (!GN.isTutor()) return null;
+    var list = GN.students();
+    if (list.length < 2) return null;
+    var rows = list.map(function (stu) {
+      var st = GN.stats(P, stu.id), prog = GN.progress(stu.id);
+      var sSum = 0, sN = 0;
+      Object.keys(prog).forEach(function (k) {
+        var q = prog[k].quiz;
+        if (q && q.total) { sSum += q.best / q.total; sN++; }
+      });
+      return { stu: stu, done: st.done, avg: sN ? Math.round((sSum / sN) * 100) : 0,
+               streak: GN.streak(stu.id).current };
+    }).sort(function (a, b) { return b.done - a.done || b.avg - a.avg; });
+    var act = GN.activeId();
+    return h("section", { class: "panel" }, [
+      h("h2", { class: "panel-h" }, ["🏁 Class leaderboard"]),
+      h("p", { class: "panel-sub" }, ["All your students, ranked by sessions completed then average test score."]),
+      h("table", { class: "lb-table" }, [
+        h("thead", {}, [h("tr", {}, [h("th", {}, ["#"]), h("th", {}, ["Student"]),
+          h("th", {}, ["Sessions"]), h("th", {}, ["Avg test"]), h("th", {}, ["Streak"])])]),
+        h("tbody", {}, rows.map(function (r, i) {
+          return h("tr", { class: r.stu.id === act ? "lb-me" : "" }, [
+            h("td", { class: "lb-rank" }, [String(i + 1)]),
+            h("td", {}, [r.stu.name]),
+            h("td", {}, [r.done + " / " + P.order.length]),
+            h("td", {}, [r.avg + "%"]),
+            h("td", {}, ["🔥 " + r.streak])
+          ]);
+        }))
+      ])
+    ]);
+  }
+
   function levelsCard() {
     return h("section", { class: "panel" }, [
       h("h2", { class: "panel-h" }, ["📚 Your two levels"]),
       h("div", { class: "lv-cards" }, P.levels.map(function (lv) {
         var ls = GN.levelStats(P, lv.level);
-        return h("a", { class: "lv-card", href: "curriculum.html", style: "--lvc:" + lv.color }, [
+        return h("a", { class: "lv-card" + (lv.level === GN.level() ? " lv-active" : ""), href: "curriculum.html",
+          onclick: function () { GN.setLevel(lv.level); }, style: "--lvc:" + lv.color }, [
           h("span", { class: "lv-card-emoji" }, [lv.emoji]),
           h("h3", {}, [lv.title]),
           h("p", {}, [lv.blurb]),
@@ -127,7 +184,7 @@
     var main = h("main", { class: "c-main" });
 
     main.appendChild(h("section", { class: "c-hero dash-hero" }, [
-      h("h1", {}, ["Grade Next Scratch Academy"]),
+      h("h1", {}, ["Scratch Academy by GradeNext"]),
       h("p", {}, ["A complete teaching system for ages 7–12: " + P.meta.sessionCount +
                   " lesson-planned sessions, " + P.meta.projectCount + " guided projects and " +
                   P.meta.exerciseCount + " exercises — with assessment and parent reports built in."])
@@ -147,6 +204,8 @@
     ]));
 
     var m = masteryCard(); if (m) main.appendChild(m);
+    main.appendChild(U.badgesPanel(P));
+    var lb = leaderboard(); if (lb) main.appendChild(lb);
     main.appendChild(levelsCard());
 
     app.appendChild(main);

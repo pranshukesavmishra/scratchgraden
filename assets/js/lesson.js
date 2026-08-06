@@ -8,6 +8,7 @@
   "use strict";
   var P = window.GN_PLATFORM, GN = window.GN, U = window.GNUI, h = U.h;
   var app, S, mode;
+  var runner = { on: false, elapsed: 0, iv: null };
 
   function qs(k) { return new URLSearchParams(location.search).get(k); }
   /* Mode is now a GLOBAL platform setting (header switch), not per session. */
@@ -33,10 +34,11 @@
     var steps = [
       { n: 1, label: "Learn", icon: "📖", href: "learn.html?s=" + S.id, done: st.learn },
       { n: 2, label: "Recall Test", icon: "🧠", href: "quiz.html?s=" + S.id, done: st.quiz },
-      { n: 3, label: "Build it", icon: "🛠", href: S.content ? S.content.href : "#", done: st.apply }
+      { n: 3, label: "Build it", icon: "🛠", href: S.content ? S.content.href : "#", done: st.apply, apply: true }
     ];
     return h("div", { class: "journey" }, steps.map(function (s, i) {
-      return h("a", { class: "jstep" + (s.done ? " done" : ""), href: s.href }, [
+      return h("a", { class: "jstep" + (s.done ? " done" : ""), href: s.href,
+        onclick: s.apply && S.content ? function () { GN.markApplied(S.id); } : null }, [
         h("span", { class: "jn" }, [s.done ? "✓" : String(s.n)]),
         h("span", { class: "jlabel" }, [s.icon + " " + s.label]),
         i < 2 ? h("span", { class: "jarrow" }, ["→"]) : null
@@ -186,7 +188,7 @@
         ])
       ]));
     });
-    main.appendChild(card("Run sheet — " + S.minutes + " minutes", "⏱", [rs], "lp-runsheet"));
+    main.appendChild(card("Run sheet — " + S.minutes + " minutes", "⏱", [runnerBar(), rs], "lp-runsheet"));
 
     /* WHAT to teach */
     subjectCards().forEach(function (c) { main.appendChild(c); });
@@ -242,6 +244,52 @@
     return wrap;
   }
 
+  /* live session runner: a class timer that follows the run sheet */
+  function fmtTime(sec) {
+    var m = Math.floor(sec / 60), s2 = sec % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (s2 < 10 ? "0" : "") + s2;
+  }
+  function phaseAt(sec) {
+    var acc = 0;
+    for (var i = 0; i < S.runSheet.length; i++) {
+      acc += S.runSheet[i].min * 60;
+      if (sec < acc) return i;
+    }
+    return S.runSheet.length - 1;
+  }
+  function paintRunner() {
+    var t = document.querySelector(".runner-time");
+    if (t) t.textContent = fmtTime(runner.elapsed) + " / " + fmtTime(S.minutes * 60);
+    var ph = phaseAt(runner.elapsed);
+    var pl = document.querySelector(".runner-phase");
+    if (pl) pl.textContent = "Now: " + S.runSheet[ph].phase + " — " + S.runSheet[ph].what;
+    var items = document.querySelectorAll(".rs-item");
+    items.forEach(function (el, i) { el.classList.toggle("now", runner.on && i === ph); });
+  }
+  function runnerBar() {
+    var toggle = h("button", { class: "btn " + (runner.on ? "ghost" : "primary") + " sm", onclick: function () {
+      runner.on = !runner.on;
+      if (runner.on && !runner.iv) {
+        runner.iv = setInterval(function () {
+          if (runner.on) { runner.elapsed++; paintRunner(); }
+        }, 1000);
+      }
+      toggle.textContent = runner.on ? "⏸ Pause" : (runner.elapsed ? "▶ Resume" : "▶ Start class");
+      toggle.className = "btn " + (runner.on ? "ghost" : "primary") + " sm";
+      paintRunner();
+    } }, [runner.on ? "⏸ Pause" : (runner.elapsed ? "▶ Resume" : "▶ Start class")]);
+    var reset = h("button", { class: "btn ghost sm", onclick: function () {
+      runner.on = false; runner.elapsed = 0;
+      if (runner.iv) { clearInterval(runner.iv); runner.iv = null; }
+      render();
+    } }, ["↺ Reset"]);
+    return h("div", { class: "runner no-print" }, [
+      toggle, reset,
+      h("span", { class: "runner-time" }, [fmtTime(runner.elapsed) + " / " + fmtTime(S.minutes * 60)]),
+      h("span", { class: "runner-phase" }, [runner.on ? "" : "Press start when the class begins — the current phase highlights automatically."])
+    ]);
+  }
+
   /* ---------------- assessment recording ---------------- */
   function assessCard() {
     var stu = GN.active();
@@ -273,7 +321,9 @@
 
     var doneBtn = h("button", { class: "btn " + (rec.status === "done" ? "complete is-done" : "primary"),
       onclick: function () {
-        GN.saveSession(S.id, { status: rec.status === "done" ? "started" : "done", notes: notes.value });
+        var wasDone = rec.status === "done";
+        GN.saveSession(S.id, { status: wasDone ? "started" : "done", notes: notes.value });
+        if (!wasDone && U.confetti) U.confetti();
         render();
       } }, [rec.status === "done" ? "✓ Completed" : "Mark session complete"]);
 

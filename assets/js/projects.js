@@ -8,6 +8,21 @@
   "use strict";
   var R = window.GN_RPI || { paths: [], projects: {} };
   var GN = window.GN, U = window.GNUI;
+  var showAllLevels = false;
+
+  /* which curriculum level uses each project (from the spine) */
+  var LEVEL_OF = {};
+  (function () {
+    var P = window.GN_PLATFORM;
+    if (P && P.sessions) Object.keys(P.sessions).forEach(function (id) {
+      var s = P.sessions[id];
+      if (s.content && s.content.kind === "project") {
+        var cur = LEVEL_OF[s.content.ref];
+        LEVEL_OF[s.content.ref] = cur ? Math.min(cur, s.level) : s.level;
+      }
+    });
+  })();
+  function projLevel(slug) { return LEVEL_OF[slug] || 2; }
   var app;
   var DONE_KEY = "gn_rpi_done";
 
@@ -52,22 +67,6 @@
     return Math.round((d / p.stepCount) * 100);
   }
 
-  /* ---------------- header ---------------- */
-  function header() {
-    return h("header", { class: "c-head" }, [
-      h("a", { class: "c-brand", href: "#/", role: "button" }, [
-        h("span", { class: "c-mark" }, ["🐱"]),
-        h("div", {}, [h("div", { class: "c-name" }, ["Grade Next"]), h("div", { class: "c-sub" }, ["Real Project Library"])])
-      ]),
-      h("nav", { class: "c-nav" }, [
-        h("a", { class: "c-navbtn", href: "index.html" }, ["🏠 Dashboard"]),
-        h("a", { class: "c-navbtn", href: "curriculum.html" }, ["📚 Curriculum"]),
-        h("a", { class: "c-navbtn active", href: "projects.html" }, ["🚀 Projects"]),
-        h("a", { class: "c-navbtn", href: "report.html" }, ["📊 Reports"])
-      ])
-    ]);
-  }
-
   /* ---------------- library home ---------------- */
   function viewHome() {
     var wrap = h("div", { class: "view" });
@@ -83,16 +82,26 @@
         " open curriculum · CC BY-SA 4.0"])
     ]));
 
+    var LV = GN.level();
+    wrap.appendChild(h("div", { class: "lv-note" }, [
+      h("span", { class: "lv-chip l" + LV }, ["LEVEL " + LV]),
+      h("span", {}, [showAllLevels ? "Showing projects from both levels."
+                                   : "Showing the projects used in Level " + LV + " sessions."]),
+      h("button", { class: "linkish", onclick: function () { showAllLevels = !showAllLevels; render(); } },
+        [showAllLevels ? "Show only Level " + LV + " →" : "Show all projects →"])
+    ]));
     R.paths.forEach(function (path) {
+      var slugs = path.projects.filter(function (slug) {
+        return R.projects[slug] && (showAllLevels || projLevel(slug) === LV);
+      });
+      if (!slugs.length) return;
       var sec = h("section", { class: "rpi-path" });
       sec.appendChild(h("div", { class: "rpi-path-head" }, [
         h("span", { class: "rpi-path-emoji", style: "background:" + path.color + "22;color:" + shade(path.color, -40) }, [path.emoji]),
         h("div", {}, [h("h2", {}, [path.title]), h("p", {}, [path.blurb])])
       ]));
       var row = h("div", { class: "rpi-row" });
-      path.projects.forEach(function (slug) {
-        var p = R.projects[slug]; if (p) row.appendChild(projCard(p));
-      });
+      slugs.forEach(function (slug) { row.appendChild(projCard(R.projects[slug])); });
       sec.appendChild(row);
       wrap.appendChild(sec);
     });
@@ -117,6 +126,7 @@
       h("div", { class: "pc-body" }, [
         h("div", { class: "pc-top" }, [
           h("span", { class: "type-badge cat-" + p.category }, [p.category]),
+          h("span", { class: "lv-chip l" + projLevel(p.slug) }, ["L" + projLevel(p.slug)]),
           h("span", { class: "pc-steps" }, ["🧩 " + p.stepCount + " steps"])
         ]),
         h("h3", {}, [p.title]),
@@ -284,7 +294,7 @@
     var hs = (location.hash || "").replace(/^#\/?/, "");
     var parts = hs.split("/").filter(Boolean);
     app.innerHTML = "";
-    app.appendChild(U && U.header ? U.header("projects") : header());
+    app.appendChild(U.header("projects"));
     var main = h("main", { class: "c-main" });
     if (U && U.modeBanner) main.appendChild(U.modeBanner());
     if (parts[0] === "p" && parts[1]) main.appendChild(viewProject(parts[1]));

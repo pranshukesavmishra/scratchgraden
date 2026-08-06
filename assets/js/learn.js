@@ -18,8 +18,9 @@
       { key: "quiz",  n: 2, label: "Recall Test", icon: "🧠", href: "quiz.html?s=" + S.id, done: st.quiz },
       { key: "apply", n: 3, label: "Build it", icon: "🛠", href: S.content ? S.content.href : "#", done: st.apply }
     ];
-    return h("div", { class: "journey" }, steps.map(function (s, i) {
-      return h("a", { class: "jstep" + (s.key === active ? " on" : "") + (s.done ? " done" : ""), href: s.href }, [
+    return h("div", { class: "journey no-print" }, steps.map(function (s, i) {
+      return h("a", { class: "jstep" + (s.key === active ? " on" : "") + (s.done ? " done" : ""), href: s.href,
+        onclick: s.key === "apply" && S.content ? function () { GN.markApplied(S.id); } : null }, [
         h("span", { class: "jn" }, [s.done ? "✓" : String(s.n)]),
         h("span", { class: "jlabel" }, [s.icon + " " + s.label]),
         i < 2 ? h("span", { class: "jarrow" }, ["→"]) : null
@@ -41,10 +42,34 @@
             h("span", { class: "tag-chip" }, ["⭐ " + S.concept])
           ])
         ]),
-        GN.isTutor() ? h("a", { class: "btn ghost sm", href: "lesson.html?s=" + S.id }, ["👩‍🏫 Lesson plan"]) : null
+        h("div", { class: "lp-headactions no-print" }, [
+          ttsButton(),
+          h("button", { class: "btn ghost sm", onclick: function () { window.print(); }, title: "Print this lesson as a handout" }, ["🖨 Handout"]),
+          GN.isTutor() ? h("a", { class: "btn ghost sm", href: "lesson.html?s=" + S.id }, ["👩‍🏫 Lesson plan"]) : null
+        ])
       ]),
       journey("learn")
     ]);
+  }
+
+  /* read the lesson aloud for young readers (Web Speech API) */
+  var speaking = false;
+  function ttsButton() {
+    if (!("speechSynthesis" in window)) return null;
+    var btn = h("button", { class: "tts-btn", title: "Read this lesson aloud", onclick: function () {
+      if (speaking) { speechSynthesis.cancel(); speaking = false; btn.classList.remove("on"); return; }
+      var d = S.deep;
+      var text = [S.title + ".", S.hook].concat(S.objectives)
+        .concat(d ? d.explain.map(function (t) { return t.replace(/\*\*/g, ""); }) : [])
+        .join(" ");
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.95; u.pitch = 1.05;
+      u.onend = function () { speaking = false; btn.classList.remove("on"); };
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+      speaking = true; btn.classList.add("on");
+    } }, ["🔊 Read aloud"]);
+    return btn;
   }
 
   function blockCard(b) {
@@ -200,7 +225,8 @@
           GN.markLearned(S.id);
           location.href = "quiz.html?s=" + S.id;
         } }, [st.learn ? "🧠 Retake the Recall Test →" : "🧠 I've read this — Recall Test →"]),
-        S.content ? h("a", { class: "btn ghost", href: S.content.href }, ["Skip to the build"]) : null
+        S.content ? h("a", { class: "btn ghost", href: S.content.href,
+          onclick: function () { GN.markApplied(S.id); } }, ["Skip to the build"]) : null
       ])
     ]));
 

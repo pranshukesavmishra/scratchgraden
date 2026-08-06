@@ -107,7 +107,7 @@
 
     var st = GN.stats(P);
     main.appendChild(h("section", { class: "c-hero" }, [
-      h("h1", {}, ["The Grade Next Scratch curriculum"]),
+      h("h1", {}, ["The Scratch Academy curriculum"]),
       h("p", {}, [P.meta.sessionCount + " sessions · " + P.meta.levelCount + " levels · " +
                   P.meta.conceptCount + " concepts · every session is a full " + P.meta.minutes +
                   "-minute lesson plan with objectives, teaching script, assessment and homework."]),
@@ -118,8 +118,17 @@
     ]));
 
     main.appendChild(toolbar());
+    // The curriculum shows ONE level at a time — switch with the header control.
+    var LV = GN.level();
+    var other = LV === 1 ? 2 : 1;
+    main.appendChild(h("div", { class: "lv-note" }, [
+      h("span", { class: "lv-chip l" + LV }, ["LEVEL " + LV]),
+      h("span", {}, [LV === 1 ? "Foundations — sessions 1–50" : "Logic, Data & Game Engineering — sessions 1–50"]),
+      h("button", { class: "linkish", onclick: function () { GN.setLevel(other); location.reload(); } },
+        ["Switch to Level " + other + " →"])
+    ]));
     var any = false;
-    P.levels.forEach(function (lv) {
+    P.levels.filter(function (lv) { return lv.level === LV; }).forEach(function (lv) {
       var sec = levelSection(lv);
       if (sec) { main.appendChild(sec); any = true; }
     });

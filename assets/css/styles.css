@@ -1325,3 +1325,106 @@ code.blk.block3sensing,code.blk.block3operators{background:#e3f6ff;color:#0e7490
   .dash-hero h1,.rpi-hero h1{background:linear-gradient(135deg,#C8B6FF,#FF6AC6);
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 }
+
+/* ===================================================================
+   Scratch Academy by GradeNext — logo, level split, palette, badges,
+   leaderboard, session runner, review & practice
+   =================================================================== */
+/* brand logo */
+.gn-logo{display:inline-flex;align-items:baseline;font-family:var(--font-heading);font-weight:800;
+  font-size:21px;color:#221530;line-height:1;letter-spacing:-.02em}
+.gn-logo-g{position:relative;display:inline-block;font-size:27px;padding-top:8px}
+.gn-cap{position:absolute;top:-6px;left:-5px;width:27px;height:19px}
+.gn-logo-x{color:var(--gn-purple);font-size:25px;font-style:italic;margin:0 -1px;font-weight:800}
+.c-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.c-brand-txt .c-sub{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gn-pink);margin-top:2px}
+@media (prefers-color-scheme: dark){ .gn-logo{color:#F3EEF8} }
+
+/* level switch */
+.level-switch{display:flex;background:var(--gn-soft-purple);border-radius:999px;padding:3px;gap:2px}
+.lv-btn{border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:800;color:var(--ink-soft);
+  padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.lv-btn.on{background:var(--grad-deep);color:#fff;box-shadow:var(--glow-brand)}
+.search-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;font-size:14px;
+  width:36px;height:36px;cursor:pointer;box-shadow:var(--shadow-sm)}
+.search-btn:hover{border-color:var(--gn-purple-light)}
+.lv-note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;font-weight:700;
+  color:var(--ink-soft);background:var(--gn-soft-purple);border:1px solid var(--gn-border-strong);
+  border-radius:12px;padding:10px 15px;margin:0 0 16px}
+.lv-chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.4px}
+.lv-chip.l1{background:#DFF5E9;color:#15803d}
+.lv-chip.l2{background:#E6E0FB;color:#5b3a9e}
+
+/* command palette */
+.cmdk{position:fixed;inset:0;background:rgba(24,12,40,.5);backdrop-filter:blur(4px);z-index:300;
+  display:flex;align-items:flex-start;justify-content:center;padding:12vh 16px 16px}
+.cmdk-box{width:100%;max-width:620px;background:var(--surface);border-radius:18px;
+  box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--gn-border-strong)}
+.cmdk-input{width:100%;border:0;outline:none;font:inherit;font-size:17px;padding:17px 20px;
+  background:transparent;color:var(--ink);border-bottom:1px solid var(--line)}
+.cmdk-list{max-height:46vh;overflow-y:auto;padding:7px}
+.cmdk-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;
+  text-decoration:none;color:inherit}
+.cmdk-item.sel,.cmdk-item:hover{background:var(--gn-soft-purple)}
+.cmdk-tag{flex:none;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  padding:3px 8px;border-radius:999px}
+.cmdk-tag.t-session{background:#E0ECFF;color:#1d4ed8}
+.cmdk-tag.t-block{background:#FFF1D6;color:#a15c00}
+.cmdk-tag.t-project{background:#FFE3F1;color:#be185d}
+.cmdk-label{font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-sub{margin-left:auto;font-size:12px;color:var(--ink-faint);white-space:nowrap}
+.cmdk-none{padding:20px;text-align:center;color:var(--ink-faint)}
+.cmdk-hint{padding:9px 16px;font-size:11.5px;color:var(--ink-faint);border-top:1px solid var(--line)}
+
+/* achievements */
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px}
+.badge{text-align:center;padding:14px 8px;border-radius:14px;background:var(--bg);
+  border:1px solid var(--line);opacity:.45;filter:grayscale(.9)}
+.badge.earned{opacity:1;filter:none;background:linear-gradient(160deg,#FBF4FF,#FFF3FA);
+  border-color:var(--gn-border-strong);box-shadow:0 4px 14px rgba(127,93,249,.14)}
+.badge-emoji{display:block;font-size:27px;margin-bottom:5px}
+.badge-name{display:block;font-weight:800;font-size:12.5px}
+.badge-desc{display:block;font-size:10.5px;color:var(--ink-faint);margin-top:2px;line-height:1.35}
+
+/* leaderboard */
+.lb-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.lb-table th{text-align:left;padding:8px 10px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.4px;color:var(--ink-faint);border-bottom:2px solid var(--line)}
+.lb-table td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.lb-rank{font-weight:800;color:var(--gn-purple)}
+.lb-me{background:var(--gn-soft-purple)}
+
+/* session runner */
+.runner{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:11px 13px;margin-bottom:13px;
+  background:var(--gn-soft-purple);border:1px solid var(--gn-border-strong);border-radius:13px}
+.runner-time{font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-weight:700;font-size:19px;
+  color:var(--gn-purple-deep);min-width:120px}
+.runner-phase{font-size:12.5px;font-weight:800;color:var(--gn-pink)}
+.rs-item.now{background:linear-gradient(90deg,rgba(245,0,126,.07),transparent 65%);border-radius:12px;
+  outline:2px solid rgba(245,0,126,.35);outline-offset:-2px}
+.rs-item.now .rs-min{background:var(--gn-pink);color:#fff}
+
+/* review + practice */
+.review-pill{background:linear-gradient(135deg,#7F5DF9,#FF6AC6);color:#fff!important}
+.gn-confetti{position:fixed;inset:0;pointer-events:none;z-index:400}
+.tts-btn{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;
+  font-size:13px;font-weight:700;padding:6px 12px;cursor:pointer;color:var(--ink-soft)}
+.tts-btn.on{background:var(--gn-pink);border-color:var(--gn-pink);color:#fff}
+
+@media (max-width:980px){
+  .level-switch{order:2}
+  .lv-btn{padding:6px 9px;font-size:11.5px}
+}
+@media (prefers-color-scheme: dark){
+  .lv-chip.l1{background:#12331f;color:#86efac}
+  .lv-chip.l2{background:#2b2447;color:#c3b0ff}
+  .badge{background:#1E1430}
+  .badge.earned{background:linear-gradient(160deg,#2A1B3D,#301A31)}
+  .search-btn{background:var(--surface)}
+}
+@media print{ .no-print{display:none!important} }
+.lp-headactions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lv-card.lv-active{outline:3px solid var(--gn-purple-light);outline-offset:2px}
+.btn.review-pill{background:linear-gradient(135deg,#7F5DF9,#FF6AC6)!important;color:#fff!important;
+  border:0!important;box-shadow:var(--glow-brand)}

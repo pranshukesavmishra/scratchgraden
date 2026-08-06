@@ -7,7 +7,8 @@
 (function () {
   "use strict";
   var P = window.GN_PLATFORM, GN = window.GN, U = window.GNUI, h = U.h;
-  var app, S, quiz;   // quiz = {qs:[], i, answers:[], done}
+  var app, S, quiz;   // quiz = {qs:[], i, answers:[], done, practice}
+  var REVIEW = false; // mixed-review mode: questions from every learned topic
 
   function qs_(k) { return new URLSearchParams(location.search).get(k); }
 
@@ -22,22 +23,37 @@
 
   /* Build an attempt: pick N questions for this concept, shuffle the
      questions AND each question's options (tracking the new correct index). */
-  function newAttempt() {
-    var pool = (P.questions[S.conceptKey] || []).slice();
-    var picked = shuffle(pool).slice(0, Math.min(P.meta.quizLength, pool.length));
-    var qs = picked.map(function (q) {
+  function reviewPool() {
+    var prog = GN.progress(), keys = {};
+    Object.keys(prog).forEach(function (sid) {
+      var r = prog[sid], sess = P.sessions[sid];
+      if (sess && (r.learned || r.status === "done")) keys[sess.conceptKey] = 1;
+    });
+    var pool = [];
+    Object.keys(keys).forEach(function (k) {
+      (P.questions[k] || []).forEach(function (q) { pool.push(q); });
+    });
+    return pool;
+  }
+
+  function reshape(picked) {
+    return picked.map(function (q) {
       var idx = q.options.map(function (_, i) { return i; });
       var order = shuffle(idx);
-      return {
-        id: q.id, stem: q.stem, why: q.why,
-        options: order.map(function (i) { return q.options[i]; }),
-        correct: order.indexOf(q.correct)
-      };
+      return { id: q.id, stem: q.stem, why: q.why,
+               options: order.map(function (i) { return q.options[i]; }),
+               correct: order.indexOf(q.correct) };
     });
-    return { qs: qs, i: 0, answers: [], done: false };
+  }
+
+  function newAttempt() {
+    var pool = REVIEW ? reviewPool() : (P.questions[S.conceptKey] || []).slice();
+    var picked = shuffle(pool).slice(0, Math.min(P.meta.quizLength, pool.length));
+    return { qs: reshape(picked), i: 0, answers: [], done: false };
   }
 
   function journey(active) {
+    if (REVIEW) return h("span", {});
     var st = GN.stages(S.id);
     var steps = [
       { key: "learn", n: 1, label: "Learn", icon: "📖", href: "learn.html?s=" + S.id, done: st.learn },
@@ -45,7 +61,8 @@
       { key: "apply", n: 3, label: "Build it", icon: "🛠", href: S.content ? S.content.href : "#", done: st.apply }
     ];
     return h("div", { class: "journey" }, steps.map(function (s, i) {
-      return h("a", { class: "jstep" + (s.key === active ? " on" : "") + (s.done ? " done" : ""), href: s.href }, [
+      return h("a", { class: "jstep" + (s.key === active ? " on" : "") + (s.done ? " done" : ""), href: s.href,
+        onclick: s.key === "apply" && S.content ? function () { GN.markApplied(S.id); } : null }, [
         h("span", { class: "jn" }, [s.done ? "✓" : String(s.n)]),
         h("span", { class: "jlabel" }, [s.icon + " " + s.label]),
         i < 2 ? h("span", { class: "jarrow" }, ["→"]) : null
@@ -56,8 +73,8 @@
   function head() {
     return h("div", { class: "lp-head", style: "--sc:" + S.strandColor }, [
       h("div", { class: "lp-crumbs" }, [
-        h("a", { href: "curriculum.html" }, ["← Curriculum"]),
-        h("span", {}, [" / Level " + S.level + " · Session " + S.n + " / Recall Test"])
+        h("a", { href: REVIEW ? "index.html" : "curriculum.html" }, [REVIEW ? "← Dashboard" : "← Curriculum"]),
+        h("span", {}, [REVIEW ? " / Mixed Review" : (" / Level " + S.level + " · Session " + S.n + " / Recall Test")])
       ]),
       h("div", { class: "lp-titlerow" }, [
         h("div", {}, [h("h1", {}, ["🧠 Recall Test — " + S.title]),
@@ -130,14 +147,18 @@
   }
 
   function finish() {
-    GN.saveQuiz(S.id, score(), quiz.qs.length, P.meta.quizPass);
+    var sc = score();
+    if (!REVIEW && !quiz.practice) GN.saveQuiz(S.id, sc, quiz.qs.length, P.meta.quizPass);
+    var passed = REVIEW ? (sc / quiz.qs.length >= 0.7) : sc >= P.meta.quizPass;
+    if (passed && U.confetti) U.confetti();
   }
 
   /* ---------------- result view ---------------- */
   function resultView() {
     var sc = score(), total = quiz.qs.length, pct = Math.round((sc / total) * 100);
-    var passed = sc >= P.meta.quizPass;
+    var passed = (REVIEW || quiz.practice) ? pct >= 70 : sc >= P.meta.quizPass;
     var st = GN.stages(S.id);
+    var wrongQs = quiz.qs.filter(function (q, i) { return quiz.answers[i] !== q.correct; });
 
     var wrap = h("div", { class: "quiz-wrap" });
     wrap.appendChild(h("section", { class: "quiz-result " + (passed ? "pass" : "fail") }, [
@@ -154,7 +175,11 @@
           ? h("a", { class: "btn primary big", href: S.content.href, onclick: function () { GN.markApplied(S.id); } }, ["🛠 Build it now →"])
           : h("button", { class: "btn primary big", onclick: function () { quiz = newAttempt(); render(); } }, ["↻ Try again"]),
         passed ? h("button", { class: "btn ghost", onclick: function () { quiz = newAttempt(); render(); } }, ["↻ Retake"]) : null,
-        h("a", { class: "btn ghost", href: "learn.html?s=" + S.id }, ["📖 Back to Learn"])
+        wrongQs.length ? h("button", { class: "btn ghost", onclick: function () {
+          quiz = { qs: reshape(wrongQs), i: 0, answers: [], done: false, practice: true }; render();
+        } }, ["🎯 Practice my mistakes (" + wrongQs.length + ")"]) : null,
+        REVIEW ? h("a", { class: "btn ghost", href: "index.html" }, ["🏠 Dashboard"])
+               : h("a", { class: "btn ghost", href: "learn.html?s=" + S.id }, ["📖 Back to Learn"])
       ])
     ]));
 
@@ -191,6 +216,20 @@
   function boot() {
     app = document.getElementById("app");
     if (GN && GN.ensureLearner && !GN.isTutor()) GN.ensureLearner();
+    REVIEW = qs_("mode") === "review";
+    if (REVIEW) {
+      S = { id: "REVIEW", level: GN.level(), n: "★", title: "Mixed Review",
+            concept: "Everything you have learned so far", strand: "Review",
+            strandColor: "#703D84", conceptKey: "__review", content: null };
+      if (!reviewPool().length) {
+        app.innerHTML = '<div style="padding:40px;text-align:center">Learn a few sessions first, then come back for a Mixed Review. <a href="curriculum.html">Curriculum</a></div>';
+        return;
+      }
+      quiz = newAttempt();
+      document.addEventListener("keydown", quizKeys);
+      render();
+      return;
+    }
     S = P && P.sessions ? P.sessions[qs_("s")] : null;
     if (!S) { app.innerHTML = '<div style="padding:40px;text-align:center">Session not found. <a href="curriculum.html">Back to curriculum</a></div>'; return; }
     if (!(P.questions[S.conceptKey] || []).length) {
@@ -198,7 +237,25 @@
       return;
     }
     quiz = newAttempt();
+    document.addEventListener("keydown", quizKeys);
     render();
+  }
+
+  /* keyboard play: 1–4 answer, Enter continues */
+  function quizKeys(e) {
+    if (!quiz || document.querySelector(".cmdk")) return;
+    var tag = (document.activeElement || {}).tagName || "";
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
+    if (!quiz.done) {
+      var given = quiz.answers[quiz.i] !== undefined;
+      if (!given && /^[1-4]$/.test(e.key)) {
+        var i = parseInt(e.key, 10) - 1;
+        if (i < quiz.qs[quiz.i].options.length) { quiz.answers[quiz.i] = i; render(); e.preventDefault(); }
+      } else if (given && (e.key === "Enter" || e.key === " ")) {
+        var btn = document.querySelector(".quiz-actions .btn.primary");
+        if (btn) { btn.click(); e.preventDefault(); }
+      }
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

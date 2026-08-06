@@ -30,6 +30,15 @@
     },
     isTutor: function () { return this.role() === "tutor"; },
 
+    /* ---------- active level: the platform is split into two parts ---------- */
+    level: function () {
+      var n = 1; try { n = parseInt(localStorage.getItem("gn_level") || "1", 10); } catch (e) {}
+      return n === 2 ? 2 : 1;
+    },
+    setLevel: function (n) {
+      try { localStorage.setItem("gn_level", n === 2 ? "2" : "1"); } catch (e) {}
+    },
+
     /* ---------- students ---------- */
     students: function () { return read(K_STUDENTS, []); },
     addStudent: function (name, level) {
@@ -90,6 +99,12 @@
       cur.updated = new Date().toISOString();
       all[st][sessionId] = cur;
       write(K_PROGRESS, all);
+      try {
+        var act = read("gn_activity", {});
+        var days = act[st] || [];
+        var today = new Date().toISOString().slice(0, 10);
+        if (days.indexOf(today) < 0) { days.push(today); act[st] = days; write("gn_activity", act); }
+      } catch (e) {}
       return cur;
     },
     clearSession: function (sessionId, studentId) {
@@ -191,19 +206,94 @@
       return ids[ids.length - 1] || null;
     },
 
+    /* ---------- streaks (days in a row with activity) ---------- */
+    streak: function (studentId) {
+      var st = studentId || this.activeId();
+      var days = (read("gn_activity", {})[st]) || [];
+      var set = {}; days.forEach(function (d) { set[d] = 1; });
+      function key(d) { return d.toISOString().slice(0, 10); }
+      var cur = 0, d = new Date();
+      if (!set[key(d)]) d.setDate(d.getDate() - 1);
+      while (set[key(d)]) { cur++; d.setDate(d.getDate() - 1); }
+      var best = 0, run = 0, sorted = days.slice().sort();
+      for (var i = 0; i < sorted.length; i++) {
+        if (i > 0) {
+          var gap = (new Date(sorted[i]) - new Date(sorted[i - 1])) / 86400000;
+          run = gap === 1 ? run + 1 : 1;
+        } else run = 1;
+        if (run > best) best = run;
+      }
+      return { current: cur, best: best, days: days.length };
+    },
+
+    unlockedCount: function (P, studentId) {
+      var prog = this.progress(studentId), n = 0;
+      Object.keys(P.blocks || {}).forEach(function (k) {
+        var ok = P.blocks[k].sessions.some(function (sid) {
+          var r = prog[sid]; return r && (r.learned || r.status === "done");
+        });
+        if (ok) n++;
+      });
+      return n;
+    },
+
+    /* ---------- achievements ---------- */
+    achievements: function (P, studentId) {
+      var st = this.stats(P, studentId), prog = this.progress(studentId);
+      var applied = 0, perfect = 0, passes = 0, sSum = 0, sN = 0;
+      Object.keys(prog).forEach(function (k) {
+        var r = prog[k];
+        if (r.applied) applied++;
+        if (r.quiz) {
+          if (r.quiz.passed) passes++;
+          if (r.quiz.total && r.quiz.best === r.quiz.total) perfect++;
+          if (r.quiz.total) { sSum += r.quiz.best / r.quiz.total; sN++; }
+        }
+      });
+      var l1 = this.levelStats(P, 1, studentId), l2 = this.levelStats(P, 2, studentId);
+      var stk = this.streak(studentId), un = this.unlockedCount(P, studentId);
+      function A(id, emoji, name, desc, earned) {
+        return { id: id, emoji: emoji, name: name, desc: desc, earned: !!earned };
+      }
+      return [
+        A("first", "🐣", "First Steps", "Complete your first session", st.done >= 1),
+        A("ten", "🚀", "Explorer", "Complete 10 sessions", st.done >= 10),
+        A("quarter", "🌟", "Scholar", "Complete 25 sessions", st.done >= 25),
+        A("half", "🏔️", "Half Way", "Complete 50 sessions", st.done >= 50),
+        A("l1", "🎓", "Level 1 Graduate", "Finish all of Level 1", l1.pct >= 100),
+        A("l2", "🏆", "Level 2 Graduate", "Finish all of Level 2", l2.pct >= 100),
+        A("perfect", "💯", "Perfect Score", "Get 10/10 on a Recall Test", perfect >= 1),
+        A("passes5", "🧠", "Quiz Master", "Pass 5 Recall Tests", passes >= 5),
+        A("brain", "⚡", "Brainbox", "Average 90%+ across 5 tests", sN >= 5 && (sSum / sN) >= 0.9),
+        A("build5", "🛠️", "Builder", "Build 5 projects", applied >= 5),
+        A("build15", "🏗️", "Maker", "Build 15 projects", applied >= 15),
+        A("streak3", "🔥", "On Fire", "Learn 3 days in a row", stk.current >= 3),
+        A("streak7", "🌋", "Unstoppable", "Learn 7 days in a row", stk.current >= 7),
+        A("blocks25", "🧩", "Block Collector", "Unlock 25 blocks", un >= 25),
+        A("blocks60", "📦", "Block Master", "Unlock 60 blocks", un >= 60)
+      ];
+    },
+
     /* ---------- portability ---------- */
     exportAll: function () {
-      return JSON.stringify({ v: 1, exported: new Date().toISOString(),
-                              students: this.students(), progress: this.allProgress() }, null, 1);
+      return JSON.stringify({ v: 2, exported: new Date().toISOString(),
+                              students: this.students(), progress: this.allProgress(),
+                              activity: read("gn_activity", {}), level: this.level() }, null, 1);
     },
     importAll: function (text) {
       var d = JSON.parse(text);
       if (!d || !d.students) throw new Error("Not a Grade Next backup file.");
       write(K_STUDENTS, d.students); write(K_PROGRESS, d.progress || {});
+      if (d.activity) write("gn_activity", d.activity);
       if (d.students.length) write(K_ACTIVE, d.students[0].id);
       return d.students.length;
     }
   };
 
   w.GN = GN;
+  try {
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    }
+  } catch (e) {}
 })(window);

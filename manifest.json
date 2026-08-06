@@ -1,0 +1,13 @@
+{
+  "name": "Scratch Academy by GradeNext",
+  "short_name": "Scratch Academy",
+  "description": "A complete Scratch teaching system for ages 7-12: 100 lesson-planned sessions, guided projects, recall tests and progress reports.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F9FAFB",
+  "theme_color": "#703D84",
+  "icons": [
+    { "src": "assets/img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

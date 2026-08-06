@@ -1,4 +1,4 @@
-# Grade Next · Scratch Academy
+# Scratch Academy by GradeNext
 
 A complete **teaching system** for running Scratch classes for ages 7–12 —
 not just a library of exercises. Everything is static HTML, CSS and vanilla

@@ -29,6 +29,10 @@ from deepdive import DEEP
 from briefs import build_brief
 
 SESSION_MINUTES = 60
+TW_EDITOR = "https://turbowarp.org/editor?project_url="
+SITE_BASE = os.environ.get("GN_SITE_BASE",
+                           "https://pranshukesavmishra.github.io/scratchgraden/")
+from urllib.parse import quote as _q
 QUIZ_LENGTH = 10        # questions per Recall Test
 QUIZ_PASS = 7           # marks needed to pass
 
@@ -117,6 +121,11 @@ def build():
                 "kind": "exercise", "ref": ref, "title": e["title"],
                 "emoji": e.get("emoji", "\U0001F3AE"), "steps": len(e.get("hints", [])),
                 "href": "exercise.html?ex=" + ref,
+                # the code-free starter, straight into the TurboWarp editor
+                "studentOpen": (TW_EDITOR + _q(SITE_BASE + e["starter"], safe="")) if e.get("desired") else "",
+                "studentMode": "starter" if e.get("desired") else "",
+                # the finished game (solution) — tutor only
+                "tutorOpen": (TW_EDITOR + _q(SITE_BASE + e["desired"], safe="")) if e.get("desired") else "",
                 "openUrl": "", "embedUrl": "",
                 "difficulty": e.get("level", ""),
                 "sprites": e.get("sprites", []),
