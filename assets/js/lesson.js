@@ -103,7 +103,7 @@
       ]),
       h("a", { class: "btn primary block big", href: c.href }, ["▶ Open the build"])
     ];
-    if (c.studentOpen) kids.push(h("a", { class: "btn ghost block", href: c.studentOpen, target: "_blank", rel: "noopener" }, ["🐱 Open the student's starter"]));
+    if (c.studentOpen) kids.push(h("a", { class: "btn ghost block", href: c.studentOpen, target: "_blank", rel: "noopener" }, ["✏️ Open the student’s starter"]));
     if (GN.isTutor() && c.tutorOpen) {
       kids.push(h("div", { class: "tutor-only" }, [
         h("div", { class: "tutor-only-h" }, ["👩‍🏫 Tutor only"]),
@@ -430,6 +430,7 @@
     var id = qs("s") || (P && P.order && P.order[0]);
     S = P && P.sessions ? P.sessions[id] : null;
     if (!S) { app.innerHTML = '<div style="padding:40px;text-align:center">Session not found. <a href="curriculum.html">Back to curriculum</a></div>'; return; }
+    if (!GN.isTutor() && S.level !== GN.level()) { app.innerHTML = U.lockedHTML(S.level, GN.level()); return; }
     mode = GN.isTutor() ? "tutor" : "student";
     render();
   }

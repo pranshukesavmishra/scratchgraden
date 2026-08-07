@@ -232,6 +232,16 @@
     ]);
   }
 
+  /* the screen a student sees when a link points into the other level */
+  function lockedHTML(wantLv, myLv) {
+    return '<div style="padding:70px 20px;text-align:center">' +
+      '<div style="font-size:46px">🔒</div>' +
+      '<h1 style="font-size:22px;margin:12px 0 6px">This is a Level ' + wantLv + ' session</h1>' +
+      '<p style="color:var(--ink-faint);max-width:420px;margin:0 auto 18px">You\'re a Level ' + myLv +
+      ' student — your tutor unlocks the other level when you\'re ready.</p>' +
+      '<a class="btn primary" href="curriculum.html">← Back to my level</a></div>';
+  }
+
   function emptyState(msg, ctaLabel, ctaFn) {
     return h("div", { class: "gn-empty" }, [
       h("div", { class: "gn-empty-emoji" }, ["🎈"]),
@@ -251,21 +261,39 @@
       }
     });
   }
+  /* Students search ONLY their assigned level — sessions, blocks and
+     projects from the other level never appear. Tutors search everything. */
   function paletteItems() {
-    var items = [], P = w.GN_PLATFORM, R = w.GN_RPI;
+    var items = [], P = w.GN_PLATFORM, R = w.GN_RPI, GN = w.GN;
+    var tutor = GN.isTutor(), LV = GN.level();
     if (P && P.order) P.order.forEach(function (id) {
       var s = P.sessions[id];
+      if (!tutor && s.level !== LV) return;
       items.push({ t: "Session", label: "L" + s.level + " S" + s.n + " · " + s.title,
                    sub: s.concept, href: "learn.html?s=" + id });
     });
     if (P && P.blocks) Object.keys(P.blocks).forEach(function (k) {
-      items.push({ t: "Block", label: k, sub: P.blocks[k].category,
+      var b = P.blocks[k];
+      if (!tutor && b.sessions && b.sessions.length && !b.sessions.some(function (sid) {
+        return P.sessions[sid] && P.sessions[sid].level === LV; })) return;
+      items.push({ t: "Block", label: k, sub: b.category,
                    href: "blocklab.html?q=" + encodeURIComponent(k) });
     });
-    if (R && R.projects) Object.keys(R.projects).forEach(function (k) {
-      var p = R.projects[k];
-      items.push({ t: "Project", label: p.title, sub: p.concept, href: "projects.html#/p/" + k });
-    });
+    if (R && R.projects) {
+      var projLv = {};
+      if (P && P.sessions) Object.keys(P.sessions).forEach(function (id) {
+        var s = P.sessions[id];
+        if (s.content && s.content.kind === "project") {
+          var cur = projLv[s.content.ref];
+          projLv[s.content.ref] = cur ? Math.min(cur, s.level) : s.level;
+        }
+      });
+      Object.keys(R.projects).forEach(function (k) {
+        if (!tutor && (projLv[k] || 2) !== LV) return;
+        var p = R.projects[k];
+        items.push({ t: "Project", label: p.title, sub: p.concept, href: "projects.html#/p/" + k });
+      });
+    }
     return items;
   }
   function openPalette() {
@@ -356,5 +384,6 @@
   w.GNUI = { h: h, shade: shade, bar: bar, ring: ring, header: header, footer: footer,
              studentSwitcher: studentSwitcher, addStudentFlow: addStudentFlow, emptyState: emptyState,
              roleSwitch: roleSwitch, modeBanner: modeBanner, logoEl: logoEl, levelSwitch: levelSwitch,
+             lockedHTML: lockedHTML,
              openPalette: openPalette, confetti: confetti, badgesPanel: badgesPanel };
 })(window);

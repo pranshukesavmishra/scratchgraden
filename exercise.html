@@ -20,7 +20,7 @@
   .tb-left{display:flex;align-items:center;gap:12px;min-width:0}
   .back{color:#fff;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}
   .back:hover{opacity:.85}
-  .logo .mark{background:#ffd21a;color:#5a3a00;border-radius:8px;padding:2px 8px;font-size:13px;font-weight:800}
+  .logo .mark{background:#F5007E;color:#fff;border-radius:8px;padding:2px 8px;font-size:13px;font-weight:800}
   .proj{background:rgba(255,255,255,.16);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tb-right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
   .tbtn{border:0;border-radius:8px;padding:9px 14px;font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
@@ -76,7 +76,7 @@
   <div class="toolbar">
     <div class="tb-left">
       <a class="back" id="back" href="curriculum.html">← Go Back</a>
-      <span class="logo"><span class="mark">🐱 Scratch</span> <span class="full" style="font-weight:800"> Academy</span></span>
+      <span class="logo"><span class="mark">GN</span> <span class="full" style="font-weight:800">Scratch Academy</span></span>
       <div class="proj" id="projName">Exercise</div>
     </div>
     <div class="tb-right">
@@ -112,8 +112,9 @@
   </div>
 </div>
 
-<script src="assets/js/exercises.js?v=20260807d"></script>
-  <script src="assets/js/gn-store.js?v=20260807d"></script>
+<script src="assets/js/platform.js?v=20260807e"></script>
+<script src="assets/js/exercises.js?v=20260807e"></script>
+  <script src="assets/js/gn-store.js?v=20260807e"></script>
 <script>
 (function(){
   var EDITOR="https://turbowarp.org/editor?project_url=";
@@ -122,6 +123,23 @@
   var id=params.get("ex");
   var course=window.GN_COURSE||{exercises:{}};
   var ex=course.exercises[id];
+  /* students may only open exercises that belong to a session in THEIR level */
+  if(ex&&window.GN&&!GN.isTutor()){
+    var PP=window.GN_PLATFORM,exLv=0;
+    if(PP&&PP.sessions){Object.keys(PP.sessions).forEach(function(sid){
+      var c=PP.sessions[sid].content;
+      if(c&&c.href==="exercise.html?ex="+id){
+        var l=PP.sessions[sid].level;exLv=exLv?Math.min(exLv,l):l;
+      }});}
+    if(exLv!==GN.level()){
+      document.body.innerHTML='<div style="font-family:Poppins,Arial,sans-serif;padding:70px 20px;text-align:center">'+
+        '<div style="font-size:46px">🔒</div>'+
+        '<h1 style="font-size:22px;margin:12px 0 6px">This exercise isn\'t in your level</h1>'+
+        '<p style="color:#8E80A0;max-width:420px;margin:0 auto 18px">Your tutor unlocks the other level when you\'re ready.</p>'+
+        '<p><a href="index.html" style="color:#703D84;font-weight:800;text-decoration:none">← Back to my level</a></p></div>';
+      return;
+    }
+  }
   var dir=location.origin+location.pathname.replace(/[^/]*$/,"");
   var stage=document.getElementById("stage");
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}

@@ -169,7 +169,7 @@
           h("span", { class: "pc-diff mini" }, [diffBar(p.difficulty), h("span", {}, [p.difficultyLabel])])
         ])
       ]),
-      h("a", { class: "btn primary big rpi-title-cta", href: p.openUrl, target: "_blank", rel: "noopener" }, ["🐱 Open in Scratch →"])
+      h("a", { class: "btn primary big rpi-title-cta", href: p.openUrl, target: "_blank", rel: "noopener" }, ["✏️ Open in Scratch →"])
     ]));
 
     // layout: main (steps) + sidebar (desired output + tools)
@@ -194,7 +194,7 @@
     // Build it — students get a starter or a blank editor, NEVER the solution.
     var tutor = GN.isTutor();
     var sMode = p.studentMode || "blank";
-    var openLabel = "🐱 Open the starter in Scratch →";
+    var openLabel = "✏️ Open the starter in Scratch →";
     var openNote = "Opens with every sprite and the backdrop already placed — and no code at all. "
                  + "Build the code yourself by following the steps.";
     var buildKids = [

@@ -50,7 +50,8 @@
     q.value = filter.q;
     q.addEventListener("input", function () {
       filter.q = q.value.toLowerCase();
-      filter.scope = filter.q ? "all" : "level";   // searching looks across both levels
+      // tutors search across both levels; students stay inside their own
+      filter.scope = (filter.q && GN.isTutor()) ? "all" : "level";
       render(true);
     });
 
@@ -128,7 +129,7 @@
     app = document.getElementById("app");
     if (!P || !P.blocks) { app.innerHTML = '<div style="padding:40px;text-align:center">Block data failed to load.</div>'; return; }
     var q0 = qs("q");
-    if (q0) { filter.q = q0.toLowerCase(); filter.scope = "all"; }
+    if (q0) { filter.q = q0.toLowerCase(); filter.scope = GN.isTutor() ? "all" : "level"; }
     var s = qs("strand");
     // the curriculum uses strand names; map the ones that match a block category
     if (s && P.blockCategories[s]) filter.cat = s;
